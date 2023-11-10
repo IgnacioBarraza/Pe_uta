@@ -1,0 +1,169 @@
+/* CALENDARIO 1 */
+/* .calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 380px;
+  margin: 2px auto;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.day {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  background-color: #fff;
+}
+
+.day:hover {
+  background-color: #eee;
+}
+
+.day.with-circle {
+  background-color: #3498db;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.day.with-circle:hover {
+  background-color: #207ab7;
+}
+
+.day.day-of-week {
+  font-weight: bold;
+  background-color: #f5f5f5;
+} */
+
+
+/* CALENDARIO 2 */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  width: 350px;
+  margin: 0 auto;
+  background-color: #2c3e50;
+  border-radius: 10px;
+  padding: 7px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.day {
+  border: 1px solid #34495e;
+  padding: 4px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ecf0f1;
+  background-color: #2c3e50;
+}
+
+.day:hover {
+  background-color: #34495e;
+  color: #fff;
+}
+
+.day.with-circle {
+  border: 2px solid #e74c3c;
+  background-color: #e74c3c;
+  color: #fff;
+  font-weight: bold;
+}
+
+.day.with-circle:hover {
+  background-color: #c0392b;
+}
+
+.day.day-of-week {
+  font-weight: bold;
+  background-color: #34495e;
+}
+
+/* CALENDARIO 3 */
+/* .calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  width: 350px;
+  margin: 10px auto;
+  background-color: #ffeead;
+  border-radius: 5px;
+  padding: 6px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.day {
+  border: 1px solid #d1d1d1;
+  padding: 4px;
+  text-align: center;
+  font-size: 1rem;
+  color: #4d4d4d;
+  background-color: #ffffff;
+}
+
+.day:hover {
+  background-color: #ffe066;
+  color: #333;
+}
+
+.day.with-circle {
+  border: 2px solid #ff6347;
+  background-color: #ff6347;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.day.with-circle:hover {
+  background-color: #e63e27;
+}
+
+.day.day-of-week {
+  font-weight: bold;
+  background-color: #ffdb58;
+} */
+
+/* CALENDARIO 4 */
+/* .calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  width: 350px;
+  margin: 0 auto;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 6px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.day {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+}
+
+.day:hover {
+  background-color: #eee;
+}
+
+.day.with-circle {
+  border: 2px solid #ff6f61;
+  background-color: #ff6f61;
+  color: #fff;
+  font-weight: bold;
+}
+
+.day.with-circle:hover {
+  background-color: #ff5043;
+}
+
+.day.day-of-week {
+  font-weight: bold;
+  background-color: #f0f0f0;
+} */
