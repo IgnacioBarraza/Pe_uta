@@ -4,9 +4,9 @@ import "./login.css";
 import { useForm } from "react-hook-form";
 
 type FormData = {
-  email: string;
-  password: string;
-};
+  rut: string,
+  password: string
+}
 
 export default function LogIn() {
   const {
@@ -49,21 +49,21 @@ export default function LogIn() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="rut-input flex flex-col m-auto pt-16 text-black font-semibold">
                   <label htmlFor="rut">Rut</label>
-                  <input
-                    type="text"
-                    name="rut-input"
-                    id="rut"
-                    className="h-8 rounded-lg"
-                  />
+                  <input type="text" name="rut-input" id="rut" className="h-8 rounded-lg"
+                  placeholder="  Rut con o sin puntos, con guion"
+                  {...register("rut", {
+                    required: 'Este campo es obligatorio', 
+                    pattern: {
+                    value: /^(\d{1,2}(?:[\\.]?\d{3}){2}-[\dkK])$/,
+                    message: 'Rut invalido'
+                  }})
+                  }/>
+                  {errors.rut && <span className="text-red-500 font-bold">{errors.rut.message}</span> }
                 </div>
                 <div className="password-input flex flex-col m-auto pt-14 font-semibold text-black">
                   <label htmlFor="pass">Contraseña</label>
-                  <input
-                    type="password"
-                    name="pass-input"
-                    id="pass"
-                    className="h-8 rounded-lg"
-                  />
+                  <input type="password" name="pass-input" id="pass" className="h-8 rounded-lg" {...register("password", {required: true})}/>
+                  {errors.password && <span className="text-red-500 font-bold">Este campo es obligatorio</span>}
                 </div>
                 <div className="flex justify-center pt-20">
                   <button
