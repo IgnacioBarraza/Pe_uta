@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import './signup.css'
-import  Modal   from "../../../components/SignUpAdvice/modal";
+import  Modal   from "../../components/SignUpAdvice/modal";
 
 type FormData = {
   nombre: string,

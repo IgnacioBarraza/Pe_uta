@@ -1,15 +1,23 @@
-import AccessPage from "../pages/accessPage/accesspage";
-import LogIn from "../pages/accessPage/components/login";
+import HomePage from "../pages/HomePage/homepage";
+import LogIn from "../pages/accessPage/login";
+import SignUp from "../pages/accessPage/signup";
 
 const routes = [
   {
     path: '/',
-    component: <AccessPage />,
+    component: <LogIn />,
     routes: [
       {
-        path: '/login',
-        component: <LogIn />
+        path: '/register',
+        component: <SignUp />
       }
+    ]
+  },
+  {
+    path: '/home',
+    component: <HomePage />,
+    routes: [
+      
     ]
   }
 ]

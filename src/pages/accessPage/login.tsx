@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Calendario from "../../../components/Calendar/calendar";
+import Calendario from "../../components/Calendar/calendar";
 import "./login.css";
 import { useForm } from "react-hook-form";
 

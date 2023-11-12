@@ -1,13 +1,12 @@
-// import LogIn  from "./pages/accessPage/components/login";
-
-import SignUp from "./pages/accessPage/components/signup"
+import LogIn  from "./pages/accessPage/login";
+// import SignUp from "./pages/accessPage/components/signup"
 
 function App() {
 
   return (
     <>
-      {/* <LogIn /> */}
-      <SignUp />
+      <LogIn />
+      {/* <SignUp /> */}
     </>
   )
 }
