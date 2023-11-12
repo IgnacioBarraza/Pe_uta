@@ -40,7 +40,7 @@
 
 
 /* CALENDARIO 2 */
-.calendar {
+/* .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 5px;
@@ -80,7 +80,7 @@
 .day.day-of-week {
   font-weight: bold;
   background-color: #34495e;
-}
+} */
 
 /* CALENDARIO 3 */
 /* .calendar {
@@ -127,12 +127,12 @@
 } */
 
 /* CALENDARIO 4 */
-/* .calendar {
+.calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 5px;
-  width: 350px;
-  margin: 0 auto;
+  width: 400px;
+  margin: 30px auto;
   background-color: #f0f0f0;
   border-radius: 5px;
   padding: 6px;
@@ -166,4 +166,4 @@
 .day.day-of-week {
   font-weight: bold;
   background-color: #f0f0f0;
-} */
+}

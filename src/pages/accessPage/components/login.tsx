@@ -50,11 +50,11 @@ export default function LogIn() {
                 <div className="rut-input flex flex-col m-auto pt-16 text-black font-semibold">
                   <label htmlFor="rut">Rut</label>
                   <input type="text" name="rut-input" id="rut" className="h-8 rounded-lg"
-                  placeholder="  Rut con o sin puntos, con guion"
+                  placeholder="  Rut sin puntos, con guion"
                   {...register("rut", {
                     required: 'Este campo es obligatorio', 
                     pattern: {
-                    value: /^(\d{1,2}(?:[\\.]?\d{3}){2}-[\dkK])$/,
+                    value: /^(\d{1,2}(\d{3}){2}-[\dkK])$/,
                     message: 'Rut invalido'
                   }})
                   }/>
@@ -122,13 +122,6 @@ export default function LogIn() {
                 </span>
               </div>
               <Calendario year={currentYear} month={currentMonth} />
-            </div>
-          </div>
-          <div className="credits bg-stone-400">
-            <div className="credits-container h-full flex justify-center items-center">
-              <span className="font-medium text-sm">
-                Desarrollado por Danny e Ignacio - ICIN
-              </span>
             </div>
           </div>
         </div>
