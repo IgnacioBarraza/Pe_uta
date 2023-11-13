@@ -1,12 +1,11 @@
-import LogIn  from "./pages/accessPage/login";
-// import SignUp from "./pages/accessPage/components/signup"
+import Router from "./router"
+import routes from "./routes/routesConfig"
 
 function App() {
 
   return (
     <>
-      <LogIn />
-      {/* <SignUp /> */}
+      <Router routes={routes} />
     </>
   )
 }

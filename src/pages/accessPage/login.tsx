@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Calendario from "../../components/Calendar/calendar";
+import Modal from "../../components/LogInAdvice/modal";
+import ErrorModal from "../../components/LogInError/errormodal";
 import "./login.css";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
-  rut: string,
-  password: string
-}
+  rut: string;
+  password: string;
+};
 
 export default function LogIn() {
   const {
@@ -15,12 +20,36 @@ export default function LogIn() {
     formState: { errors },
   } = useForm<FormData>();
 
+  const [registeredRut, setRegisteredRut] = useState("");
+  const [error, setError] = useState("");
+  const [modal, setModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
+
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1;
+  const showModal = () => setModal(!modal);
+  const showErrorModal = () => setErrorModal(!errorModal);
+  const navigate = useNavigate();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const response = await axios.post('http://localhost:3000/registro-o-inicio-sesion', data);
+      if (response.status === 201) {
+        console.log(response.statusText);
+        setRegisteredRut(data.rut);
+        showModal();
+      }
+      if (response.status === 200) {
+        console.log(response.statusText);
+        navigate('/home')
+      }
+    } catch (error) {
+      if (error.response.status === 401 || error.response.status === 400) {
+        setError(error.response.data.mensaje);
+        showErrorModal();
+      }
+    }
   };
 
   return (
@@ -49,21 +78,40 @@ export default function LogIn() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="rut-input flex flex-col m-auto pt-16 text-black font-semibold">
                   <label htmlFor="rut">Rut</label>
-                  <input type="text" name="rut-input" id="rut" className="h-8 rounded-lg"
-                  placeholder="  Rut sin puntos, con guion"
-                  {...register("rut", {
-                    required: 'Este campo es obligatorio', 
-                    pattern: {
-                    value: /^(\d{1,2}(\d{3}){2}-[\dkK])$/,
-                    message: 'Rut invalido'
-                  }})
-                  }/>
-                  {errors.rut && <span className="text-red-500 font-bold">{errors.rut.message}</span> }
+                  <input
+                    type="text"
+                    name="rut-input"
+                    id="rut"
+                    className="h-8 rounded-lg"
+                    placeholder="  Rut sin puntos, con guion"
+                    {...register("rut", {
+                      required: "Este campo es obligatorio",
+                      pattern: {
+                        value: /^(\d{1,2}(\d{3}){2}-[\dkK])$/,
+                        message: "Rut invalido",
+                      },
+                    })}
+                  />
+                  {errors.rut && (
+                    <span className="text-red-500 font-bold">
+                      {errors.rut.message}
+                    </span>
+                  )}
                 </div>
                 <div className="password-input flex flex-col m-auto pt-14 font-semibold text-black">
                   <label htmlFor="pass">Contraseña</label>
-                  <input type="password" name="pass-input" id="pass" className="h-8 rounded-lg" {...register("password", {required: true})}/>
-                  {errors.password && <span className="text-red-500 font-bold">Este campo es obligatorio</span>}
+                  <input
+                    type="password"
+                    name="pass-input"
+                    id="pass"
+                    className="h-8 rounded-lg"
+                    {...register("password", { required: true })}
+                  />
+                  {errors.password && (
+                    <span className="text-red-500 font-bold">
+                      Este campo es obligatorio
+                    </span>
+                  )}
                 </div>
                 <div className="flex justify-center pt-20">
                   <button
@@ -126,6 +174,8 @@ export default function LogIn() {
           </div>
         </div>
       </div>
+      <Modal show={modal} close={showModal} name={registeredRut} />
+      <ErrorModal show={errorModal} close={showErrorModal} error={error} />
     </>
   );
 }

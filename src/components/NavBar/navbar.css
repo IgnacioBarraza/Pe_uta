@@ -1,0 +1,31 @@
+.navbar {
+  background-color: #846A6A;
+  height: 90px;
+  width: 100%;
+}
+
+.logo-container {
+  height: 100%;
+}
+
+.uta-logo {
+  height: 70px;
+}
+
+.nav-btn {
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+.nav-btn:hover {
+  background-color: #6b5555;
+  border: 2px solid #4b4949;
+}
+
+.left-container,
+.center-container,
+.right-container {
+  width: 550px;
+  height: 100%;
+}
