@@ -1,15 +1,15 @@
+* {
+  outline: 1px solid limegreen;
+}
+
 .navbar {
   background-color: #846A6A;
   height: 90px;
   width: 100%;
-}
-
-.logo-container {
-  height: 100%;
-}
-
-.uta-logo {
-  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 
 .nav-btn {
@@ -26,6 +26,23 @@
 .left-container,
 .center-container,
 .right-container {
-  width: 550px;
-  height: 100%;
+  max-width: 500px;
+  width: 100%;
+}
+
+.center-container {
+  flex-grow: 1; /* Hace que el centro crezca para ocupar el espacio restante */
+}
+
+@media (max-width: 1150px) {
+  .left-container,
+  .center-container,
+  .right-container {
+    max-width: 100%;
+    width: 100px; 
+  }
+
+  .center-container {
+    margin-top: 10px;
+  }
 }

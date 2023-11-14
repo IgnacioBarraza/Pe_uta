@@ -1,4 +1,5 @@
 import HomePage from "../pages/HomePage/homepage";
+import Projects from "../pages/Projects/projects";
 import LogIn from "../pages/accessPage/login";
 
 const routes = [
@@ -11,7 +12,10 @@ const routes = [
     path: '/home',
     component: <HomePage />,
     routes: [
-      
+      {
+        path: '/home/dashboard',
+        component: <Projects />
+      }
     ]
   }
 ]
