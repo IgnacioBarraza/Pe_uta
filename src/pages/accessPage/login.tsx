@@ -39,10 +39,14 @@ export default function LogIn() {
         console.log(response.statusText);
         setRegisteredRut(data.rut);
         showModal();
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('userRut', response.data.rut)
       }
       if (response.status === 200) {
-        console.log(response.statusText);
         navigate('/home')
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('userRut', response.data.rut)
+        
       }
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {

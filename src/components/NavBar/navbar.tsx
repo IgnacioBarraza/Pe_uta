@@ -7,13 +7,14 @@ import {
   faBars
 } from "@fortawesome/free-solid-svg-icons";
 import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const iconSize = "xl";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const handleResize = () => {
@@ -41,20 +42,18 @@ export default function Navbar() {
           </button>
           <div className={`xl:flex items-center ${isMenuOpen ? "flex-col absolute top-24 left-1 hamburguer-menu" : "hidden"}`}>
             <Link to="/home">
-            {/* nav-btn flex items-center justify-center */}
               <button className={`xl:flex items-center ${isMenuOpen ? "flex items-start menu-nav-btn mb-2" : "nav-btn flex items-center justify-center"}`}>
                 <FontAwesomeIcon icon={faHome} size={iconSize} />
                 <span className="font-semibold text-lg lg:ml-3 ml-1">Inicio</span>
               </button>
             </Link>
-            <Link to="/home/dashboard">
+            <Link to="/projects">
               <button className={`xl:flex items-center ${isMenuOpen ? "flex items-start menu-nav-btn mb-2" : "nav-btn flex items-center justify-center"}`}>
                 <FontAwesomeIcon icon={faBookmark} size={iconSize} />
                 <span className="font-semibold text-lg lg:ml-3 ml-1">Proyectos</span>
               </button>
             </Link>
             <Link to="/evaluated">
-            {/* ml-1 lg:ml-2 */}
               <button className={`xl:flex items-center ${isMenuOpen ? "flex items-start menu-nav-btn" : "nav-btn flex items-center justify-center"}`}>
                 <FontAwesomeIcon icon={faSquareCheck} size={iconSize} />
                 <span className="font-semibold text-lg lg:ml-3 ml-1">Evaluados</span>
@@ -70,7 +69,11 @@ export default function Navbar() {
           </div>
         </div>
         <div className="right-container flex justify-end">
-          <button>
+          <button onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userRut");
+            navigate("/");
+          }}>
             <FontAwesomeIcon icon={faRightToBracket} size={iconSize} />
           </button>
         </div>
