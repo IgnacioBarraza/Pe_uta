@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Calendario from "../../components/Calendar/calendar";
 import Modal from "../../components/LogInAdvice/modal";
 import ErrorModal from "../../components/LogInError/errormodal";
 import "./login.css";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +25,7 @@ export default function LogIn() {
   const [error, setError] = useState("");
   const [modal, setModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
 
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -34,19 +36,21 @@ export default function LogIn() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post('http://localhost:3000/registro-o-inicio-sesion', data);
+      const response = await axios.post(
+        "http://localhost:3000/registro-o-inicio-sesion",
+        data
+      );
       if (response.status === 201) {
         console.log(response.statusText);
         setRegisteredRut(data.rut);
         showModal();
-        localStorage.setItem('token', response.data.token)
-        localStorage.setItem('userRut', response.data.rut)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userRut", response.data.rut);
       }
       if (response.status === 200) {
-        navigate('/home')
-        localStorage.setItem('token', response.data.token)
-        localStorage.setItem('userRut', response.data.rut)
-        
+        navigate("/home");
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userRut", response.data.rut);
       }
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {
@@ -56,18 +60,38 @@ export default function LogIn() {
     }
   };
 
+  const handleResponsive = () => {
+    setIsSmallScreen(window.innerWidth <= 1050);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResponsive);
+
+    return () => {
+      window.removeEventListener("resize", handleResponsive);
+    };
+  }, [isSmallScreen]);
+
   return (
     <>
       <div className="flex justify-center login">
-        <div className="bg-stone-300 self-center rounded-xl main-container grid grid-flow-col">
-          <div className="bg-stone-400 m-4 login-container rounded-lg row-span-4">
+        <div
+          className={`bg-stone-300 self-center ${ isSmallScreen ? "flex flex-col items-center main-container-mobile" : "grid grid-flow-col main-container rounded-xl" }`}>
+          <div
+            className={`bg-stone-400 m-4 ${ isSmallScreen ? "login-container-mobile mb-2": "login-container row-span-4 rounded-lg " }`}>
             <div className="science-expo flex justify-center">
               <img
                 src="src\assets\uta_logo.svg"
                 alt="Uta logo"
-                className="uta-icon p-2"
+                className={`uta-icon ${isSmallScreen ? "p-3" : "p-2"}`}
               />
-              <div className="title-text text-white pt-2 pl-5 pr-5">
+              <div
+                className={`text-white ${
+                  isSmallScreen
+                    ? "title-text-mobile"
+                    : "title-text pr-5 pt-2 pl-5"
+                }`}
+              >
                 <span>Feria de ciencias</span>
                 <span>“Triunfando en el conocimiento”</span>
                 <span>Universidad de Tarapacá</span>
@@ -75,7 +99,7 @@ export default function LogIn() {
               <img
                 src="src/assets/feria_de_ciencias_logo.jpg"
                 alt="Feria de ciencias logo"
-                className="feria-icon p-1"
+                className={`feria-icon ${isSmallScreen ? "p-3" : "p-2"}`}
               />
             </div>
             <div className="form-container">
@@ -135,19 +159,37 @@ export default function LogIn() {
               </div>
             </div>
           </div>
-          <div className="organize col-span-2 mt-4 bg-stone-400 mb-2">
-            <div className="organize-container">
+          <div
+            className={` ${
+              isSmallScreen
+                ? "mb-2 organize-mobile"
+                : "organize col-span-2 mt-4 mb-2"
+            }`}
+          >
+            <div
+              className={`bg-stone-400 ${ 
+                isSmallScreen
+                  ? "organize-container-mobile m-1"
+                  : "organize-container"
+              }`}
+            >
               <div className="organize-header flex items-center flex-wrap">
                 <img
                   src="src/assets/organize_icon.svg"
                   alt="Organize icon"
-                  className="organize-icon p-3 ml-28"
+                  className={`organize-icon p-3 ${
+                    isSmallScreen ? "ml-16" : "ml-28"
+                  }`}
                 />
                 <span className="ml-9 font-medium text-2xl text-white">
                   Organiza
                 </span>
               </div>
-              <div className="flex gap-8 justify-center mt-6">
+              <div
+                className={`flex justify-center ${
+                  isSmallScreen ? "gap-2 m-2" : "m-5 gap-8"
+                }`}
+              >
                 <img src="src/assets/icin_logo.png" alt="ICIN logo" />
                 <img src="src/assets/ici_logo.png" alt="ICI logo" />
                 <img src="src/assets/explora_logo.png" alt="EXPLORA logo" />
@@ -155,8 +197,14 @@ export default function LogIn() {
               </div>
             </div>
           </div>
-          <div className="upcoming-dates bg-stone-400 row-span-2 col-span-2">
-            <div className="dates-container">
+          <div
+            className={` ${
+              isSmallScreen
+                ? "upcoming-dates-mobile"
+                : "upcoming-dates row-span-2 col-span-2"
+            }`}
+          >
+            <div className={`bg-stone-400 ${isSmallScreen ? "m-1 dates-container-mobile" : "dates-container"}`}>
               <div className="date-header flex justify-center items-center">
                 <img
                   src="src/assets/upcoming_dates.svg"
