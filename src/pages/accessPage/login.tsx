@@ -78,7 +78,7 @@ export default function LogIn() {
         <div
           className={`bg-stone-300 self-center ${ isSmallScreen ? "flex flex-col items-center main-container-mobile" : "grid grid-flow-col main-container rounded-xl" }`}>
           <div
-            className={`bg-stone-400 m-4 ${ isSmallScreen ? "login-container-mobile mb-2": "login-container row-span-4 rounded-lg " }`}>
+            className={`bg-stone-400 m-2 ${ isSmallScreen ? "login-container-mobile mb-2": "login-container row-span-4 rounded-lg " }`}>
             <div className="science-expo flex justify-center">
               <img
                 src="src\assets\uta_logo.svg"

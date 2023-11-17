@@ -17,7 +17,9 @@ export default function HomePage() {
                 ¡Bienvenido/a, {rut} 👋
               </span>
             </div>
-            <div></div>
+            <div className="">
+
+            </div>
             <div></div>
           </div>
         </div>
