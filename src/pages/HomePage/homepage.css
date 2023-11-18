@@ -1,10 +1,11 @@
 .page-container {
   width: 100%;
-  height: 85.8vh;
+  height: 84.3vh;
   padding: 10px;
   background-image: url('../../assets/fondo_login.jpg');
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
 .welcome {
@@ -24,9 +25,8 @@
 .projects-carousel-container {
   width: 90%;
   height: 350px;
-  overflow: hidden;
-  border-radius: 10px;
 }
+
 
 .project-btn-container {
   flex: 0 0 auto;
@@ -38,13 +38,17 @@
 
 .projects-wrapper-container {
   scroll-snap-align: center;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory; 
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  /* Firefox */
+  scrollbar-color: #4a5568 #cbd5e0;
+  /* Firefox */
 }
 
 .projects-wrapper-container::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 .projects-wrapper-container::-webkit-scrollbar-thumb {
@@ -57,27 +61,89 @@
   border-radius: 10px;
 }
 
+.project-btn {
+  height: 100%;
+}
+
+.intro-fisica-img,
+.mecanica-clasica-img,
+.electro-img,
+.fisica-contemporanea-img {
+  border-radius: 10px 10px 0 0;
+  width: 550px;
+  height: 230px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.intro-fisica-img {
+  background-image: url('src/assets/intro_fisica_img.jpg');
+}
+
+.mecanica-clasica-img {
+  background-image: url('src/assets/mecanica_clasica_img.jpg');
+}
+
+.electro-img {
+  background-image: url('src/assets/electro_img.jpg');
+}
+
+.fisica-contemporanea-img {
+  background-image: url('src/assets/fisica_contemporanea_img.jpg');
+}
+
+.project-subject {
+  height: 70px;
+}
+
+.subject-text {
+  height: 50px;
+  width: 350px;
+  background-color: #8d9199;
+}
+
 @media (max-width: 768px) {
   .page-container {
-    height: 100%;
     padding: 0;
   }
+
   .welcome {
     width: 100%;
     height: 40px;
     border-radius: 0;
   }
+
   .home-container {
     border-radius: 0;
     height: 100%;
   }
+
   .projects-carousel-container {
     width: 92%;
     height: 100%;
   }
+
   .project-btn-container {
     width: 90%;
-    /* height: 20px; */
+  }
+
+  .projects-wrapper-container {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer y Edge */
+  }
+
+  .projects-wrapper-container::-webkit-scrollbar {
+    display: none;
+    /* WebKit (Chrome, Safari) */
+  }
+
+  .intro-fisica-img,
+  .mecanica-clasica-img,
+  .electro-img,
+  .fisica-contemporanea-img {
+    width: 82.7vw;
   }
 }
-

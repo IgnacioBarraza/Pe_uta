@@ -46,11 +46,13 @@ export default function LogIn() {
         showModal();
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRut", response.data.rut);
+        localStorage.setItem("userId", response.data.userID);
       }
       if (response.status === 200) {
         navigate("/home");
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRut", response.data.rut);
+        localStorage.setItem("userId", response.data.userID);
       }
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {
@@ -78,7 +80,7 @@ export default function LogIn() {
         <div
           className={`bg-stone-300 self-center ${ isSmallScreen ? "flex flex-col items-center main-container-mobile" : "grid grid-flow-col main-container rounded-xl" }`}>
           <div
-            className={`bg-stone-400 m-2 ${ isSmallScreen ? "login-container-mobile mb-2": "login-container row-span-4 rounded-lg " }`}>
+            className={`bg-stone-400  ${ isSmallScreen ? "login-container-mobile mb-2 m-2": "login-container row-span-4 rounded-lg m-4" }`}>
             <div className="science-expo flex justify-center">
               <img
                 src="src\assets\uta_logo.svg"

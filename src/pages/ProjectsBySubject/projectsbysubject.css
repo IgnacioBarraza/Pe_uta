@@ -1,0 +1,60 @@
+.page-container {
+  width: 100%;
+  height: 84.3vh;
+  padding: 10px;
+  background-image: url('../../assets/fondo_login.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.project-container {
+  width: 100%;
+  height: 76.6vh;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 0;
+  }
+
+  .welcome {
+    width: 100%;
+    height: 40px;
+    border-radius: 0;
+  }
+
+  .project-container {
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .projects-carousel-container {
+    width: 92%;
+    height: 100%;
+  }
+
+  .project-btn-container {
+    width: 90%;
+  }
+
+  .projects-wrapper-container {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer y Edge */
+  }
+
+  .projects-wrapper-container::-webkit-scrollbar {
+    display: none;
+    /* WebKit (Chrome, Safari) */
+  }
+
+  /* .intro-fisica-img,
+  .mecanica-clasica-img,
+  .electro-img,
+  .fisica-contemporanea-img {
+    width: 82.7vw;
+  } */
+}
