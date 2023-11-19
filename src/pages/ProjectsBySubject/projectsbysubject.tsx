@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Footer from "../../components/Footer/footer";
 import Navbar from "../../components/NavBar/navbar";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./projectsbysubject.css";
 
 const formatName = (rawName) => {
@@ -16,7 +17,9 @@ const formatName = (rawName) => {
 export default function ProjectsBySubject() {
   const { id } = useParams();
   const [projectName, setProjectName] = useState("");
+  const [projectId, setProjectId] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
+  const [grupos, setGrupos] = useState([]);
 
   const handleResponsive = () => {
     setIsSmallScreen(window.innerWidth <= 1050);
@@ -35,9 +38,31 @@ export default function ProjectsBySubject() {
     }
   };
 
+  const getGroups = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/grupos-asignaturas"
+      );
+
+      // Filtrar los grupos por id_asignatura
+      const gruposFiltrados = response.data.filter(
+        (grupo) => grupo.id_asignatura === parseInt(id, 10)
+      );
+
+      // Actualizar el estado con los grupos filtrados
+      setGrupos(gruposFiltrados);
+      setProjectId(gruposFiltrados[0].id_grupo);
+      console.log(gruposFiltrados);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     window.addEventListener("resize", handleResponsive);
     getSubjects();
+    getGroups();
+    // console.log(grupos);
     return () => {
       window.removeEventListener("resize", handleResponsive);
     };
@@ -54,10 +79,44 @@ export default function ProjectsBySubject() {
         >
           <h1 className="font-semibold text-2xl">Proyectos de {projectName}</h1>
         </div>
-        <div className="project-container bg-stone-400 flex flex-col items-center"></div>
+        <div className="project-container bg-stone-400 flex flex-col items-center">
+          <div
+            className={`projects-by-subject-carousel-container flex ${
+              isSmallScreen
+                ? "flex-col"
+                : "overflow-x-auto whitespace-nowrap m-6"
+            }`}
+            role="region"
+            aria-label="Proyectos disponibles"
+          >
+            <div className="projects-wrapper-container flex">
+              {grupos.map((grupo) => (
+                <div
+                  key={grupo.id_grupo}
+                  className="project-btn-container bg-stone-300 mx-4 mb-4"
+                >
+                  <div className="project-btn flex flex-col items-center">
+                    <Link to={`/project_id/${grupo.id_grupo}`}>
+                      <button aria-label={`Ir a ${grupo.nombre_grupo}`} className="mb-3">
+                        <div className="project-img flex justify-center items-center">
+                          <img src={`${grupo.imagen_url}`} alt={`Imagen del proyecto ${grupo.nombre_grupo}`} />
+                        </div>
+                      </button>
+                      <div className="project-by-subject-title flex justify-center items-center rounded-2xl">
+                          <span className="font-semibold text-2xl text-white">
+                            {grupo.nombre_grupo}
+                          </span>
+                        </div>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
       <div
-        className={`${isSmallScreen ? "fixed bottom-0 left-0 right-0" : ""}`}
+        className={`${isSmallScreen ? "" : ""}`}
       >
         <Footer />
       </div>

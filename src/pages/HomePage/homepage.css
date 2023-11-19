@@ -78,19 +78,19 @@
 }
 
 .intro-fisica-img {
-  background-image: url('src/assets/intro_fisica_img.jpg');
+  background-image: url('../../assets/intro_fisica_img.jpg');
 }
 
 .mecanica-clasica-img {
-  background-image: url('src/assets/mecanica_clasica_img.jpg');
+  background-image: url('../../assets/mecanica_clasica_img.jpg');
 }
 
 .electro-img {
-  background-image: url('src/assets/electro_img.jpg');
+  background-image: url('../../assets/electro_img.jpg');
 }
 
 .fisica-contemporanea-img {
-  background-image: url('src/assets/fisica_contemporanea_img.jpg');
+  background-image: url('../../assets/fisica_contemporanea_img.jpg');
 }
 
 .project-subject {
