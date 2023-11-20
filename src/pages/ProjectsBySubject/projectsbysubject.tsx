@@ -17,7 +17,6 @@ const formatName = (rawName) => {
 export default function ProjectsBySubject() {
   const { id } = useParams();
   const [projectName, setProjectName] = useState("");
-  const [projectId, setProjectId] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [grupos, setGrupos] = useState([]);
 
@@ -51,7 +50,6 @@ export default function ProjectsBySubject() {
 
       // Actualizar el estado con los grupos filtrados
       setGrupos(gruposFiltrados);
-      setProjectId(gruposFiltrados[0].id_grupo);
       console.log(gruposFiltrados);
     } catch (error) {
       console.error(error);
@@ -62,7 +60,7 @@ export default function ProjectsBySubject() {
     window.addEventListener("resize", handleResponsive);
     getSubjects();
     getGroups();
-    // console.log(grupos);
+
     return () => {
       window.removeEventListener("resize", handleResponsive);
     };
@@ -73,51 +71,59 @@ export default function ProjectsBySubject() {
       <Navbar />
       <div className="page-container">
         <div
-          className={`welcome flex justify-center items-center ${
-            isSmallScreen ? "" : "mb-3"
+          className={` flex justify-center items-center ${
+            isSmallScreen ? "welcome-mobile" : "mb-3 welcome"
           }`}
         >
           <h1 className="font-semibold text-2xl">Proyectos de {projectName}</h1>
         </div>
-        <div className="project-container bg-stone-400 flex flex-col items-center">
+        <div className="projects-by-subject-container bg-stone-400 flex flex-col items-center">
           <div
             className={`projects-by-subject-carousel-container flex ${
               isSmallScreen
-                ? "flex-col"
+                ? "flex-col mt-6"
                 : "overflow-x-auto whitespace-nowrap m-6"
             }`}
             role="region"
             aria-label="Proyectos disponibles"
           >
-            <div className="projects-wrapper-container flex">
+            <div className="projects-by-subject-wrapper-container flex">
               {grupos.map((grupo) => (
                 <div
                   key={grupo.id_grupo}
-                  className="project-btn-container bg-stone-300 mx-4 mb-4"
+                  className="projects-by-subject-btn-container bg-stone-300 mx-4 mb-20"
                 >
                   <div className="project-btn flex flex-col items-center">
                     <Link to={`/project_id/${grupo.id_grupo}`}>
-                      <button aria-label={`Ir a ${grupo.nombre_grupo}`} className="mb-3">
+                      <div
+                        aria-label={`Ir a ${grupo.nombre_grupo}`}
+                        className="mb-3"
+                      >
                         <div className="project-img flex justify-center items-center">
-                          <img src={`${grupo.imagen_url}`} alt={`Imagen del proyecto ${grupo.nombre_grupo}`} />
+                          <img
+                            src={`${grupo.imagen_url}`}
+                            alt={`Imagen del proyecto ${grupo.nombre_grupo}`}
+                            className={`${
+                              isSmallScreen ? "rounded-none" : "rounded-xl"
+                            }`}
+                          />
                         </div>
-                      </button>
+                      </div>
                       <div className="project-by-subject-title flex justify-center items-center rounded-2xl">
-                          <span className="font-semibold text-2xl text-white">
-                            {grupo.nombre_grupo}
-                          </span>
-                        </div>
+                    <span className="font-semibold text-2xl text-white">
+                      {grupo.nombre_grupo}
+                    </span>
+                  </div>
                     </Link>
                   </div>
+                  
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-      <div
-        className={`${isSmallScreen ? "" : ""}`}
-      >
+      <div className={`${isSmallScreen ? "" : ""}`}>
         <Footer />
       </div>
     </>
