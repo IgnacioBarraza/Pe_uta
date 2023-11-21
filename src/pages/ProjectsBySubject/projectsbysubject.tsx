@@ -50,7 +50,6 @@ export default function ProjectsBySubject() {
 
       // Actualizar el estado con los grupos filtrados
       setGrupos(gruposFiltrados);
-      console.log(gruposFiltrados);
     } catch (error) {
       console.error(error);
     }

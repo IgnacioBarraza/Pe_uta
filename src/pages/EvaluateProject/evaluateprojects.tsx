@@ -107,7 +107,7 @@ export default function EvaluateProject() {
               <p className="font-normal text-lg mt-2">{descripcion}</p>
             </div>
           </div>
-          <Formulario />
+          <Formulario group_id={id}/>
         </div>
       </div>
       <Footer />

@@ -44,7 +44,7 @@ export default function HomePage() {
             aria-label="Proyectos disponibles"
           >
             <div className="projects-wrapper-container flex">
-              <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+              <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn flex flex-col items-center">
                   <Link to={"/projects_by_subject/1"}>
                     <button aria-label="Ir a Introducción a la Física">
@@ -58,7 +58,7 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-              <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+              <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn">
                   <Link to={"/projects_by_subject/2"}>
                     <button aria-label="Ir a Mecánica Clásica">
@@ -72,7 +72,7 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-              <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+              <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn">
                   <Link to={"/projects_by_subject/3"}>
                     <button aria-label="Ir a Electromagnetismo">
@@ -95,7 +95,7 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div> */}
-              <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+              <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn">
                   <Link to={"/projects_by_subject/5"}>
                     <button aria-label="Ir a Física Contemporanea">
@@ -109,9 +109,18 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
+              <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+                <div className="project-btn">
+                  <Link to={'/projects_by_subject/6'}>
+                    <button aria-label="Ir a Categoria Especial">
+                      Categoria Especial
+                    </button>
+                  </Link>
+                </div>
+              </div>
               {/* EN CASO DE NECESITAR AGREGAR UN NUEVO RAMO, COPIAR EL CONTENIDO DE ESTE COMENTARIO
                   Y CAMBIARLE LOS DATOS NECESARIOS :D
-                <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+                <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn">
                   <Link to={"/projects_by_subject/ID DEL RAMO (numero)"}>
                     <button aria-label="Ir a CAMBIAR POR EL NOMBRE DEL RAMO">

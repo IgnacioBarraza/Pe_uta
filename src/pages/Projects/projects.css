@@ -48,8 +48,7 @@
 }
 
 .total-projects-wrapper-container::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
 }
 
 .total-projects-wrapper-container::-webkit-scrollbar-thumb {
@@ -77,11 +76,11 @@
 
   .total-project-container {
     border-radius: 0;
-    height: 100%;
+    /* height: 100%; */
   }
 
   .total-projects-carousel-container {
-    width: 90%;
+    width: 92%;
     height: 100%;
   }
   .total-project-title {
