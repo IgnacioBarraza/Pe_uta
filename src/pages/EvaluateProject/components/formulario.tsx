@@ -39,7 +39,7 @@ export default function Formulario({ group_id }) {
         criterio_1: parseFloat((Number(data.criterio_1) * 0.45).toFixed(2)),
         criterio_2: parseFloat((Number(data.criterio_1) * 0.05).toFixed(2)),
         criterio_3: parseFloat((Number(data.criterio_1) * 0.05).toFixed(2)),
-        criterio_4: parseFloat((Number(data.criterio_1) * 0.4).toFixed(2)),
+        criterio_4: parseFloat((Number(data.criterio_1) * 0.40).toFixed(2)),
         criterio_5: parseFloat((Number(data.criterio_1) * 0.05).toFixed(2)),
       };
 
@@ -61,7 +61,8 @@ export default function Formulario({ group_id }) {
       );
     
       console.log('Suma de criterios:', Number(sumaCriterios.toFixed(2)));
-      console.log(BodyToSend);
+      // console.log(BodyToSend);
+      console.log(formatedData);
 
       try {
         const response = await axios.post('http://localhost:3000/evaluaciones', BodyToSend);

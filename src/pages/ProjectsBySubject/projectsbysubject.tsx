@@ -59,6 +59,7 @@ export default function ProjectsBySubject() {
     window.addEventListener("resize", handleResponsive);
     getSubjects();
     getGroups();
+    console.log(JSON.stringify(localStorage.getItem('proyectosEvaluados')));
 
     return () => {
       window.removeEventListener("resize", handleResponsive);

@@ -3,6 +3,7 @@ import Navbar from "../../components/NavBar/navbar";
 import Footer from "../../components/Footer/footer";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function HomePage() {
 
@@ -11,6 +12,36 @@ export default function HomePage() {
 
   const handleResponsive = () => {
     setIsSmallScreen(window.innerWidth <= 1050);
+  };
+
+  const excel = async () => {
+    await axios.post(
+        "http://localhost:3000/export",
+        {
+          tipo: 1,
+        },
+        {
+          responseType: "blob", // Indica que esperas una respuesta de tipo Blob
+        }
+      )
+      .then((response) => {
+        // Crear un enlace (link) temporal para el archivo Blob
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "evaluaciones.xlsx";
+
+        // Simular un clic en el enlace para iniciar la descarga
+        document.body.appendChild(a);
+        a.click();
+
+        // Limpiar el enlace y liberar recursos
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud:", error);
+      });
   };
 
   useEffect(() => {
@@ -136,6 +167,9 @@ export default function HomePage() {
               </div>
                 */}
             </div>
+          </div>
+          <div className="excel-btn">
+            <button onClick={excel}>Descargar excel</button>
           </div>
         </div>
       </div>

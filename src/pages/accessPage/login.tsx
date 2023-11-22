@@ -53,6 +53,7 @@ export default function LogIn() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRut", response.data.rut);
         localStorage.setItem("userId", response.data.userID);
+        localStorage.setItem("proyectosEvaluados", response.data.gruposEvaluados);
       }
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {
