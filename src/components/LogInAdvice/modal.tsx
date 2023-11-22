@@ -22,9 +22,9 @@ export default function Modal({ show, close, name }) {
                 Ya estas registrado para poder evaluar los proyectos que se
                 exponen en esta feria de ciencias
               </span>
-              <span className="text-base mb-2">Cosas a tener en cuenta:</span>
+              <span className="text-base mb-2">Consideraciones a tener en cuenta:</span>
               <li className="text-sm mb-2">
-                Para una proxima vez debes ingresar con la misma clave que
+                Para una próxima vez debes ingresar con la misma clave que
                 ingresaste cuando iniciaste sesión
               </li>
               <li className="text-sm mb-2">

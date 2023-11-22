@@ -108,7 +108,7 @@ export default function Formulario({ group_id }) {
                   htmlFor="c1"
                   className="primer-criterio font-semibold text-xl"
                 >
-                  Creatividad - animación, Video incluye portada con nombre de
+                  Creatividad - animación, video incluye portada con nombre de
                   integrantes y universidad, introducción, objetivos,
                   descripción experiencia, demostración práctica y con
                   ecuaciones, análisis, conclusiones
@@ -165,7 +165,7 @@ export default function Formulario({ group_id }) {
                   htmlFor="c3"
                   className="tercer-criterio font-semibold text-xl"
                 >
-                  Material reciclado, reutilizado
+                  Material reciclado, reutilizado, biodegradable
                 </label>
               </div>
               <div className="criterio-options">
