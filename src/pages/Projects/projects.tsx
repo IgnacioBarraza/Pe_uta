@@ -20,7 +20,7 @@ export default function Projects() {
 
       const gruposIdAlmacenados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
 
-      if (JSON.parse(localStorage.getItem("proyectosEvaluados")) != null) {
+      if (JSON.parse(localStorage.getItem("proyectosEvaluados")) != null && JSON.parse(localStorage.getItem("proyectosEvaluados")).length != 0 ) {
         if (gruposIdAlmacenados.length > 0) {
           // Filtrar proyectos excluyendo los que coinciden con los grupo_id almacenados
           const groupsFiltered = response.data.filter(
