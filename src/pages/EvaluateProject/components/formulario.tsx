@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./formulario.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 type FormData = {
   criterio_1: string;
@@ -55,26 +55,22 @@ export default function Formulario({ group_id }) {
         ]
       }
 
-      const sumaCriterios = Object.values(formatedData).reduce(
-        (acc, currentValue) => acc + currentValue,
-        0
-      );
-    
-      console.log('Suma de criterios:', Number(sumaCriterios.toFixed(2)));
-      // console.log(BodyToSend);
-      console.log(formatedData);
+      const gruposYaEvaluados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
+      const nuevoGrupoEvaluado = group_id;
+      gruposYaEvaluados.push({grupo_id: Number(nuevoGrupoEvaluado)});
+      localStorage.setItem("proyectosEvaluados", JSON.stringify(gruposYaEvaluados));
 
-      try {
-        const response = await axios.post('https://bak.torresproject.com/evaluaciones', BodyToSend);
-        if (response.status === 201) {
-          alert(`${response.data.mensaje} \nSeras redireccionado al inicio`)
-          navigate('/home');
-        }
-      } catch (error) {
-        if (error.response.status === 400 || error.response.status === 500) {
-          alert(error.response.data.mensaje)
-        }
-      }
+      // try {
+      //   const response = await axios.post('https://bak.torresproject.com/evaluaciones', BodyToSend);
+      //   if (response.status === 201) {
+      //     alert(`${response.data.mensaje} \nSeras redireccionado al inicio`)
+      //     navigate('/home');
+      //   }
+      // } catch (error) {
+      //   if (error.response.status === 400 || error.response.status === 500) {
+      //     alert(error.response.data.mensaje)
+      //   }
+      // }
 
       
     } else {

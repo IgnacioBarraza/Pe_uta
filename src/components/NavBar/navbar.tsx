@@ -72,6 +72,7 @@ export default function Navbar() {
           <button onClick={() => {
             localStorage.removeItem("token");
             localStorage.removeItem("userRut");
+            localStorage.removeItem("proyectosEvaluados");
             navigate("/");
           }}>
             <FontAwesomeIcon icon={faRightToBracket} size={iconSize} />
