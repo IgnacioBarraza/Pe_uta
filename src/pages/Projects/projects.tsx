@@ -8,7 +8,7 @@ import "./projects.css";
 
 export default function Projects() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
-  const [gruposFiltrados, setGruposFiltrados] = useState([]);
+  const [grupos, setGrupos] = useState([]);
 
   const handleResponsive = () => {
     setIsSmallScreen(window.innerWidth <= 1050);
@@ -20,19 +20,23 @@ export default function Projects() {
 
       const gruposIdAlmacenados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
 
-      if (gruposIdAlmacenados.length > 0) {
-        // Filtrar proyectos excluyendo los que coinciden con los grupo_id almacenados
-        const groupsFiltered = response.data.filter(
-          (proyecto) =>
-            !gruposIdAlmacenados.some(
-              (grupo) => grupo.grupo_id === proyecto.id_grupo
-            )
-        );
-
-        // groupsFiltered ahora contiene solo los proyectos que no coinciden con los grupo_id almacenados
-        setGruposFiltrados(groupsFiltered);
-        console.log(groupsFiltered);
+      if (JSON.parse(localStorage.getItem("proyectosEvaluados")) != null) {
+        if (gruposIdAlmacenados.length > 0) {
+          // Filtrar proyectos excluyendo los que coinciden con los grupo_id almacenados
+          const groupsFiltered = response.data.filter(
+            (proyecto) =>
+              !gruposIdAlmacenados.some(
+                (grupo) => grupo.grupo_id === proyecto.id_grupo
+              )
+          );
+  
+          // groupsFiltered ahora contiene solo los proyectos que no coinciden con los grupo_id almacenados
+          setGrupos(groupsFiltered);
+        } else {
+          console.log("No hay grupo_id almacenados en localStorage.");
+        }
       } else {
+        setGrupos(response.data);
         console.log("No hay grupo_id almacenados en localStorage.");
       }
     } catch (error) {
@@ -68,7 +72,7 @@ export default function Projects() {
             aria-label="Proyectos disponibles"
           >
             <div className="total-projects-wrapper-container">
-              {gruposFiltrados.map((grupo) => (
+              {grupos.map((grupo) => (
                 <div
                   key={grupo.id_grupo}
                   className="total-project-btn-container bg-stone-300 mx-4 mb-20"

@@ -55,22 +55,32 @@ export default function Formulario({ group_id }) {
         ]
       }
 
-      const gruposYaEvaluados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
-      const nuevoGrupoEvaluado = group_id;
-      gruposYaEvaluados.push({grupo_id: Number(nuevoGrupoEvaluado)});
-      localStorage.setItem("proyectosEvaluados", JSON.stringify(gruposYaEvaluados));
+      if (JSON.parse(localStorage.getItem("proyectosEvaluados")) != null) {
+        const gruposYaEvaluados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
+        const nuevoGrupoEvaluado = group_id;
+        gruposYaEvaluados.push({ grupo_id: Number(nuevoGrupoEvaluado) });
+        localStorage.setItem("proyectosEvaluados", JSON.stringify(gruposYaEvaluados));
+      } else {
+        const proyectoEvaluado = [
+          {
+            grupo_id: Number(group_id)
+          }
+        ]
+        localStorage.setItem("proyectosEvaluados", JSON.stringify(proyectoEvaluado));
+      }
 
-      // try {
-      //   const response = await axios.post('https://bak.torresproject.com/evaluaciones', BodyToSend);
-      //   if (response.status === 201) {
-      //     alert(`${response.data.mensaje} \nSeras redireccionado al inicio`)
-      //     navigate('/home');
-      //   }
-      // } catch (error) {
-      //   if (error.response.status === 400 || error.response.status === 500) {
-      //     alert(error.response.data.mensaje)
-      //   }
-      // }
+      try {
+        const response = await axios.post('https://bak.torresproject.com/evaluaciones', BodyToSend);
+        if (response.status === 201) {
+          alert(`${response.data.mensaje} \nSeras redireccionado a la pagina de Inicio`)
+          navigate('/home');
+        }
+      } catch (error) {
+        if (error.response.status === 400 || error.response.status === 500) {
+          alert(`${error.response.data.mensaje}\nSeras redireccionado a la pagina de Inicio`)
+          navigate('/home');
+        }
+      }
 
       
     } else {

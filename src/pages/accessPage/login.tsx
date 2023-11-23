@@ -54,7 +54,6 @@ export default function LogIn() {
         localStorage.setItem("userRut", response.data.rut);
         localStorage.setItem("userId", response.data.userID);
         localStorage.setItem("proyectosEvaluados", JSON.stringify(response.data.gruposEvaluados));
-        console.log(response.data);
       }
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {
