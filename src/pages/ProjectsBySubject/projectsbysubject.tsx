@@ -26,7 +26,7 @@ export default function ProjectsBySubject() {
 
   const getSubjects = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/asignaturas");
+      const response = await axios.get("https://bak.torresproject.com/asignaturas");
       const idToNameMap = {};
       response.data.forEach((project) => {
         idToNameMap[project.id] = formatName(project.nombre);
@@ -40,7 +40,7 @@ export default function ProjectsBySubject() {
   const getGroups = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/grupos-asignaturas"
+        "https://bak.torresproject.com/grupos-asignaturas"
       );
 
       // Filtrar los grupos por id_asignatura

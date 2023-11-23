@@ -16,7 +16,7 @@ export default function HomePage() {
 
   const excel = async () => {
     await axios.post(
-        "http://localhost:3000/export",
+        "https://bak.torresproject.com/export",
         {
           tipo: 1,
         },
@@ -117,15 +117,6 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-              {/* <div className="project-btn-container bg-stone-300 mx-4 mb-4">
-                <div className="project-btn">
-                  <Link to={'/projects_by_subject/4'}>
-                    <button aria-label="Ir a Kinesiología">
-                      Kinesiología
-                    </button>
-                  </Link>
-                </div>
-              </div> */}
               <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn">
                   <Link to={"/projects_by_subject/5"}>
@@ -133,18 +124,23 @@ export default function HomePage() {
                       <div className="fisica-contemporanea-img"></div>
                       <div className="project-subject flex justify-center items-center">
                         <span className="font-semibold text-xl">
-                          Física Contemporanea
+                          Física contemporánea
                         </span>
                       </div>
                     </button>
                   </Link>
                 </div>
               </div>
-              <div className="project-btn-container bg-stone-300 mx-4 mb-4">
+              <div className="project-btn-container bg-stone-300 mx-4 mb-2">
                 <div className="project-btn">
-                  <Link to={'/projects_by_subject/6'}>
+                  <Link to={"/projects_by_subject/6"}>
                     <button aria-label="Ir a Categoria Especial">
-                      Categoria Especial
+                      <div className="categoria-especial-img"></div>
+                      <div className="project-subject flex justify-center items-center">
+                        <span className="font-semibold text-xl">
+                          Categoría especial
+                        </span>
+                      </div>
                     </button>
                   </Link>
                 </div>

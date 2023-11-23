@@ -37,7 +37,7 @@ export default function LogIn() {
   const onSubmit = async (data: FormData) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/registro-o-inicio-sesion",
+        "https://bak.torresproject.com/registro-o-inicio-sesion",
         data
       );
       if (response.status === 201) {

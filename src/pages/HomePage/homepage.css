@@ -67,7 +67,8 @@
 .intro-fisica-img,
 .mecanica-clasica-img,
 .electro-img,
-.fisica-contemporanea-img {
+.fisica-contemporanea-img,
+.categoria-especial-img {
   border-radius: 10px 10px 0 0;
   width: 550px;
   height: 230px;
@@ -90,6 +91,9 @@
 
 .fisica-contemporanea-img {
   background-image: url('../../assets/fisica_contemporanea_img.jpg');
+}
+.categoria-especial-img {
+  background-image: url('../../assets/categoria_especial_img.jpg');
 }
 
 .project-subject {
@@ -142,7 +146,8 @@
   .intro-fisica-img,
   .mecanica-clasica-img,
   .electro-img,
-  .fisica-contemporanea-img {
+  .fisica-contemporanea-img,
+  .categoria-especial-img {
     width: 82.7vw;
   }
 }
