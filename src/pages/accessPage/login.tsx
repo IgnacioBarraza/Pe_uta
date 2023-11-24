@@ -47,6 +47,7 @@ export default function LogIn() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRut", response.data.rut);
         localStorage.setItem("userId", response.data.userID);
+        localStorage.setItem("tipoId", response.data.tipoID);
       }
       if (response.status === 200) {
         navigate("/home");
@@ -54,6 +55,7 @@ export default function LogIn() {
         localStorage.setItem("userRut", response.data.rut);
         localStorage.setItem("userId", response.data.userID);
         localStorage.setItem("proyectosEvaluados", JSON.stringify(response.data.gruposEvaluados));
+        localStorage.setItem("tipoId", response.data.tipoID);
       }
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 400) {

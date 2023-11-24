@@ -106,9 +106,32 @@
   background-color: #8d9199;
 }
 
-@media (max-width: 768px) {
+.admin-btns {
+  height: 200px;
+}
+
+.excel {
+  width: 250px;
+  height: 60px;
+  background-color: green;
+}
+
+.recover-passwd {
+  width: 320px;
+  height: 60px;
+  background-color: #cbd5e0;
+}
+
+.recover-btn,
+.excel-btn {
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 1080px) {
   .page-container {
     padding: 0;
+    overflow: scroll!important;
   }
 
   .welcome {
@@ -119,12 +142,12 @@
 
   .home-container {
     border-radius: 0;
-    height: 100%;
+    /* height: 100%; */
   }
 
   .projects-carousel-container {
     width: 92%;
-    height: 100%;
+    height: auto;
   }
 
   .project-btn-container {

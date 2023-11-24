@@ -1,4 +1,4 @@
-.total-page-container {
+.total-evaluated-page-container {
   width: 100%;
   height: 84.3vh;
   padding: 10px;
@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-.total-project-container {
+.total-evaluated-project-container {
   width: 100%;
   height: 76.6vh;
   border-radius: 10px;
@@ -63,9 +63,9 @@
 
 
 @media (max-width: 768px) {
-  .total-page-container {
+  .total-evaluated-page-container {
     padding: 0;
-    height: 100%;
+    /* height: 100%; */
   }
 
   .welcome {
@@ -74,9 +74,9 @@
     border-radius: 0;
   }
 
-  .total-project-container {
+  .total-evaluated-project-container {
     border-radius: 0;
-    /* height: 100%; */
+    height: 100%;
   }
 
   .total-projects-carousel-container {

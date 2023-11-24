@@ -4,9 +4,10 @@ import Footer from "../../components/Footer/footer";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExcel, faKey } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
-
   const rut = localStorage.getItem("userRut");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
 
@@ -15,7 +16,8 @@ export default function HomePage() {
   };
 
   const excel = async () => {
-    await axios.post(
+    await axios
+      .post(
         "https://bak.torresproject.com/export",
         {
           tipo: 1,
@@ -46,6 +48,7 @@ export default function HomePage() {
 
   useEffect(() => {
     window.addEventListener("resize", handleResponsive);
+    console.log(Number(localStorage.getItem("tipoId")));
 
     return () => {
       window.removeEventListener("resize", handleResponsive);
@@ -55,15 +58,20 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <div className="page-container bg-stone-100 flex flex-col" aria-live="polite">
-        <div className={`welcome flex justify-center items-center ${isSmallScreen ? "" : "mb-3"}`}>
+      <div
+        className="page-container bg-stone-100 flex flex-col"
+        aria-live="polite"
+      >
+        <div
+          className={`welcome flex justify-center items-center ${
+            isSmallScreen ? "" : "mb-3"
+          }`}
+        >
           <h1 className="font-semibold text-2xl">¡Bienvenido/a, {rut} 👋</h1>
         </div>
         <div className="home-container bg-stone-400 flex flex-col items-center">
           <div className="subject-text m-6 flex justify-center items-center rounded-lg">
-            <span className="text-2xl font-bold">
-              Proyectos por asignatura
-            </span>
+            <span className="text-2xl font-bold">Proyectos por asignatura</span>
           </div>
           <div
             className={`projects-carousel-container  flex ${
@@ -164,16 +172,25 @@ export default function HomePage() {
                 */}
             </div>
           </div>
-          <div className="excel-btn">
-            <button onClick={excel}>Descargar excel</button>
+          <div className={`admin-btns flex justify-around w-full items-center  ${
+            isSmallScreen ? "flex-col mt-10" : "mt-16"
+          }`}>
+            <div className={`excel flex items-center justify-center rounded-full ${isSmallScreen ? "mb-4" : ""}`}>
+              <button onClick={excel} className="excel-btn">
+                <FontAwesomeIcon icon={faFileExcel} size="xl" />
+                <span className="ml-3 font-semibold text-xl">Descargar excel</span>
+              </button>
+            </div>
+            <div className={`recover-passwd flex items-center justify-center rounded-full ${isSmallScreen ? "mb-4" : ""}`}>
+              <button className="recover-btn flex items-center justify-center">
+                <FontAwesomeIcon icon={faKey} size="xl"/>
+                <span className="ml-3 font-semibold text-2xl text-amber-950">Recuperar contraseña</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div
-        className={`${isSmallScreen ? "fixed bottom-0 left-0 right-0" : ""}`}
-      >
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }

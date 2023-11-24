@@ -5,3 +5,9 @@
 body {
   overflow: hidden;
 }
+
+@media (max-width: 1080px) {
+  body {
+    overflow: scroll;
+  }
+}

@@ -51,7 +51,7 @@ export default function Projects() {
   return (
     <>
       <Navbar />
-      <div className="total-page-container">
+      <div className="total-evaluated-page-container">
         <div
           className={`welcome flex justify-center items-center ${
             isSmallScreen ? "" : "mb-3"
@@ -59,7 +59,7 @@ export default function Projects() {
         >
           <h1 className="font-semibold text-2xl">Proyectos</h1>
         </div>
-        <div className="total-project-container bg-stone-400 flex flex-col items-center">
+        <div className="total-evaluated-project-container bg-stone-400 flex flex-col items-center">
           <div
             className={`total-projects-carousel-container flex flex-col overflow-y-auto ${
               isSmallScreen ? "mt-4" : "m-9"
