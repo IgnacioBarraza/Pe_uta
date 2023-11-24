@@ -213,10 +213,10 @@ export default function LogIn() {
                   isSmallScreen ? "gap-2 m-2" : "m-5 gap-8"
                 }`}
               >
-                <img src="src/assets/icin_logo.png" alt="ICIN logo" />
-                <img src="src/assets/ici_logo.png" alt="ICI logo" />
-                <img src="src/assets/explora_logo.png" alt="EXPLORA logo" />
-                <img src="src/assets/ice_logo.png" alt="ICE logo" />
+                <a href="https://www.instagram.com/ceal_icin/" target="_blank" rel="noopener noreferrer"><img src="src/assets/icin_logo.png" alt="ICIN logo" /></a>
+                <a href="https://www.instagram.com/ceal_ici_uta.iqq/" target="_blank" rel="noopener noreferrer"><img src="src/assets/ici_logo.png" alt="ICI logo" /></a>
+                <a href="https://www.instagram.com/exploratarapaca/" target="_blank" rel="noopener noreferrer"><img src="src/assets/explora_logo.png" alt="EXPLORA logo" /></a>
+                <a href="https://www.instagram.com/ceal_ice_2023/" target="_blank" rel="noopener noreferrer"><img src="src/assets/ice_logo.png" alt="ICE logo" /></a>
               </div>
             </div>
           </div>
