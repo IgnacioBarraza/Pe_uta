@@ -16,16 +16,13 @@ type FormData = {
 
 export default function Formulario({ group_id }) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
-  const {
-    register,
-    handleSubmit,
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
 
   const handleResponsive = () => {
     setIsSmallScreen(window.innerWidth <= 1050);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
     if (
@@ -39,12 +36,12 @@ export default function Formulario({ group_id }) {
         criterio_1: parseFloat((Number(data.criterio_1) * 0.45).toFixed(2)),
         criterio_2: parseFloat((Number(data.criterio_1) * 0.05).toFixed(2)),
         criterio_3: parseFloat((Number(data.criterio_1) * 0.05).toFixed(2)),
-        criterio_4: parseFloat((Number(data.criterio_1) * 0.40).toFixed(2)),
+        criterio_4: parseFloat((Number(data.criterio_1) * 0.4).toFixed(2)),
         criterio_5: parseFloat((Number(data.criterio_1) * 0.05).toFixed(2)),
       };
 
       const BodyToSend = {
-        rut: localStorage.getItem('userRut'),
+        rut: localStorage.getItem("userRut"),
         grupo_id: group_id,
         puntuaciones: [
           formatedData.criterio_1,
@@ -52,37 +49,50 @@ export default function Formulario({ group_id }) {
           formatedData.criterio_3,
           formatedData.criterio_4,
           formatedData.criterio_5,
-        ]
-      }
+        ],
+      };
 
       if (JSON.parse(localStorage.getItem("proyectosEvaluados")) != null) {
-        const gruposYaEvaluados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
+        const gruposYaEvaluados = JSON.parse(
+          localStorage.getItem("proyectosEvaluados")
+        );
         const nuevoGrupoEvaluado = group_id;
         gruposYaEvaluados.push({ grupo_id: Number(nuevoGrupoEvaluado) });
-        localStorage.setItem("proyectosEvaluados", JSON.stringify(gruposYaEvaluados));
+        localStorage.setItem(
+          "proyectosEvaluados",
+          JSON.stringify(gruposYaEvaluados)
+        );
       } else {
         const proyectoEvaluado = [
           {
-            grupo_id: Number(group_id)
-          }
-        ]
-        localStorage.setItem("proyectosEvaluados", JSON.stringify(proyectoEvaluado));
+            grupo_id: Number(group_id),
+          },
+        ];
+        localStorage.setItem(
+          "proyectosEvaluados",
+          JSON.stringify(proyectoEvaluado)
+        );
       }
 
       try {
-        const response = await axios.post('https://bak.torresproject.com/evaluaciones', BodyToSend);
+        const response = await axios.post(
+          "https://bak.torresproject.com/evaluaciones",
+          BodyToSend
+        );
         if (response.status === 201) {
-          alert(`${response.data.mensaje} \nSeras redireccionado a la pagina de Inicio`)
-          navigate('/home');
+          alert(
+            `${response.data.mensaje} \nSeras redireccionado a la pagina de Inicio`
+          );
+          navigate("/home");
         }
       } catch (error) {
         if (error.response.status === 400 || error.response.status === 500) {
-          alert(`${error.response.data.mensaje}\nSeras redireccionado a la pagina de Inicio`)
-          navigate('/home');
+          alert(
+            `${error.response.data.mensaje}\nSeras redireccionado a la pagina de Inicio`
+          );
+          navigate("/home");
         }
       }
-
-      
     } else {
       console.log(data);
       alert("Por favor ingrese un valor valido en la evaluacion");
@@ -127,6 +137,7 @@ export default function Formulario({ group_id }) {
                   className="select-container"
                   defaultValue={"--"}
                   {...register("criterio_1", { required: true })}
+                  aria-describedby="criterio 1 evaluación"
                 >
                   <option value="--">--</option>
                   <option value={7}>Excelente</option>
@@ -155,6 +166,7 @@ export default function Formulario({ group_id }) {
                   className="select-container"
                   defaultValue={"--"}
                   {...register("criterio_2", { required: true })}
+                  aria-describedby="criterio 2 evaluación"
                 >
                   <option value="--">--</option>
                   <option value={7}>Excelente</option>
@@ -181,6 +193,7 @@ export default function Formulario({ group_id }) {
                   className="select-container"
                   defaultValue={"--"}
                   {...register("criterio_3", { required: true })}
+                  aria-describedby="criterio 3 evaluación"
                 >
                   <option value="--">--</option>
                   <option value={7}>Excelente</option>
@@ -209,6 +222,7 @@ export default function Formulario({ group_id }) {
                   className="select-container"
                   defaultValue={"--"}
                   {...register("criterio_4", { required: true })}
+                  aria-describedby="criterio 4 evaluación"
                 >
                   <option value="--">--</option>
                   <option value={7}>Excelente</option>
@@ -235,6 +249,7 @@ export default function Formulario({ group_id }) {
                   className="select-container"
                   defaultValue={"--"}
                   {...register("criterio_5", { required: true })}
+                  aria-describedby="criterio 5 evaluación"
                 >
                   <option value="--">--</option>
                   <option value={7}>Excelente</option>

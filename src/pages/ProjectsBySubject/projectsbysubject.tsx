@@ -26,7 +26,9 @@ export default function ProjectsBySubject() {
 
   const getSubjects = async () => {
     try {
-      const response = await axios.get("https://bak.torresproject.com/asignaturas");
+      const response = await axios.get(
+        "https://bak.torresproject.com/asignaturas"
+      );
       const idToNameMap = {};
       response.data.forEach((project) => {
         idToNameMap[project.id] = formatName(project.nombre);
@@ -59,7 +61,7 @@ export default function ProjectsBySubject() {
     window.addEventListener("resize", handleResponsive);
     getSubjects();
     getGroups();
-    console.log(JSON.stringify(localStorage.getItem('proyectosEvaluados')));
+    console.log(JSON.stringify(localStorage.getItem("proyectosEvaluados")));
 
     return () => {
       window.removeEventListener("resize", handleResponsive);
@@ -71,7 +73,7 @@ export default function ProjectsBySubject() {
       <Navbar />
       <div className="page-container">
         <div
-          className={` flex justify-center items-center ${
+          className={`flex justify-center items-center ${
             isSmallScreen ? "welcome-mobile" : "mb-3 welcome"
           }`}
         >
@@ -87,11 +89,13 @@ export default function ProjectsBySubject() {
             role="region"
             aria-label="Proyectos disponibles"
           >
-            <div className="projects-by-subject-wrapper-container flex">
+            <h2 className="sr-only">Proyectos disponibles</h2>
+            <ul className="projects-by-subject-wrapper-container flex">
               {grupos.map((grupo) => (
-                <div
+                <li
                   key={grupo.id_grupo}
                   className="projects-by-subject-btn-container bg-stone-300 mx-4 mb-20"
+                  role="listitem"
                 >
                   <div className="project-btn flex flex-col items-center">
                     <Link to={`/project_id/${grupo.id_grupo}`}>
@@ -110,16 +114,15 @@ export default function ProjectsBySubject() {
                         </div>
                       </div>
                       <div className="project-by-subject-title flex justify-center items-center rounded-2xl">
-                    <span className="font-semibold text-2xl text-white">
-                      {grupo.nombre_grupo}
-                    </span>
-                  </div>
+                        <span className="font-semibold text-2xl text-white">
+                          {grupo.nombre_grupo}
+                        </span>
+                      </div>
                     </Link>
                   </div>
-                  
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>

@@ -16,11 +16,18 @@ export default function Projects() {
 
   const getGroups = async () => {
     try {
-      const response = await axios.get("https://bak.torresproject.com/grupos-asignaturas");
+      const response = await axios.get(
+        "https://bak.torresproject.com/grupos-asignaturas"
+      );
 
-      const gruposIdAlmacenados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
+      const gruposIdAlmacenados = JSON.parse(
+        localStorage.getItem("proyectosEvaluados")
+      );
 
-      if (JSON.parse(localStorage.getItem("proyectosEvaluados")) != null && JSON.parse(localStorage.getItem("proyectosEvaluados")).length != 0 ) {
+      if (
+        JSON.parse(localStorage.getItem("proyectosEvaluados")) != null &&
+        JSON.parse(localStorage.getItem("proyectosEvaluados")).length != 0
+      ) {
         if (gruposIdAlmacenados.length > 0) {
           // Filtrar proyectos excluyendo los que coinciden con los grupo_id almacenados
           const groupsFiltered = response.data.filter(
@@ -29,7 +36,7 @@ export default function Projects() {
                 (grupo) => grupo.grupo_id === proyecto.id_grupo
               )
           );
-  
+
           // groupsFiltered ahora contiene solo los proyectos que no coinciden con los grupo_id almacenados
           setGrupos(groupsFiltered);
         } else {
@@ -71,11 +78,13 @@ export default function Projects() {
             role="region"
             aria-label="Proyectos disponibles"
           >
-            <div className="total-projects-wrapper-container">
+            <h2 className="sr-only">Proyectos disponibles</h2>
+            <div className="total-projects-wrapper-container" role="list">
               {grupos.map((grupo) => (
                 <div
                   key={grupo.id_grupo}
                   className="total-project-btn-container bg-stone-300 mx-4 mb-20"
+                  role="listitem"
                 >
                   <div className="project-btn flex flex-col items-center">
                     <Link to={`/project_id/${grupo.id_grupo}`} className="mb-3">
@@ -83,7 +92,9 @@ export default function Projects() {
                         <img
                           src={`${grupo.imagen_url}`}
                           alt={`Imagen del proyecto ${grupo.nombre_grupo}`}
-                          className={`${isSmallScreen ? "rounded-none" : "rounded-xl"}`}
+                          className={`${
+                            isSmallScreen ? "rounded-none" : "rounded-xl"
+                          }`}
                         />
                       </div>
                       <div className="total-project-title flex justify-center items-center rounded-2xl">
@@ -99,9 +110,7 @@ export default function Projects() {
           </div>
         </div>
       </div>
-      <div
-        className={`${isSmallScreen ? "" : ""}`}
-      >
+      <div className={`${isSmallScreen ? "" : ""}`}>
         <Footer />
       </div>
     </>

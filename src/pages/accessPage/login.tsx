@@ -54,7 +54,10 @@ export default function LogIn() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRut", response.data.rut);
         localStorage.setItem("userId", response.data.userID);
-        localStorage.setItem("proyectosEvaluados", JSON.stringify(response.data.gruposEvaluados));
+        localStorage.setItem(
+          "proyectosEvaluados",
+          JSON.stringify(response.data.gruposEvaluados)
+        );
         localStorage.setItem("tipoId", response.data.tipoID);
       }
     } catch (error) {
@@ -81,9 +84,21 @@ export default function LogIn() {
     <>
       <div className="flex justify-center login">
         <div
-          className={`bg-stone-300 self-center ${ isSmallScreen ? "flex flex-col items-center main-container-mobile" : "grid grid-flow-col main-container rounded-xl" }`}>
+          className={`bg-stone-300 self-center ${
+            isSmallScreen
+              ? "flex flex-col items-center main-container-mobile"
+              : "grid grid-flow-col main-container rounded-xl"
+          }`}
+        >
           <div
-            className={`bg-stone-400  ${ isSmallScreen ? "login-container-mobile mb-2 m-2": "login-container row-span-4 rounded-lg m-4" }`}>
+            className={`bg-stone-400 ${
+              isSmallScreen
+                ? "login-container-mobile mb-2 m-2"
+                : "login-container row-span-4 rounded-lg m-4"
+            }`}
+            role="region"
+            aria-label="Login Container"
+          >
             <div className="science-expo flex justify-center">
               <img
                 src="src\assets\uta_logo.svg"
@@ -108,7 +123,10 @@ export default function LogIn() {
               />
             </div>
             <div className="form-container">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="login-form-heading"
+              >
                 <div className="rut-input flex flex-col m-auto pt-16 text-black font-semibold">
                   <label htmlFor="rut">Rut</label>
                   <input
@@ -172,7 +190,7 @@ export default function LogIn() {
             }`}
           >
             <div
-              className={`bg-stone-400 ${ 
+              className={`bg-stone-400 ${
                 isSmallScreen
                   ? "organize-container-mobile m-1"
                   : "organize-container"
@@ -209,7 +227,11 @@ export default function LogIn() {
                 : "upcoming-dates row-span-2 col-span-2"
             }`}
           >
-            <div className={`bg-stone-400 ${isSmallScreen ? "m-1 dates-container-mobile" : "dates-container"}`}>
+            <div
+              className={`bg-stone-400 ${
+                isSmallScreen ? "m-1 dates-container-mobile" : "dates-container"
+              }`}
+            >
               <div className="date-header flex justify-center items-center">
                 <img
                   src="src/assets/upcoming_dates.svg"

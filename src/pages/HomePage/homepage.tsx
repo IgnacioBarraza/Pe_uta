@@ -6,14 +6,18 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExcel, faKey } from "@fortawesome/free-solid-svg-icons";
+import RecoverPassword from "../../components/RecoverPasswordModal/recover";
 
 export default function HomePage() {
   const rut = localStorage.getItem("userRut");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
+  const [modal, setModal] = useState(false);
 
   const handleResponsive = () => {
     setIsSmallScreen(window.innerWidth <= 1050);
   };
+
+  const showModal = () => setModal(!modal);
 
   const excel = async () => {
     await axios
@@ -153,23 +157,6 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-              {/* EN CASO DE NECESITAR AGREGAR UN NUEVO RAMO, COPIAR EL CONTENIDO DE ESTE COMENTARIO
-                  Y CAMBIARLE LOS DATOS NECESARIOS :D
-                <div className="project-btn-container bg-stone-300 mx-4 mb-2">
-                <div className="project-btn">
-                  <Link to={"/projects_by_subject/ID DEL RAMO (numero)"}>
-                    <button aria-label="Ir a CAMBIAR POR EL NOMBRE DEL RAMO">
-                      <div className="nombre-ramo-img"></div>
-                      <div className="project-subject flex justify-center items-center">
-                        <span className="font-semibold text-xl">
-                          NOMBRE RAMO
-                        </span>
-                      </div>
-                    </button>
-                  </Link>
-                </div>
-              </div>
-                */}
             </div>
           </div>
           <div className={`admin-btns flex justify-around w-full items-center  ${
@@ -182,7 +169,7 @@ export default function HomePage() {
               </button>
             </div>
             <div className={`recover-passwd flex items-center justify-center rounded-full ${isSmallScreen ? "mb-4" : ""}`}>
-              <button className="recover-btn flex items-center justify-center">
+              <button className="recover-btn flex items-center justify-center" onClick={() => showModal()}>
                 <FontAwesomeIcon icon={faKey} size="xl"/>
                 <span className="ml-3 font-semibold text-2xl text-amber-950">Recuperar contraseña</span>
               </button>
@@ -191,6 +178,7 @@ export default function HomePage() {
         </div>
       </div>
       <Footer />
+      <RecoverPassword show={modal} close={showModal} />
     </>
   );
 }
