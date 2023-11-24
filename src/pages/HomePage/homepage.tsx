@@ -158,21 +158,43 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className={`admin-btns flex justify-around w-full items-center  ${
-            isSmallScreen ? "flex-col mt-10" : "mt-16"
-          }`}>
-            <div className={`excel flex items-center justify-center rounded-full ${isSmallScreen ? "mb-4" : ""}`}>
-              <button onClick={excel} className="excel-btn">
-                <FontAwesomeIcon icon={faFileExcel} size="xl" />
-                <span className="ml-3 font-semibold text-xl">Descargar excel</span>
-              </button>
-            </div>
-            <div className={`recover-passwd flex items-center justify-center rounded-full ${isSmallScreen ? "mb-4" : ""}`}>
-              <button className="recover-btn flex items-center justify-center" onClick={() => showModal()}>
-                <FontAwesomeIcon icon={faKey} size="xl"/>
-                <span className="ml-3 font-semibold text-2xl text-amber-950">Recuperar contraseña</span>
-              </button>
-            </div>
+          <div
+            className={`admin-btns flex justify-around w-full items-center ${
+              isSmallScreen ? "flex-col mt-10" : "mt-16"
+            }`}
+          >
+            {Number(localStorage.getItem("tipoId")) === 1 && (
+              <>
+                <div
+                  className={`excel flex items-center justify-center rounded-full ${
+                    isSmallScreen ? "mb-4" : ""
+                  }`}
+                >
+                  <button onClick={excel} className="excel-btn">
+                    <FontAwesomeIcon icon={faFileExcel} size="xl" />
+                    <span className="ml-3 font-semibold text-xl">
+                      Descargar excel
+                    </span>
+                  </button>
+                </div>
+
+                <div
+                  className={`recover-passwd flex items-center justify-center rounded-full ${
+                    isSmallScreen ? "mb-4" : ""
+                  }`}
+                >
+                  <button
+                    className="recover-btn flex items-center justify-center"
+                    onClick={() => showModal()}
+                  >
+                    <FontAwesomeIcon icon={faKey} size="xl" />
+                    <span className="ml-3 font-semibold text-2xl text-amber-950">
+                      Recuperar contraseña
+                    </span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
