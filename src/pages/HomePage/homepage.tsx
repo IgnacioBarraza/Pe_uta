@@ -52,7 +52,6 @@ export default function HomePage() {
 
   useEffect(() => {
     window.addEventListener("resize", handleResponsive);
-    console.log(Number(localStorage.getItem("tipoId")));
 
     return () => {
       window.removeEventListener("resize", handleResponsive);

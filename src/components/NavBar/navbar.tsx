@@ -4,7 +4,7 @@ import {
   faBookmark,
   faHome,
   faRightToBracket,
-  faBars
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSquareCheck } from "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,44 +37,86 @@ export default function Navbar() {
       <div className="navbar flex justify-between items-center p-4">
         <div className="left-container flex items-center justify-center">
           <div className="nav-btns flex items-center">
-          <button className="xl:hidden" onClick={toggleMenu}>
-            <FontAwesomeIcon icon={faBars} size={iconSize} />
-          </button>
-          <div className={`xl:flex items-center ${isMenuOpen ? "flex-col absolute top-24 left-1 hamburguer-menu" : "hidden"}`}>
-            <Link to="/home">
-              <button className={`xl:flex items-center ${isMenuOpen ? "flex items-start menu-nav-btn mb-2" : "nav-btn flex items-center justify-center"}`}>
-                <FontAwesomeIcon icon={faHome} size={iconSize} />
-                <span className="font-semibold text-lg lg:ml-3 ml-1">Inicio</span>
-              </button>
-            </Link>
-            <Link to="/projects">
-              <button className={`xl:flex items-center ${isMenuOpen ? "flex items-start menu-nav-btn mb-2" : "nav-btn flex items-center justify-center"}`}>
-                <FontAwesomeIcon icon={faBookmark} size={iconSize} />
-                <span className="font-semibold text-lg lg:ml-3 ml-1">Proyectos</span>
-              </button>
-            </Link>
-            <Link to="/evaluated">
-              <button className={`xl:flex items-center ${isMenuOpen ? "flex items-start menu-nav-btn" : "nav-btn flex items-center justify-center"}`}>
-                <FontAwesomeIcon icon={faSquareCheck} size={iconSize} />
-                <span className="font-semibold text-lg lg:ml-3 ml-1">Evaluados</span>
-              </button>
-            </Link>
+            <button
+              className="xl:hidden"
+              onClick={toggleMenu}
+              aria-label="Toggle Menú"
+            >
+              <FontAwesomeIcon icon={faBars} size={iconSize} />
+            </button>
+            <div
+              className={`xl:flex items-center ${
+                isMenuOpen
+                  ? "flex-col absolute top-24 left-1 hamburguer-menu"
+                  : "hidden"
+              }`}
+            >
+              <Link to="/home">
+                <button
+                  className={`xl:flex items-center ${
+                    isMenuOpen
+                      ? "flex items-start menu-nav-btn mb-2"
+                      : "nav-btn flex items-center justify-center"
+                  }`}
+                  aria-label="Ir a Inicio"
+                >
+                  <FontAwesomeIcon icon={faHome} size={iconSize} />
+                  <span className="font-semibold text-lg lg:ml-3 ml-1">
+                    Inicio
+                  </span>
+                </button>
+              </Link>
+              <Link to="/projects">
+                <button
+                  className={`xl:flex items-center ${
+                    isMenuOpen
+                      ? "flex items-start menu-nav-btn mb-2"
+                      : "nav-btn flex items-center justify-center"
+                  }`}
+                  aria-label="Ir a Proyectos"
+                >
+                  <FontAwesomeIcon icon={faBookmark} size={iconSize} />
+                  <span className="font-semibold text-lg lg:ml-3 ml-1">
+                    Proyectos
+                  </span>
+                </button>
+              </Link>
+              <Link to="/evaluated">
+                <button
+                  className={`xl:flex items-center ${
+                    isMenuOpen
+                      ? "flex items-start menu-nav-btn"
+                      : "nav-btn flex items-center justify-center"
+                  }`}
+                  aria-label="Ir a Evaluados"
+                >
+                  <FontAwesomeIcon icon={faSquareCheck} size={iconSize} />
+                  <span className="font-semibold text-lg lg:ml-3 ml-1">
+                    Evaluados
+                  </span>
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
         </div>
         <div className="center-container flex justify-center items-center">
           <div className="title-text text-black flex items-center justify-center h-12">
-            <span className="font-semibold title">Feria de ciencias “Triunfando en el conocimiento”</span>
+            <span className="font-semibold title">
+              Feria de ciencias “Triunfando en el conocimiento”
+            </span>
             <span className="font-semibold title">Universidad de Tarapacá</span>
           </div>
         </div>
         <div className="right-container flex justify-end">
-          <button onClick={() => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("userRut");
-            localStorage.removeItem("proyectosEvaluados");
-            navigate("/");
-          }}>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("userRut");
+              localStorage.removeItem("proyectosEvaluados");
+              navigate("/");
+            }}
+            aria-label="Cerrar Sesión"
+          >
             <FontAwesomeIcon icon={faRightToBracket} size={iconSize} />
           </button>
         </div>

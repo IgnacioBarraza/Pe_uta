@@ -61,40 +61,55 @@ export default function EvaluateProject() {
     <>
       <Navbar />
       <div className="project-page-container">
-  <div className={`welcome flex justify-center items-center ${isSmallScreen ? "" : "mb-3"}`}>
-    <h1 className="font-semibold text-2xl">Proyecto "{nombreGrupo}"</h1>
-  </div>
-  <div className="info-project-container bg-stone-400 flex flex-col">
-    <div className={`project-info flex ${isSmallScreen ? "flex-col items-center m-2" : "m-10"}`}>
-      <div className={`img-project ${isSmallScreen ? "mt-2" : "mr-4"}`}>
-        <img
-          src={imagenGrupo}
-          alt={`Imagen del proyecto ${nombreGrupo}`}
-          className="rounded-xl border-zinc-700 border-2"
-        />
+        <div
+          className={`welcome flex justify-center items-center ${
+            isSmallScreen ? "" : "mb-3"
+          }`}
+        >
+          <h1 className="font-semibold text-2xl">Proyecto "{nombreGrupo}"</h1>
+        </div>
+        <div className="info-project-container bg-stone-400 flex flex-col">
+          <div
+            className={`project-info flex ${
+              isSmallScreen ? "flex-col items-center m-2" : "m-10"
+            }`}
+          >
+            <div className={`img-project ${isSmallScreen ? "mt-2" : "mr-4"}`}>
+              <img
+                src={imagenGrupo}
+                alt={`Imagen del proyecto ${nombreGrupo}`}
+                className="rounded-xl border-zinc-700 border-2"
+              />
+            </div>
+            <div
+              className={`project-members flex flex-col items-center ${
+                isSmallScreen ? "mt-4 mb-4" : "mr-5"
+              }`}
+            >
+              <span className="font-semibold text-3xl">Integrantes</span>
+              <ul>
+                {integrantes.map((integrante) => (
+                  <li key={integrante.id} className="font-semibold text-lg">
+                    - {integrante.nombre} {integrante.apellidos}
+                    <br />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="project-description flex flex-col">
+              <span
+                className={`font-semibold ${
+                  isSmallScreen ? "text-3xl" : "text-3xl"
+                }`}
+              >
+                Descripción del proyecto
+              </span>
+              <p className="font-normal text-lg mt-2">{descripcion}</p>
+            </div>
+          </div>
+          <Formulario group_id={id} />
+        </div>
       </div>
-      <div className={`project-members flex flex-col items-center ${isSmallScreen ? "mt-4 mb-4" : "mr-5"}`}>
-        <span className="font-semibold text-3xl">Integrantes</span>
-        <ul>
-          {integrantes.map((integrante) => (
-            <li key={integrante.id} className="font-semibold text-lg">
-              - {integrante.nombre} {integrante.apellidos}
-              <br />
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="project-description flex flex-col">
-        <span className={`font-semibold ${isSmallScreen ? "text-3xl" : "text-3xl"}`}>
-          Descripción del proyecto
-        </span>
-        <p className="font-normal text-lg mt-2">{descripcion}</p>
-      </div>
-    </div>
-    <Formulario group_id={id}/>
-  </div>
-</div>
-
       <Footer />
     </>
   );

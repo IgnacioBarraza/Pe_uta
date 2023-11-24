@@ -9,7 +9,7 @@ interface CalendarioProps {
 export default function Calendario({ year, month }: CalendarioProps) {
   const daysInMonth = new Date(year, month, 0).getDate();
   const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
 
   const handleResponsive = () => {
@@ -25,7 +25,11 @@ export default function Calendario({ year, month }: CalendarioProps) {
   }, [isSmallScreen]);
 
   return (
-    <div className={`${isSmallScreen ? "calendar-mobile" : "calendar"}`}>
+    <div
+      className={`${isSmallScreen ? "calendar-mobile" : "calendar"}`}
+      role="grid"
+      aria-label="Calendario de la Feria de Ciencias"
+    >
       {daysOfWeek.map((day) => (
         <div key={day} className="day day-of-week">
           {day}
@@ -37,8 +41,11 @@ export default function Calendario({ year, month }: CalendarioProps) {
         </div>
       ))}
       {Array.from({ length: daysInMonth }, (_, index) => (
-        // to change the day of the science fair, change the number 24 with the day of the science of the year
-        <div key={index + 1} className={`day ${index + 1 === 24 ? 'with-circle' : ''}`}>
+        <div
+          key={index + 1}
+          className={`day ${index + 1 === 24 ? "with-circle" : ""}`}
+          tabIndex={0}
+        >
           {index + 1}
         </div>
       ))}
