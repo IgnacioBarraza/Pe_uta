@@ -1,9 +1,9 @@
-import HomePage from '../pages/HomePage/homepage';
-import Projects from '../pages/Projects/projects';
-import ProjectsBySubject from '../pages/ProjectsBySubject/projectsbysubject';
-import ProjectsEvaluated from '../pages/ProjectsEvaluated/projectsevaluated';
-import EvaluateProject from '../pages/EvaluateProject/evaluateprojects';
-import LogIn from '../pages/accessPage/login';
+import HomePage from '../shared/homepage';
+import Projects from '../shared/projects';
+import ProjectsBySubject from '../shared/projectsbysubject';
+import ProjectsEvaluated from '../shared/projectsevaluated';
+import EvaluateProject from '../shared/evaluateprojects';
+import LogIn from '../auth/login';
 import ProtectedRoute from './protectedRoute';
 
 const routes = [
