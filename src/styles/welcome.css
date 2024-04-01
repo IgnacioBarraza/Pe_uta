@@ -1,0 +1,15 @@
+.btn-text {
+  font-family: 'Roboto', sans-serif;
+}
+
+@media only screen and (max-width: 700px) {
+  .main-layout {
+    display: flex !important;
+    align-items: center;
+    flex-direction: column;
+    grid-gap: 2rem !important;
+  }
+  .btn-options {
+    width: 90vw;
+  }
+}
