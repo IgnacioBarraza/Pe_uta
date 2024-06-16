@@ -1,4 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Page404 } from "../shared/page404";
 
 export default function Router(props) {
     const routes = props.routes.map((element) => {
@@ -39,7 +40,7 @@ export default function Router(props) {
         <BrowserRouter>
             <Routes>
                 {routes}
-                {/* <Route path='*' element={<Page404 />}></Route> */}
+                <Route path='*' element={<Page404 />}></Route>
             </Routes>
         </BrowserRouter>
     );

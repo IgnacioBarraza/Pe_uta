@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Calendario from "../components/Calendar/calendar";
 import Modal from "../components/LogInAdvice/modal";
 import ErrorModal from "../components/LogInError/errormodal";
@@ -9,10 +8,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { OrganizeModal } from "../components/organize-modal";
 import { Box } from "@chakra-ui/react";
+import { useProps } from "../hooks/useProps";
 
 type FormData = {
   rut: string;
   password: string;
+  name?: string
 };
 
 export default function LogIn() {
@@ -22,11 +23,14 @@ export default function LogIn() {
     formState: { errors },
   } = useForm<FormData>();
 
+  const { setUserType, setTokenData, setUserName, setUserId, setUserRut } = useProps()
+
   const [registeredRut, setRegisteredRut] = useState("");
   const [error, setError] = useState("");
   const [modal, setModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
+  const [newUser, setNewUser] =  useState(false)
 
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -35,38 +39,69 @@ export default function LogIn() {
   const showErrorModal = () => setErrorModal(!errorModal);
   const navigate = useNavigate();
 
-  const onSubmit = async (data: FormData) => {
+  const handleLoginOrRegister = (data: FormData) => {
+    if (!data.name && !newUser) {
+      handleLogin(data)
+    } else {
+      handleRegister(data)
+    }
+  };
+
+  const handleLogin = async (loginData: FormData) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/registro-o-inicio-sesion",
-        data
+      const res = await axios.post(
+        "http://localhost:3000/login",
+        loginData
       );
-      if (response.status === 201) {
-        console.log(response.statusText);
-        setRegisteredRut(data.rut);
-        showModal();
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userRut", response.data.rut);
-        localStorage.setItem("userId", response.data.userID);
-        localStorage.setItem("tipoId", response.data.tipoID);
-      }
-      if (response.status === 200) {
+      const {status, data } = res
+      console.log(data)
+      if (status === 200) {
+        const { token, userID, userName, tipoID, rut } = data;
+        saveUserData(token, userID, userName, tipoID, rut)
         navigate("/home");
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userRut", response.data.rut);
-        localStorage.setItem("userId", response.data.userID);
-        localStorage.setItem(
-          "proyectosEvaluados",
-          JSON.stringify(response.data.gruposEvaluados)
-        );
-        localStorage.setItem("tipoId", response.data.tipoID);
       }
     } catch (error) {
-      if (error.response.status === 401 || error.response.status === 400) {
+      if (error.response.status === 404) {
+        setNewUser(true)
+      }
+      if (error.response.status === 401) {
         setError(error.response.data.mensaje);
         showErrorModal();
       }
     }
+  }
+
+  const handleRegister = async (registerData: FormData) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/registro",
+        registerData
+      );
+      const {status, data } = res
+      if (status === 201) {
+        const { token, userID, userName, tipoID, rut } = data;
+        saveUserData(token, userID, userName, tipoID, rut)
+        navigate("/home");
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        setError(error.response.data.mensaje);
+        showErrorModal();
+      }
+    }
+  }
+
+  const saveUserData = (token: string, userID: string, username: string, tipoID: string, rut: string) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("userRut", rut);
+    localStorage.setItem("userType", userID);
+    localStorage.setItem("tipoId", tipoID);
+    localStorage.setItem("userName", username)
+    setUserType(userID);
+    setTokenData(token);
+    setUserName(username);
+    setUserId(tipoID);
+    setUserRut(rut)
   };
 
   const handleResponsive = () => {
@@ -83,7 +118,7 @@ export default function LogIn() {
 
   return (
     <>
-      <Box bgImage={'url(/fondo_login.jpg)'}>
+      <Box bgImage={"url(/fondo_login.jpg)"}>
         <div className="flex justify-center login">
           <div
             className={`bg-stone-300 self-center ${
@@ -103,7 +138,7 @@ export default function LogIn() {
             >
               <div className="science-expo flex justify-center">
                 <img
-                  src="src\assets\uta_logo.svg"
+                  src="/uta_logo.svg"
                   alt="Uta logo"
                   className={`uta-icon ${isSmallScreen ? "p-3" : "p-2"}`}
                 />
@@ -119,16 +154,36 @@ export default function LogIn() {
                   <span>Universidad de Tarapacá</span>
                 </div>
                 <img
-                  src="src/assets/feria_de_ciencias_logo.jpg"
+                  src="/feria_de_ciencias_logo.jpg"
                   alt="Feria de ciencias logo"
                   className={`feria-icon ${isSmallScreen ? "p-3" : "p-2"}`}
                 />
               </div>
               <div className="form-container">
                 <form
-                  onSubmit={handleSubmit(onSubmit)}
+                  onSubmit={handleSubmit(handleLoginOrRegister)}
                   aria-labelledby="login-form-heading"
                 >
+                  {newUser && (
+                    <div className="rut-input flex flex-col m-auto pt-10 text-black font-semibold">
+                      <label htmlFor="rut">Nombre</label>
+                      <input
+                        type="text"
+                        name="name-input"
+                        id="name"
+                        className="h-8 rounded-lg"
+                        placeholder="Nombre"
+                        {...register("name", {
+                          required: "Este campo es obligatorio",
+                        })}
+                      />
+                      {errors.name && (
+                        <span className="text-red-500 font-bold">
+                          {errors.name.message}
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="rut-input flex flex-col m-auto pt-16 text-black font-semibold">
                     <label htmlFor="rut">Rut</label>
                     <input
@@ -209,7 +264,7 @@ export default function LogIn() {
               >
                 <div className="date-header flex justify-center items-center">
                   <img
-                    src="src/assets/upcoming_dates.svg"
+                    src="/upcoming_dates.svg"
                     alt="Organize icon"
                     className="organize-icon p-3"
                   />

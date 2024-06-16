@@ -1,11 +1,14 @@
-import Router from "./routes/router"
+import { PropsDataProvider } from "./providers/propsContext"
+import Router from "./router/router"
 import routes from "./routes/routesConfig"
 
 function App() {
 
   return (
     <>
-      <Router routes={routes} />
+      <PropsDataProvider>
+        <Router routes={routes} />
+      </PropsDataProvider>
     </>
   )
 }
