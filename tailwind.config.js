@@ -12,6 +12,16 @@ export default {
         'navy-800': '#03045e',
         'deep-sky-blue': '#0077b6',
         'dark-blue': '#023e8a',
+        'white': '#ffffff'
+      },
+      keyframes: {
+        'beat-fade': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
+        },
+      },
+      animation: {
+        'beat-fade': 'beat-fade 2s infinite',
       },
     },
   },

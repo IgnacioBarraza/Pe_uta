@@ -7,9 +7,10 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExcel, faKey } from "@fortawesome/free-solid-svg-icons";
 import RecoverPassword from "../components/RecoverPasswordModal/recover";
+import { useProps } from "../hooks/useProps";
 
 export default function HomePage() {
-  const rut = localStorage.getItem("userRut");
+  const { userName } = useProps()
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [modal, setModal] = useState(false);
 
@@ -70,7 +71,7 @@ export default function HomePage() {
             isSmallScreen ? "" : "mb-3"
           }`}
         >
-          <h1 className="font-semibold text-2xl">¡Bienvenido/a, {rut} 👋</h1>
+          <h1 className="font-semibold text-2xl">¡Bienvenid@, {userName}! 👋</h1>
         </div>
         <div className="home-container bg-stone-400 flex flex-col items-center">
           <div className="subject-text m-6 flex justify-center items-center rounded-lg">

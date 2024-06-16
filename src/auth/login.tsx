@@ -54,7 +54,6 @@ export default function LogIn() {
         loginData
       );
       const {status, data } = res
-      console.log(data)
       if (status === 200) {
         const { token, userID, userName, tipoID, rut } = data;
         saveUserData(token, userID, userName, tipoID, rut)
