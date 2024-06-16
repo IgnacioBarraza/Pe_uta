@@ -40,7 +40,7 @@ export default function Navbar() {
       </div>
       <div className="flex justify-center items-center lg:max-w-[500px] lg:w-full grow">
         <div className="title-text flex items-center justify-center h-12">
-          <span className="font-semibold text-lg lg:text-2xl text-navy-800">
+          <span className="font-semibold text-lg lg:text-2xl text-navy-800 font-roboto">
             Feria de ciencias “Triunfando en el conocimiento”
           </span>
         </div>

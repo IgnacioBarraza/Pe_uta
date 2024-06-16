@@ -93,13 +93,13 @@ export default function LogIn() {
   const saveUserData = (token: string, userID: string, username: string, tipoID: string, rut: string) => {
     localStorage.setItem("token", token);
     localStorage.setItem("userRut", rut);
-    localStorage.setItem("userType", userID);
-    localStorage.setItem("tipoId", tipoID);
+    localStorage.setItem("userType", tipoID);
+    localStorage.setItem("tipoId", userID);
     localStorage.setItem("userName", username)
-    setUserType(userID);
+    setUserType(tipoID);
     setTokenData(token);
     setUserName(username);
-    setUserId(tipoID);
+    setUserId(userID);
     setUserRut(rut)
   };
 

@@ -1,51 +1,51 @@
-import HomePage from '../shared/homepage';
-import Projects from '../shared/projects';
-import ProjectsBySubject from '../shared/projectsbysubject';
-import ProjectsEvaluated from '../shared/projectsevaluated';
-import EvaluateProject from '../shared/evaluateprojects';
-import LogIn from '../auth/login';
-import ProtectedRoute from './protectedRoute';
+import { HomePage } from "../shared/homepage";
+import Projects from "../shared/projects";
+import ProjectsBySubject from "../shared/projectsbysubject";
+import ProjectsEvaluated from "../shared/projectsevaluated";
+import EvaluateProject from "../shared/evaluateprojects";
+import LogIn from "../auth/login";
+import ProtectedRoute from "./protectedRoute";
+import { MainPage } from "../shared/mainpage";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     component: <LogIn />,
-    exact: true,
   },
   {
-    path: '/home',
+    path: "/home",
     component: <HomePage />,
-    exact: true,
-    protection: <ProtectedRoute
-    roles={["user", "admin"]} />
-  },
-  {
-    path: '/projects',
-    component: <Projects />,
-    exact: true,
-    protection: <ProtectedRoute
-    roles={["user", "admin"]} />
-  },
-  {
-    path: '/projects/:subject_name/:id',
-    component: <ProjectsBySubject />,
-    exact: true,
-    protection: <ProtectedRoute
-    roles={["user", "admin"]} />
-  },
-  {
-    path: '/project/:id',
-    component: <EvaluateProject />,
-    exact: true,
-    protection: <ProtectedRoute
-    roles={["user", "admin"]} />
-  },
-  {
-    path: '/evaluated',
-    component: <ProjectsEvaluated />,
-    exact: true,
-    protection: <ProtectedRoute
-    roles={["user", "admin"]} />
+    protection: <ProtectedRoute roles={["user", "admin"]} />,
+    routes: [
+      {
+        path: "/home",
+        component: <MainPage />,
+        protection: <ProtectedRoute roles={["user", "admin"]} />,
+      },
+      {
+        path: "/home/projects",
+        component: <Projects />,
+        protection: <ProtectedRoute roles={["user", "admin"]} />,
+        routes: [
+          {
+            path: "/home/projects/:subject_name/:id",
+            component: <ProjectsBySubject />,
+            protection: <ProtectedRoute roles={["user", "admin"]} />,
+          },
+        ],
+      },
+
+      {
+        path: "/home/project/:id",
+        component: <EvaluateProject />,
+        protection: <ProtectedRoute roles={["user", "admin"]} />,
+      },
+      {
+        path: "/home/evaluated",
+        component: <ProjectsEvaluated />,
+        protection: <ProtectedRoute roles={["user", "admin"]} />,
+      },
+    ],
   },
 ];
 
