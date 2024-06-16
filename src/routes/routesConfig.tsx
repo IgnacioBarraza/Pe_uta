@@ -27,14 +27,14 @@ const routes = [
     roles={["user", "admin"]} />
   },
   {
-    path: '/projects_by_subject/:id',
+    path: '/projects/:subject_name/:id',
     component: <ProjectsBySubject />,
     exact: true,
     protection: <ProtectedRoute
     roles={["user", "admin"]} />
   },
   {
-    path: '/project_id/:id',
+    path: '/project/:id',
     component: <EvaluateProject />,
     exact: true,
     protection: <ProtectedRoute

@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import "../styles/projectsbysubject.css";
 
 const formatName = (rawName) => {
-  // Puedes implementar lógica para formatear el nombre según tus necesidades
-  // Por ejemplo, reemplazar caracteres especiales o corregir errores tipográficos
   return rawName.replace(/¡/g, "í").replace(/¢/g, "ó").replace(/ /g, " ");
 };
 
