@@ -69,12 +69,8 @@
 .electro-img,
 .fisica-contemporanea-img,
 .categoria-especial-img {
-  border-radius: 10px 10px 0 0;
   width: 550px;
   height: 230px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 }
 
 .intro-fisica-img {

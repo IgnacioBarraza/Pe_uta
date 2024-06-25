@@ -12,3 +12,22 @@
   background-color: #cbd5e0;
   border-radius: 10px;
 }
+
+.intro-fisica-img {
+  background-image: url('/intro_fisica_img.jpg');
+}
+.mecanica-clasica-img {
+  background-image: url('/mecanica_clasica_img.jpg');
+}
+.electro-img {
+  background-image: url('/electro_img.jpg');
+}
+.fisica-contemporanea-img {
+  background-image: url('/fisica_contemporanea_img.jpg');
+}
+.kine-img {
+  background-image: url('/kine_img.jpg');
+}
+.categoria-especial-img {
+  background-image: url('/categoria_especial_img.jpg');
+}

@@ -5,7 +5,7 @@ import ProjectsEvaluated from "../shared/projectsevaluated";
 import EvaluateProject from "../shared/evaluateprojects";
 import LogIn from "../auth/login";
 import ProtectedRoute from "./protectedRoute";
-import { MainPage } from "../shared/mainpage";
+import { MainPage } from "../shared/MainPage/mainpage";
 
 const routes = [
   {
