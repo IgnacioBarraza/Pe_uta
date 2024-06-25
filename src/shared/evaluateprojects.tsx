@@ -25,7 +25,7 @@ export default function EvaluateProject() {
   const getGroupById = async () => {
     try {
       const response = await axios.get(
-        `https://bak.torresproject.com/grupo-por-id/${id}`
+        `http://localhost:3000/grupo-por-id/${id}`
       );
       setNombreAsignatura(response.data[0].nombre_asignatura);
       setnombreGrupo(response.data[0].nombre);
@@ -39,7 +39,7 @@ export default function EvaluateProject() {
   const getMembersByGroupId = async () => {
     try {
       const response = await axios.get(
-        `https://bak.torresproject.com/integrantes-grupo/${id}`
+        `http://localhost:3000/integrantes-grupo/${id}`
       );
       setIntegrantes(response.data);
     } catch (error) {

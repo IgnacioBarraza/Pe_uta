@@ -26,6 +26,7 @@
   background-image: url('/fisica_contemporanea_img.jpg');
 }
 .kine-img {
+  height: 230px;
   background-image: url('/kine_img.jpg');
 }
 .categoria-especial-img {

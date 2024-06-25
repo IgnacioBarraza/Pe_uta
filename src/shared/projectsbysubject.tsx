@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../styles/projectsbysubject.css";
 
 const formatName = (rawName) => {
@@ -38,12 +38,10 @@ export default function ProjectsBySubject() {
       const response = await axios.get(
         "http://localhost:3000/grupos-asignaturas"
       );
-
       // Filtrar los grupos por id_asignatura
       const gruposFiltrados = response.data.filter(
         (grupo) => grupo.id_asignatura === parseInt(id, 10)
       );
-
       // Actualizar el estado con los grupos filtrados
       setGrupos(gruposFiltrados);
     } catch (error) {
@@ -52,8 +50,6 @@ export default function ProjectsBySubject() {
   };
 
   useEffect(() => {
-    console.log(id)
-    console.log(subject_name)
     window.addEventListener("resize", handleResponsive);
     getSubjects();
     getGroups();

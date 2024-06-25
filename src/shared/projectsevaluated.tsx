@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/NavBar/navbar";
-import Footer from "../components/Footer/footer";
 import '../styles/projectsevaluated.css'
 
 
@@ -19,7 +17,6 @@ export default function Projects() {
       const response = await axios.get("https://bak.torresproject.com/grupos-asignaturas");
 
       const gruposIdAlmacenados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
-
       // Verificar si hay algún grupo_id almacenado
       if (gruposIdAlmacenados.length > 0) {
         // Filtrar proyectos basados en los grupo_id almacenados
@@ -28,7 +25,6 @@ export default function Projects() {
             (grupo) => grupo.grupo_id === proyecto.id_grupo
           )
         );
-
         // proyectosFiltrados ahora contiene solo los proyectos correspondientes a los grupo_id almacenados
         setGruposFiltrados(proyectosFiltrados);
       } else {

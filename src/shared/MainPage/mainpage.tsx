@@ -2,10 +2,10 @@ import { faFileExcel, faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useProps } from "../../hooks/useProps";
 import { useState } from "react";
-import axios from "axios";
+import { useBackend } from "../../hooks/useBackend";
 import RecoverPassword from "../../components/RecoverPasswordModal/recover";
-import "../../styles/mainpage.css";
 import ProjectButton from "./components/ProjectButton";
+import "../../styles/mainpage.css";
 
 const SubjectProjects = [
   {
@@ -47,6 +47,7 @@ const SubjectProjects = [
 
 export const MainPage = () => {
   const { userName, userType } = useProps();
+  const { exportExcel } = useBackend()
 
   const [modal, setModal] = useState(false);
 
@@ -55,17 +56,7 @@ export const MainPage = () => {
   const currentYear = date.getFullYear();
 
   const excel = async () => {
-    await axios
-      .post(
-        "http://localhost:3000/export",
-        {
-          tipo: 1,
-        },
-        {
-          responseType: "blob", // Indica que esperas una respuesta de tipo Blob
-        }
-      )
-      .then((response) => {
+    await exportExcel().then((response) => {
         // Crear un enlace (link) temporal para el archivo Blob
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const a = document.createElement("a");
