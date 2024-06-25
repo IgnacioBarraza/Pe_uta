@@ -50,7 +50,6 @@ export default function Projects() {
 
   return (
     <>
-      <Navbar />
       <div className="total-evaluated-page-container">
         <div
           className={`welcome flex justify-center items-center ${
@@ -95,7 +94,6 @@ export default function Projects() {
           </div>
         </div>
       </div>
-        <Footer />
     </>
   );
 }

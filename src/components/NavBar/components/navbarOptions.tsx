@@ -32,7 +32,7 @@ export const NavbarOptions = ({toggleMenu, isMenuOpen, iconSize}) => {
             <span className="font-semibold text-lg lg:ml-3">Inicio</span>
           </button>
         </Link>
-        <Link to="/projects">
+        <Link to="projects">
           <button
             className={`flex items-center text-navy-800 ${
               isMenuOpen
@@ -47,7 +47,7 @@ export const NavbarOptions = ({toggleMenu, isMenuOpen, iconSize}) => {
             </span>
           </button>
         </Link>
-        <Link to="/evaluated">
+        <Link to="evaluated">
           <button
             className={`flex items-center text-navy-800 ${
               isMenuOpen

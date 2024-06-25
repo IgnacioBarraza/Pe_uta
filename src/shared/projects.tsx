@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../components/NavBar/navbar";
-import Footer from "../components/Footer/footer";
 import "../styles/projects.css";
 
 export default function Projects() {
@@ -17,7 +15,7 @@ export default function Projects() {
   const getGroups = async () => {
     try {
       const response = await axios.get(
-        "https://bak.torresproject.com/grupos-asignaturas"
+        "http://localhost:3000/grupos-asignaturas"
       );
 
       const gruposIdAlmacenados = JSON.parse(
@@ -61,7 +59,6 @@ export default function Projects() {
 
   return (
     <>
-      <Navbar />
       <div className="total-page-container">
         <div
           className={`welcome flex justify-center items-center ${
@@ -109,9 +106,6 @@ export default function Projects() {
             </div>
           </div>
         </div>
-      </div>
-      <div className={`${isSmallScreen ? "" : ""}`}>
-        <Footer />
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import EvaluateProject from "../shared/evaluateprojects";
 import LogIn from "../auth/login";
 import ProtectedRoute from "./protectedRoute";
 import { MainPage } from "../shared/MainPage/mainpage";
+import { Page404 } from "../shared/page404"; // Ensure you have a 404 page
 
 const routes = [
   {
@@ -14,38 +15,53 @@ const routes = [
   },
   {
     path: "/home",
-    component: <HomePage />,
-    protection: <ProtectedRoute roles={["user", "admin"]} />,
+    component: (
+      <ProtectedRoute roles={["user", "admin"]}>
+        <HomePage />
+      </ProtectedRoute>
+    ),
     routes: [
       {
-        path: "/home",
+        path: "",
         component: <MainPage />,
-        protection: <ProtectedRoute roles={["user", "admin"]} />,
       },
       {
-        path: "/home/projects",
-        component: <Projects />,
-        protection: <ProtectedRoute roles={["user", "admin"]} />,
-        routes: [
-          {
-            path: "/home/projects/:subject_name/:id",
-            component: <ProjectsBySubject />,
-            protection: <ProtectedRoute roles={["user", "admin"]} />,
-          },
-        ],
-      },
-
-      {
-        path: "/home/project/:id",
-        component: <EvaluateProject />,
-        protection: <ProtectedRoute roles={["user", "admin"]} />,
+        path: "projects",
+        component: (
+          <ProtectedRoute roles={["user", "admin"]}>
+            <Projects />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "/home/evaluated",
-        component: <ProjectsEvaluated />,
-        protection: <ProtectedRoute roles={["user", "admin"]} />,
+        path: "projects/:subject_name/:id",
+        component: (
+          <ProtectedRoute roles={["user", "admin"]}>
+            <ProjectsBySubject />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "project/:id",
+        component: (
+          <ProtectedRoute roles={["user", "admin"]}>
+            <EvaluateProject />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "evaluated",
+        component: (
+          <ProtectedRoute roles={["user", "admin"]}>
+            <ProjectsEvaluated />
+          </ProtectedRoute>
+        ),
       },
     ],
+  },
+  {
+    path: "*",
+    component: <Page404 />,
   },
 ];
 

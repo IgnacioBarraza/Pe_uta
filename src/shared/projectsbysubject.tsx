@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
-import Footer from "../components/Footer/footer";
-import Navbar from "../components/NavBar/navbar";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -13,7 +9,7 @@ const formatName = (rawName) => {
 };
 
 export default function ProjectsBySubject() {
-  const { id } = useParams();
+  const { subject_name, id } = useParams();
   const [projectName, setProjectName] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [grupos, setGrupos] = useState([]);
@@ -25,7 +21,7 @@ export default function ProjectsBySubject() {
   const getSubjects = async () => {
     try {
       const response = await axios.get(
-        "https://bak.torresproject.com/asignaturas"
+        "http://localhost:3000/asignaturas"
       );
       const idToNameMap = {};
       response.data.forEach((project) => {
@@ -40,7 +36,7 @@ export default function ProjectsBySubject() {
   const getGroups = async () => {
     try {
       const response = await axios.get(
-        "https://bak.torresproject.com/grupos-asignaturas"
+        "http://localhost:3000/grupos-asignaturas"
       );
 
       // Filtrar los grupos por id_asignatura
@@ -56,6 +52,8 @@ export default function ProjectsBySubject() {
   };
 
   useEffect(() => {
+    console.log(id)
+    console.log(subject_name)
     window.addEventListener("resize", handleResponsive);
     getSubjects();
     getGroups();
@@ -64,11 +62,10 @@ export default function ProjectsBySubject() {
     return () => {
       window.removeEventListener("resize", handleResponsive);
     };
-  }, [isSmallScreen]);
+  }, [isSmallScreen, subject_name, id]);
 
   return (
     <>
-      <Navbar />
       <div className="page-container">
         <div
           className={`flex justify-center items-center ${
@@ -123,9 +120,6 @@ export default function ProjectsBySubject() {
             </ul>
           </div>
         </div>
-      </div>
-      <div className={`${isSmallScreen ? "" : ""}`}>
-        <Footer />
       </div>
     </>
   );
