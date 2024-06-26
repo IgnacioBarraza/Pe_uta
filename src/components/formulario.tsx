@@ -174,7 +174,7 @@ export default function Formulario({ group_id }) {
               </div>
             </div>
             <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
-              <div className=" flex justify-around items-center">
+              <div className="flex justify-around items-center w-full">
                 <span className="font-semibold text-xl mr-1">3.-</span>
                 <label
                   htmlFor="c3"
@@ -230,7 +230,7 @@ export default function Formulario({ group_id }) {
               </div>
             </div>
             <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
-              <div className=" flex justify-around items-center">
+              <div className=" flex justify-around items-center w-full">
                 <span className="font-semibold text-xl mr-1">5.-</span>
                 <label
                   htmlFor="c5"

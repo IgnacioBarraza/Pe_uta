@@ -133,14 +133,14 @@ export default function LogIn() {
       <Box bgImage={"url(/fondo_login.jpg)"}>
         <div className="flex justify-center login">
           <div
-            className={`bg-stone-300 self-center ${
+            className={`bg-gray-100 self-center ${
               isSmallScreen
                 ? "flex flex-col items-center main-container-mobile"
                 : "grid grid-flow-col main-container rounded-xl"
             }`}
           >
             <div
-              className={`bg-stone-400 ${
+              className={`bg-davy-gray ${
                 isSmallScreen
                   ? "login-container-mobile mb-2 m-2"
                   : "login-container row-span-4 rounded-lg m-4"
@@ -148,42 +148,33 @@ export default function LogIn() {
               role="region"
               aria-label="Login Container"
             >
-              <div className="science-expo flex justify-center">
+              <div className="w-full h-[100px] rounded-t-lg bg-dark-gray flex items-center justify-around">
                 <img
                   src="/uta_logo.svg"
                   alt="Uta logo"
-                  className={`uta-icon ${isSmallScreen ? "p-3" : "p-2"}`}
+                  className={`h-[100px] ${isSmallScreen ? "p-3" : "p-2"}`}
                 />
                 <div
-                  className={`text-white ${
-                    isSmallScreen
-                      ? "title-text-mobile"
-                      : "title-text pr-5 pt-2 pl-5"
-                  }`}
+                  className="text-white flex flex-col justify-center items-center text-lg"
                 >
-                  <span>Feria de ciencias</span>
-                  <span>“Triunfando en el conocimiento”</span>
+                  <span>Feria de divulgación universitaria</span>
                   <span>Universidad de Tarapacá</span>
                 </div>
-                <img
-                  src="/feria_de_ciencias_logo.jpg"
-                  alt="Feria de ciencias logo"
-                  className={`feria-icon ${isSmallScreen ? "p-3" : "p-2"}`}
-                />
+                <div className="h-[100px] w-[56px] p-2"></div>
               </div>
-              <div className="form-container">
+              <div className="flex flex-col justify-around h-[510px]">
                 <form
                   onSubmit={handleSubmit(handleLoginOrRegister)}
                   aria-labelledby="login-form-heading"
                 >
                   {newUser && (
-                    <div className="rut-input flex flex-col m-auto pt-10 text-black font-semibold">
-                      <label htmlFor="rut">Nombre</label>
+                    <div className="rut-input flex flex-col m-auto pt-10 font-semibold">
+                      <label htmlFor="nombre" className="text-white">Nombre</label>
                       <input
                         type="text"
                         name="name-input"
                         id="name"
-                        className="h-8 rounded-lg"
+                        className="h-8 rounded-lg pl-2"
                         placeholder="Nombre"
                         {...register("name", {
                           required: "Este campo es obligatorio",
@@ -196,13 +187,13 @@ export default function LogIn() {
                       )}
                     </div>
                   )}
-                  <div className="rut-input flex flex-col m-auto pt-16 text-black font-semibold">
-                    <label htmlFor="rut">Rut</label>
+                  <div className="rut-input flex flex-col m-auto pt-10 font-semibold">
+                    <label htmlFor="rut" className="text-white">Rut</label>
                     <input
                       type="text"
                       name="rut-input"
                       id="rut"
-                      className="h-8 rounded-lg"
+                      className="h-8 rounded-lg pl-2"
                       placeholder="  Rut sin puntos, con guion"
                       {...register("rut", {
                         required: "Este campo es obligatorio",
@@ -218,13 +209,13 @@ export default function LogIn() {
                       </span>
                     )}
                   </div>
-                  <div className="password-input flex flex-col m-auto pt-14 font-semibold text-black">
-                    <label htmlFor="pass">Contraseña</label>
+                  <div className="password-input flex flex-col m-auto pt-10 font-semibold">
+                    <label htmlFor="pass" className="text-white">Contraseña</label>
                     <input
                       type="password"
                       name="pass-input"
                       id="pass"
-                      className="h-8 rounded-lg"
+                      className="h-8 rounded-lg pl-2"
                       {...register("password", { required: true })}
                     />
                     {errors.password && (
@@ -236,7 +227,7 @@ export default function LogIn() {
                   <div className="flex justify-center pt-20">
                     <button
                       type="submit"
-                      className="bg-stone-300 submit-btn rounded-lg"
+                      className="bg-stone-100 submit-btn rounded-lg"
                     >
                       <span className="text-black font-semibold text-lg">
                         Ingresar
@@ -245,36 +236,20 @@ export default function LogIn() {
                   </div>
                 </form>
                 <div className="flex justify-center items-center copyright">
-                  <span className="font-bold">
+                  <span className="font-bold text-white">
                     © {currentYear} Feria de Ciencia y Tecnología
                   </span>
                 </div>
               </div>
             </div>
-            <div
-              className={` ${
-                isSmallScreen
-                  ? "mb-2 organize-mobile"
-                  : "organize col-span-2 mt-4 mb-2"
-              }`}
-            >
+            <div className="mb-2 w-[98%] lg:w-[460px] lg:h-[180px] lg:col-span-2 lg:mt-4">
               <OrganizeModal />
             </div>
-            <div
-              className={` ${
-                isSmallScreen
-                  ? "upcoming-dates-mobile"
-                  : "upcoming-dates row-span-2 col-span-2"
-              }`}
-            >
+            <div className="w-[98%] lg:row-span-2 lg:col-span-2 lg:w-[460px] lg:h-[422px] mb-2">
               <div
-                className={`bg-stone-400 ${
-                  isSmallScreen
-                    ? "m-1 dates-container-mobile"
-                    : "dates-container"
-                }`}
+                className="bg-davy-gray rounded-lg h-[422px] mb-2"
               >
-                <div className="date-header flex justify-center items-center">
+                <div className="w-full h-[60px] rounded-t-lg bg-dark-gray flex justify-center items-center">
                   <img
                     src="/upcoming_dates.svg"
                     alt="Organize icon"
@@ -284,10 +259,10 @@ export default function LogIn() {
                     Proximas Fechas
                   </span>
                 </div>
-                <div className="important-day text-center mt-1 flex flex-col mb-2">
+                <div className="important-day text-center mt-1 flex flex-col mb-2 text-white">
                   <span className="font-bold">Lugar: UTA Sede La Tirana</span>
                   <span className="font-bold">
-                    Fecha: Viernes 24 de Noviembre {currentYear} - 09:00hrs
+                    Fecha: Viernes 28 de Junio {currentYear} - 09:00hrs
                   </span>
                 </div>
                 <Calendario year={currentYear} month={currentMonth} />

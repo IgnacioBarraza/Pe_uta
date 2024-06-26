@@ -43,7 +43,7 @@ export default function Calendario({ year, month }: CalendarioProps) {
       {Array.from({ length: daysInMonth }, (_, index) => (
         <div
           key={index + 1}
-          className={`day ${index + 1 === 24 ? "with-circle" : ""}`}
+          className={`day ${index + 1 === 28 ? "with-circle" : ""}`}
           tabIndex={0}
         >
           {index + 1}

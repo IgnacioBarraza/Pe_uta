@@ -3,16 +3,16 @@ import './styles/organize-modal.css'
 export const OrganizeModal = () => {
   return (
     <>
-      <div className="bg-stone-400">
-        <div className="organize-header flex items-center flex-wrap">
+      <div className="bg-davy-gray rounded-lg">
+        <div className="flex items-center flex-wrap w-full bg-dark-gray rounded-t-lg p-2">
           <img
             src="/organize_icon.svg"
             alt="Organize icon"
-            className="organize-icon p-3"
+            className="p-3"
           />
-          <span className="ml-9 font-medium text-2xl text-white">Organiza</span>
+          <span className="ml-9 font-bold text-2xl text-white">Organiza</span>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center p-3">
           <a
             href="https://www.instagram.com/ceal_icin/"
             target="_blank"
