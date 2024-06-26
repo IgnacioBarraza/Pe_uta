@@ -1,11 +1,12 @@
-import { faFileExcel, faKey } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel, faFileUpload, faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useProps } from "../../hooks/useProps";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBackend } from "../../hooks/useBackend";
 import RecoverPassword from "../../components/RecoverPasswordModal/recover";
 import ProjectButton from "./components/ProjectButton";
 import "../../styles/mainpage.css";
+import { UploadProject } from "../../components/uploadProject/uploadProject";
 
 const SubjectProjects = [
   {
@@ -47,11 +48,14 @@ const SubjectProjects = [
 
 export const MainPage = () => {
   const { userName, userType } = useProps();
-  const { exportExcel } = useBackend()
+  const { exportExcel, getAsignaturas } = useBackend()
 
   const [modal, setModal] = useState(false);
+  const [uploadInterface, setUploadInterface] = useState(false);
+  const [asignaturas, setAsignaturas] = useState(null)
 
   const showModal = () => setModal(!modal);
+  const showInterface = () => setUploadInterface(!uploadInterface)
   const date = new Date();
   const currentYear = date.getFullYear();
 
@@ -74,6 +78,23 @@ export const MainPage = () => {
         console.error("Error en la solicitud:", error);
       });
   };
+
+  const getAsignaturasData = async () => {
+    try {
+      const res = await getAsignaturas()
+      setAsignaturas(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleInterface = () => {
+    setUploadInterface((prevState) => !prevState)
+  }
+
+  useEffect(() => {
+    getAsignaturasData()
+  }, [])
   return (
     <>
       <div className="flex justify-center items-center w-full h-14 rounded-lg bg-gray-100 mb-1 lg:mb-3">
@@ -93,13 +114,13 @@ export const MainPage = () => {
           aria-label="Proyectos disponibles"
         >
           <div className="projects-wrapper-container flex">
-            {SubjectProjects.map(subject => (
-              <ProjectButton 
-              key={subject.key}
-              to={subject.to}
-              label={subject.label}
-              imgClass={subject.imgClass}
-              subject={subject.subject}
+            {SubjectProjects.map((subject) => (
+              <ProjectButton
+                key={subject.key}
+                to={subject.to}
+                label={subject.label}
+                imgClass={subject.imgClass}
+                subject={subject.subject}
               />
             ))}
           </div>
@@ -109,35 +130,49 @@ export const MainPage = () => {
         >
           {Number(userType) === 1 && (
             <>
-              <div
-                className={`excel flex items-center justify-center rounded-full mb-4 lg:mb-0`}
-              >
-                <button onClick={excel} className="excel-btn">
-                  <FontAwesomeIcon icon={faFileExcel} size="xl" />
-                  <span className="ml-3 font-semibold text-xl">
-                    Descargar excel
-                  </span>
-                </button>
-              </div>
-
-              <div
-                className={`recover-passwd flex items-center justify-center rounded-full mb-4 lg:mb-0`}
-              >
-                <button
-                  className="recover-btn flex items-center justify-center"
-                  onClick={() => showModal()}
+              <div className="flex flex-row items-center justify-around w-full">
+                <div
+                  className="w-14 h-14 lg:w-64 lg:h-16 flex items-center justify-center rounded-full mb-4 lg:mb-0 bg-green-600"
                 >
-                  <FontAwesomeIcon icon={faKey} size="xl" />
-                  <span className="ml-3 font-semibold text-2xl text-amber-950">
-                    Recuperar contraseña
-                  </span>
-                </button>
+                  <button onClick={excel} className="h-full w-full flex items-center justify-center">
+                    <FontAwesomeIcon icon={faFileExcel} size="xl" />
+                    <span className="ml-3 font-bold text-2xl hidden lg:block">
+                      Descargar excel
+                    </span>
+                  </button>
+                </div>
+                <div
+                  className="w-14 h-14 flex items-center justify-center rounded-full mb-4 lg:mb-0 bg-gray-100 lg:w-80 lg:h-16"
+                >
+                  <button onClick={() => showInterface()} className="h-full w-full flex items-center justify-center">
+                    <FontAwesomeIcon icon={faFileUpload} size="xl" />
+                    <span className="ml-3 font-bold text-2xl hidden lg:flex text-navy-800">
+                      Subir proyecto
+                    </span>
+                  </button>
+                </div>
+                <div
+                  className={`w-14 h-14 lg:w-[350px] lg:h-16 flex items-center justify-center rounded-full mb-4 lg:mb-0 bg-gray-100`}
+                >
+                  <button
+                    className="h-full w-full flex items-center justify-center"
+                    onClick={() => showModal()}
+                  >
+                    <FontAwesomeIcon icon={faKey} size="xl" />
+                    <span className="ml-3 font-bold text-2xl text-navy-800 hidden lg:block">
+                      Recuperar contraseña
+                    </span>
+                  </button>
+                </div>
               </div>
             </>
           )}
         </div>
       </div>
       <RecoverPassword show={modal} close={showModal} />
+      {uploadInterface && (
+        <UploadProject asignaturas={asignaturas} handleInterface={handleInterface}/>
+      )}
     </>
   );
 };
