@@ -9,7 +9,7 @@ export const HomePage = () =>  {
     <>
       <Navbar />
       <div
-        className="flex flex-col bg-dark-gray bg-cover bg-center overflow-hidden p-1 lg:p-2.5 w-full h-[85vh]"
+        className="flex flex-col bg-dark-gray bg-cover bg-center overflow-auto p-1 lg:p-2.5 w-full h-[85vh]"
         aria-live="polite"
       >
         <Outlet />

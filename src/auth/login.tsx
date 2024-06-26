@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { OrganizeModal } from "../components/organize-modal";
 import { Box } from "@chakra-ui/react";
 import { useProps } from "../hooks/useProps";
+import { useToast } from "@chakra-ui/react";
 
 type FormData = {
   rut: string;
@@ -38,6 +39,7 @@ export default function LogIn() {
   const showModal = () => setModal(!modal);
   const showErrorModal = () => setErrorModal(!errorModal);
   const navigate = useNavigate();
+  const toast = useToast()
 
   const handleLoginOrRegister = (data: FormData) => {
     if (!data.name && !newUser) {
@@ -55,9 +57,10 @@ export default function LogIn() {
       );
       const {status, data } = res
       if (status === 200) {
-        const { token, userID, userName, tipoID, rut } = data;
+        const { token, userID, userName, tipoID, rut, mensaje } = data;
         saveUserData(token, userID, userName, tipoID, rut)
         navigate("/home");
+        toastNotification(mensaje)
       }
     } catch (error) {
       if (error.response.status === 404) {
@@ -78,9 +81,10 @@ export default function LogIn() {
       );
       const {status, data } = res
       if (status === 201) {
-        const { token, userID, userName, tipoID, rut } = data;
+        const { token, userID, userName, tipoID, rut, mensaje } = data;
         saveUserData(token, userID, userName, tipoID, rut)
         navigate("/home");
+        toastNotification(mensaje)
       }
     } catch (error) {
       if (error.response.status === 400) {
@@ -106,6 +110,15 @@ export default function LogIn() {
   const handleResponsive = () => {
     setIsSmallScreen(window.innerWidth <= 1050);
   };
+
+  const toastNotification = (message: string) => {
+    toast({
+      title: message,
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    })
+  }
 
   useEffect(() => {
     window.addEventListener("resize", handleResponsive);

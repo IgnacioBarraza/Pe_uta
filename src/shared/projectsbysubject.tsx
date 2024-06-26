@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/projectsbysubject.css";
 
 const formatName = (rawName) => {
   return rawName.replace(/¡/g, "í").replace(/¢/g, "ó").replace(/ /g, " ");
@@ -20,9 +19,7 @@ export default function ProjectsBySubject() {
 
   const getSubjects = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/asignaturas"
-      );
+      const response = await axios.get("http://localhost:3000/asignaturas");
       const idToNameMap = {};
       response.data.forEach((project) => {
         idToNameMap[project.id] = formatName(project.nombre);
@@ -62,58 +59,47 @@ export default function ProjectsBySubject() {
 
   return (
     <>
-      <div className="page-container">
+      <div
+        className={`welcome flex justify-center items-center ${
+          isSmallScreen ? "" : "mb-3"
+        }`}
+      >
+        <h1 className="font-semibold text-2xl">Proyectos de {projectName}</h1>
+      </div>
+      <div className="bg-stone-400 bg-cover bg-center w-full min-h-screen bg-no-repeat flex flex-col rounded-lg">
         <div
-          className={`flex justify-center items-center ${
-            isSmallScreen ? "welcome-mobile" : "mb-3 welcome"
-          }`}
+          className="flex-grow mx-auto mt-8 mb-20"
+          role="region"
+          aria-label="Proyectos disponibles"
         >
-          <h1 className="font-semibold text-2xl">Proyectos de {projectName}</h1>
-        </div>
-        <div className="projects-by-subject-container bg-stone-400 flex flex-col items-center">
+          <h2 className="sr-only">Proyectos disponibles</h2>
           <div
-            className={`projects-by-subject-carousel-container flex ${
-              isSmallScreen
-                ? "flex-col mt-6"
-                : "overflow-x-auto whitespace-nowrap m-6"
-            }`}
-            role="region"
-            aria-label="Proyectos disponibles"
+            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 ml-4 mr-4 md:ml-24 md:mr-24"
+            role="list"
           >
-            <h2 className="sr-only">Proyectos disponibles</h2>
-            <ul className="projects-by-subject-wrapper-container flex">
-              {grupos.map((grupo) => (
-                <li
-                  key={grupo.id_grupo}
-                  className="projects-by-subject-btn-container bg-stone-300 mx-4 mb-20"
+            {grupos.map((grupo) => (
+              <Link
+                to={`/project_id/${grupo.id_grupo}`}
+                className="mb-3"
+                key={grupo.id_grupo}
+              >
+                <div
+                  className="bg-white rounded-lg shadow-lg transition-shadow hover:shadow-xl cursor-pointer"
                   role="listitem"
                 >
-                  <div className="project-btn flex flex-col items-center">
-                    <Link to={`/project_id/${grupo.id_grupo}`}>
-                      <div
-                        aria-label={`Ir a ${grupo.nombre_grupo}`}
-                        className="mb-3"
-                      >
-                        <div className="project-img flex justify-center items-center">
-                          <img
-                            src={`${grupo.imagen_url}`}
-                            alt={`Imagen del proyecto ${grupo.nombre_grupo}`}
-                            className={`${
-                              isSmallScreen ? "rounded-none" : "rounded-xl"
-                            }`}
-                          />
-                        </div>
-                      </div>
-                      <div className="project-by-subject-title flex justify-center items-center rounded-2xl">
-                        <span className="font-semibold text-2xl text-white">
-                          {grupo.nombre_grupo}
-                        </span>
-                      </div>
-                    </Link>
+                  <img
+                    src={grupo.imagen_url}
+                    alt={grupo.nombre_grupo}
+                    className="w-full h-48 sm:h-64 md:h-64 object-cover rounded-t-lg"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-lg font-bold mb-2">
+                      {grupo.nombre_grupo}
+                    </h2>
                   </div>
-                </li>
-              ))}
-            </ul>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

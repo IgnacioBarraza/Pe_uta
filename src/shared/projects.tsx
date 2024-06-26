@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/projects.css";
 
 export default function Projects() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
@@ -59,51 +58,44 @@ export default function Projects() {
 
   return (
     <>
-      <div className="total-page-container">
-        <div
-          className={`welcome flex justify-center items-center ${
-            isSmallScreen ? "" : "mb-3"
-          }`}
-        >
-          <h1 className="font-semibold text-2xl">Proyectos</h1>
-        </div>
-        <div className="total-project-container bg-stone-400 flex flex-col items-center">
+      <div
+        className="flex justify-center items-center bg-gray-100 rounded-lg mb-3 h-12"
+        role="region"
+        aria-label="Proyectos disponibles"
+      >
+        <h1 className="font-semibold text-2xl text-navy-800">
+          Proyectos disponibles
+        </h1>
+      </div>
+      <div className="bg-stone-400 bg-cover bg-center w-full bg-no-repeat flex flex-col rounded-lg">
+        <div className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto">
           <div
-            className={`total-projects-carousel-container flex flex-col overflow-y-auto ${
-              isSmallScreen ? "mt-4" : "m-9"
-            }`}
-            role="region"
-            aria-label="Proyectos disponibles"
+            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24"
+            role="list"
           >
-            <h2 className="sr-only">Proyectos disponibles</h2>
-            <div className="total-projects-wrapper-container" role="list">
-              {grupos.map((grupo) => (
+            {grupos.map((grupo) => (
+              <Link
+                to={`/project_id/${grupo.id_grupo}`}
+                className="mb-3"
+                key={grupo.id_grupo}
+              >
                 <div
-                  key={grupo.id_grupo}
-                  className="total-project-btn-container bg-stone-300 mx-4 mb-20"
+                  className="bg-white rounded-lg shadow-lg transition-shadow hover:shadow-xl cursor-pointer"
                   role="listitem"
                 >
-                  <div className="project-btn flex flex-col items-center">
-                    <Link to={`/project_id/${grupo.id_grupo}`} className="mb-3">
-                      <div className="total-project-img flex justify-center items-center mb-3">
-                        <img
-                          src={`${grupo.imagen_url}`}
-                          alt={`Imagen del proyecto ${grupo.nombre_grupo}`}
-                          className={`${
-                            isSmallScreen ? "rounded-none" : "rounded-xl"
-                          }`}
-                        />
-                      </div>
-                      <div className="total-project-title flex justify-center items-center rounded-2xl">
-                        <span className="font-semibold text-2xl text-white">
-                          {grupo.nombre_grupo}
-                        </span>
-                      </div>
-                    </Link>
+                  <img
+                    src={grupo.imagen_url}
+                    alt={grupo.nombre_grupo}
+                    className="w-full h-48 sm:h-64 md:h-64 object-cover rounded-t-lg"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-lg font-bold mb-2">
+                      {grupo.nombre_grupo}
+                    </h2>
                   </div>
                 </div>
-              ))}
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
