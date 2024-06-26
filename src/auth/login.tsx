@@ -24,7 +24,7 @@ export default function LogIn() {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { setUserType, setTokenData, setUserName, setUserId, setUserRut } = useProps()
+  const { setUserType, setTokenData, setUserName, setUserId, setUserRut, userName } = useProps()
 
   const [registeredRut, setRegisteredRut] = useState("");
   const [error, setError] = useState("");
@@ -83,7 +83,7 @@ export default function LogIn() {
       if (status === 201) {
         const { token, userID, userName, tipoID, rut, mensaje } = data;
         saveUserData(token, userID, userName, tipoID, rut)
-        navigate("/home");
+        showModal()
         toastNotification(mensaje)
       }
     } catch (error) {
@@ -270,7 +270,7 @@ export default function LogIn() {
             </div>
           </div>
         </div>
-        <Modal show={modal} close={showModal} name={registeredRut} />
+        <Modal show={modal} close={showModal} name={userName} />
         <ErrorModal show={errorModal} close={showErrorModal} error={error} />
       </Box>
     </>
