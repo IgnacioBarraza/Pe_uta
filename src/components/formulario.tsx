@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import "../styles/formulario.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -117,12 +114,12 @@ export default function Formulario({ group_id }) {
         <span className="title-evaluation font-bold text-2xl">Evaluación</span>
         <div className="evaluation-form-container mt-5">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="criterios flex items-center justify-between mb-2">
+            <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
               <div className=" flex justify-around items-center">
                 <span className="font-semibold text-xl mr-1">1.-</span>
                 <label
                   htmlFor="c1"
-                  className="primer-criterio font-semibold text-xl"
+                  className="w-full lg:w-[95%] font-semibold text-xl"
                 >
                   Creatividad - animación, video incluye portada con nombre de
                   integrantes y universidad, introducción, objetivos,
@@ -134,7 +131,7 @@ export default function Formulario({ group_id }) {
                 <select
                   name="puntuacion"
                   id="c1"
-                  className="select-container"
+                  className="p-3 text-base border-solid border-2 border-gray-300 rounded-md appearance-none outline-none"
                   defaultValue={"--"}
                   {...register("criterio_1", { required: true })}
                   aria-describedby="criterio 1 evaluación"
@@ -147,12 +144,12 @@ export default function Formulario({ group_id }) {
                 </select>
               </div>
             </div>
-            <div className="criterios flex items-center justify-between mb-2">
+            <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
               <div className=" flex justify-around items-center">
                 <span className="font-semibold text-xl mr-1">2.-</span>
                 <label
                   htmlFor="c2"
-                  className="segundo-criterio font-semibold text-xl"
+                  className="w-full lg:w-[95%] font-semibold text-xl"
                 >
                   Usa voz clara, con volumen apropiado, sin uso de muletillas y
                   con buen ritmo, de modo que se pueda oír y seguir. Además, el
@@ -163,7 +160,7 @@ export default function Formulario({ group_id }) {
                 <select
                   name="puntuacion"
                   id="c2"
-                  className="select-container"
+                  className="p-3 text-base border-solid border-2 border-gray-300 rounded-md appearance-none outline-none"
                   defaultValue={"--"}
                   {...register("criterio_2", { required: true })}
                   aria-describedby="criterio 2 evaluación"
@@ -176,12 +173,12 @@ export default function Formulario({ group_id }) {
                 </select>
               </div>
             </div>
-            <div className="criterios flex items-center justify-between mb-2">
+            <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
               <div className=" flex justify-around items-center">
                 <span className="font-semibold text-xl mr-1">3.-</span>
                 <label
                   htmlFor="c3"
-                  className="tercer-criterio font-semibold text-xl"
+                  className="w-full lg:w-[95%] font-semibold text-xl"
                 >
                   Material reciclado, reutilizado, biodegradable
                 </label>
@@ -190,7 +187,7 @@ export default function Formulario({ group_id }) {
                 <select
                   name="puntuacion"
                   id="c3"
-                  className="select-container"
+                  className="p-3 text-base border-solid border-2 border-gray-300 rounded-md appearance-none outline-none"
                   defaultValue={"--"}
                   {...register("criterio_3", { required: true })}
                   aria-describedby="criterio 3 evaluación"
@@ -203,12 +200,12 @@ export default function Formulario({ group_id }) {
                 </select>
               </div>
             </div>
-            <div className="criterios flex items-center justify-between mb-2">
+            <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
               <div className=" flex justify-around items-center">
                 <span className="font-semibold text-xl mr-1">4.-</span>
                 <label
                   htmlFor="c4"
-                  className="cuarto-criterio font-semibold text-xl"
+                  className="w-full lg:w-[95%] font-semibold text-xl"
                 >
                   La demostración y aplicación de las ecuaciones pudo realizarse
                   de acuerdo con los objetivos con posibilidad de replicarse a
@@ -219,7 +216,7 @@ export default function Formulario({ group_id }) {
                 <select
                   name="puntuacion"
                   id="c4"
-                  className="select-container"
+                  className="p-3 text-base border-solid border-2 border-gray-300 rounded-md appearance-none outline-none"
                   defaultValue={"--"}
                   {...register("criterio_4", { required: true })}
                   aria-describedby="criterio 4 evaluación"
@@ -232,12 +229,12 @@ export default function Formulario({ group_id }) {
                 </select>
               </div>
             </div>
-            <div className="criterios flex items-center justify-between mb-2">
+            <div className="h-auto lg:h-[70px] w-full bg-gray-100 rounded-lg p-3 flex items-center justify-between mb-2">
               <div className=" flex justify-around items-center">
                 <span className="font-semibold text-xl mr-1">5.-</span>
                 <label
                   htmlFor="c5"
-                  className="quinto-criterio font-semibold text-xl"
+                  className="w-full lg:w-[95%] font-semibold text-xl"
                 >
                   El tiempo total de presentación no es exagerado
                 </label>
@@ -246,7 +243,7 @@ export default function Formulario({ group_id }) {
                 <select
                   name="puntuacion"
                   id="c5"
-                  className="select-container"
+                  className="p-3 text-base border-solid border-2 border-gray-300 rounded-md appearance-none outline-none"
                   defaultValue={"--"}
                   {...register("criterio_5", { required: true })}
                   aria-describedby="criterio 5 evaluación"
@@ -262,9 +259,9 @@ export default function Formulario({ group_id }) {
             <div className="submit-evaluation flex justify-center mt-3">
               <button
                 type="submit"
-                className="submit-evaluation-btn rounded-full"
+                className="rounded-full w-52 h-12 bg-gray-100"
               >
-                <span className="font-semibold text-amber-950 text-lg">
+                <span className="font-semibold text-lg">
                   Enviar Evaluación
                 </span>
               </button>

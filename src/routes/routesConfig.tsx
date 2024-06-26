@@ -42,7 +42,7 @@ const routes = [
         ),
       },
       {
-        path: "project/:id",
+        path: "project/:project_name/:id",
         component: (
           <ProtectedRoute roles={["user", "admin"]}>
             <EvaluateProject />

@@ -67,7 +67,7 @@ export default function Projects() {
           Proyectos disponibles
         </h1>
       </div>
-      <div className="bg-stone-400 bg-cover bg-center w-full bg-no-repeat flex flex-col rounded-lg">
+      <div className="bg-stone-400 bg-cover bg-center w-full h-full bg-no-repeat flex flex-col rounded-lg">
         <div className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto">
           <div
             className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24"
@@ -75,7 +75,7 @@ export default function Projects() {
           >
             {grupos.map((grupo) => (
               <Link
-                to={`/project_id/${grupo.id_grupo}`}
+                to={`/home/project/${grupo.nombre_grupo}/${grupo.id_grupo}`}
                 className="mb-3"
                 key={grupo.id_grupo}
               >

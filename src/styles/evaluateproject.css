@@ -1,20 +1,3 @@
-.project-page-container {
-  width: 100%;
-  height: 84.3vh;
-  padding: 10px;
-  background-image: url('../assets/fondo_login.jpg');
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
-
-.info-project-container {
-  width: 100%;
-  height: 76vh;
-  border-radius: 10px;
-  overflow: auto;
-}
-
 .info-project-container::-webkit-scrollbar {
   width: 8px;
   height: 8px;

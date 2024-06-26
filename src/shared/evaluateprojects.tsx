@@ -59,16 +59,11 @@ export default function EvaluateProject() {
 
   return (
     <>
-      <Navbar />
-      <div className="project-page-container">
-        <div
-          className={`welcome flex justify-center items-center ${
-            isSmallScreen ? "" : "mb-3"
-          }`}
-        >
-          <h1 className="font-semibold text-2xl">Proyecto "{nombreGrupo}"</h1>
+      <div className="w-full h-auto lg:h-[84vh] overflow-auto info-project-container">
+        <div className="bg-gray-100 flex justify-center items-center rounded-lg lg:h-12 mb-3">
+          <h1 className="font-semibold text-lg lg:text-2xl text-navy-800">Proyecto "{nombreGrupo}"</h1>
         </div>
-        <div className="info-project-container bg-stone-400 flex flex-col">
+        <div className="rounded-lg bg-stone-400 flex flex-col overflow-auto">
           <div
             className={`project-info flex ${
               isSmallScreen ? "flex-col items-center m-2" : "m-10"
@@ -97,11 +92,7 @@ export default function EvaluateProject() {
               </ul>
             </div>
             <div className="project-description flex flex-col">
-              <span
-                className={`font-semibold ${
-                  isSmallScreen ? "text-3xl" : "text-3xl"
-                }`}
-              >
+              <span className="font-semibold text-3xl">
                 Descripción del proyecto
               </span>
               <p className="font-normal text-lg mt-2">{descripcion}</p>
@@ -110,7 +101,6 @@ export default function EvaluateProject() {
           <Formulario group_id={id} />
         </div>
       </div>
-      <Footer />
     </>
   );
 }

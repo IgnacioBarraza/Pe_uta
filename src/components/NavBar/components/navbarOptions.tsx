@@ -1,4 +1,4 @@
-import { faBars, faBookmark, faHome, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBookmark, faHome, faSquareCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
@@ -10,12 +10,12 @@ export const NavbarOptions = ({toggleMenu, isMenuOpen, iconSize}) => {
         onClick={toggleMenu}
         aria-label="Toggle Menú"
       >
-        <FontAwesomeIcon icon={faBars} size={iconSize} />
+        <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size={iconSize} />
       </button>
       <div
         className={`xl:flex items-center ${
           isMenuOpen
-            ? "flex-col absolute top-20 left-0 bg-gray-100 shadow-lg rounded-b-md p-4"
+            ? "flex-col absolute top-[75px] left-0 bg-gray-100 shadow-lg rounded-b-md p-4"
             : "hidden"
         }`}
       >

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -10,12 +10,7 @@ const formatName = (rawName) => {
 export default function ProjectsBySubject() {
   const { subject_name, id } = useParams();
   const [projectName, setProjectName] = useState("");
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [grupos, setGrupos] = useState([]);
-
-  const handleResponsive = () => {
-    setIsSmallScreen(window.innerWidth <= 1050);
-  };
 
   const getSubjects = async () => {
     try {
@@ -47,39 +42,30 @@ export default function ProjectsBySubject() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResponsive);
-    getSubjects();
-    getGroups();
-    console.log(JSON.stringify(localStorage.getItem("proyectosEvaluados")));
-
-    return () => {
-      window.removeEventListener("resize", handleResponsive);
-    };
-  }, [isSmallScreen, subject_name, id]);
+    getGroups()
+    getSubjects()
+  })
 
   return (
     <>
       <div
-        className={`welcome flex justify-center items-center ${
-          isSmallScreen ? "" : "mb-3"
-        }`}
+        className="flex justify-center items-center bg-gray-100 rounded-lg mb-3 h-12"
+        role="region"
+        aria-label="Proyectos disponibles"
       >
-        <h1 className="font-semibold text-2xl">Proyectos de {projectName}</h1>
+        <h1 className="font-semibold text-xl lg:text-2xl text-navy-800">
+          Proyectos de {projectName}
+        </h1>
       </div>
-      <div className="bg-stone-400 bg-cover bg-center w-full min-h-screen bg-no-repeat flex flex-col rounded-lg">
-        <div
-          className="flex-grow mx-auto mt-8 mb-20"
-          role="region"
-          aria-label="Proyectos disponibles"
-        >
-          <h2 className="sr-only">Proyectos disponibles</h2>
+      <div className="bg-stone-400 bg-cover bg-center w-full h-full bg-no-repeat flex flex-col rounded-lg">
+        <div className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto">
           <div
-            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 ml-4 mr-4 md:ml-24 md:mr-24"
+            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24"
             role="list"
           >
             {grupos.map((grupo) => (
               <Link
-                to={`/project_id/${grupo.id_grupo}`}
+                to={`/home/project/${grupo.nombre_grupo}/${grupo.id_grupo}`}
                 className="mb-3"
                 key={grupo.id_grupo}
               >
