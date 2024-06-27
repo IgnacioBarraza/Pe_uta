@@ -44,7 +44,7 @@ export const BackendProvider = ({children}: BackendProviderProps) => {
   const getAsignaturas = () => axios.get(`${BACKEND_URL}/asignaturas`)
 
   /** Integrantes endpoint **/
-  const createMembers = (members) => axios.post(`${BACKEND_URL}/agregar-integrantes`)
+  const createMembers = (members) => axios.post(`${BACKEND_URL}/agregar-integrantes`, members)
   return (
     <BackendContext.Provider value={{ getGroups, getGroupsById, getMembersByGroup, exportExcel, getAsignaturas, createGroup, createMembers }}>{children}</BackendContext.Provider>
   )
