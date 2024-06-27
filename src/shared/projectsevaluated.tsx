@@ -14,7 +14,7 @@ export default function Projects() {
 
   const getGroupsFiltered = async () => {
     try {
-      const response = await axios.get("https://bak.torresproject.com/grupos-asignaturas");
+      const response = await axios.get("http://localhost:3000/grupos-asignaturas");
 
       const gruposIdAlmacenados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
       // Verificar si hay algún grupo_id almacenado
@@ -46,50 +46,39 @@ export default function Projects() {
 
   return (
     <>
-      <div className="total-evaluated-page-container">
-        <div
-          className={`welcome flex justify-center items-center ${
-            isSmallScreen ? "" : "mb-3"
-          }`}
+      <div
+          className="flex justify-center items-center bg-gray-100 rounded-lg mb-3 h-12"
         >
-          <h1 className="font-semibold text-2xl">Proyectos</h1>
+          <h1 className="font-bold text-2xl text-navy-800 rounded-lg">Proyectos evaluados</h1>
         </div>
-        <div className="total-evaluated-project-container bg-stone-400 flex flex-col items-center">
+        <div className="w-full h-[77vh] rounded-lg p-0 bg-davy-gray flex flex-col items-center">
           <div
-            className={`total-projects-carousel-container flex flex-col overflow-y-auto ${
-              isSmallScreen ? "mt-4" : "m-9"
-            }`}
+            className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto"
             role="region"
             aria-label="Proyectos disponibles"
           >
-            <div className="total-projects-wrapper-container">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24">
               {gruposFiltrados.map((grupo) => (
                 <div
-                  key={grupo.id_grupo}
-                  className="total-project-btn-container bg-stone-300 mx-4 mb-20"
-                >
-                  <div className="project-btn flex flex-col items-center">
-                    <div className="mb-3">
-                      <div className="total-project-img flex justify-center items-center mb-3">
-                        <img
-                          src={`${grupo.imagen_url}`}
-                          alt={`Imagen del proyecto ${grupo.nombre_grupo}`}
-                          className={`${isSmallScreen ? "rounded-none" : "rounded-xl"}`}
-                        />
-                      </div>
-                      <div className="total-project-title flex justify-center items-center rounded-2xl">
-                        <span className="font-semibold text-2xl text-white">
-                          {grupo.nombre_grupo}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                key={grupo.id}
+                className="bg-white rounded-lg shadow-lg transition-shadow hover:shadow-xl"
+                role="listitem"
+              >
+                <img
+                  src={grupo.imagen_url}
+                  alt={grupo.nombre_grupo}
+                  className="w-full h-48 sm:h-64 md:h-64 object-cover rounded-t-lg"
+                />
+                <div className="p-4">
+                  <h2 className="text-lg font-bold mb-2">
+                    {grupo.nombre_grupo}
+                  </h2>
                 </div>
+              </div>
               ))}
             </div>
           </div>
-        </div>
-      </div>
+        </div>  
     </>
   );
 }

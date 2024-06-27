@@ -73,7 +73,7 @@ export default function Formulario({ group_id }) {
 
       try {
         const response = await axios.post(
-          "https://bak.torresproject.com/evaluaciones",
+          "http://localhost:3000/evaluaciones",
           BodyToSend
         );
         if (response.status === 201) {

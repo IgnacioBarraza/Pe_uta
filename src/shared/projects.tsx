@@ -63,11 +63,11 @@ export default function Projects() {
         role="region"
         aria-label="Proyectos disponibles"
       >
-        <h1 className="font-semibold text-2xl text-navy-800">
+        <h1 className="font-bold text-2xl text-navy-800">
           Proyectos disponibles
         </h1>
       </div>
-      <div className="bg-stone-400 bg-cover bg-center w-full h-full bg-no-repeat flex flex-col rounded-lg">
+      <div className="bg-davy-gray bg-cover bg-center w-full h-full bg-no-repeat flex flex-col rounded-lg">
         <div className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto">
           <div
             className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24"
