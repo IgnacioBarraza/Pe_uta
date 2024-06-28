@@ -119,10 +119,10 @@ export const LogIn = () => {
   return (
     <>
       <Box bgImage={"url(/fondo_login.jpg)"}>
-        <div className="flex justify-center login">
+        <div className="flex justify-center login w-screen h-screen">
           <div className="bg-gray-100 self-center flex flex-col items-center w-screen h-full lg:w-[1035px] lg:h-[640px] lg:grid lg:grid-flow-col lg:rounded-xl">
             <div
-              className="bg-davy-gray mb-2 m-2 w-[98%] rounded-xl lg:mb-0 lg:m-4 lg:row-span-4 lg:w-[510px] lg:h-[610px]"
+              className="bg-davy-gray mb-2 m-2 w-[98%] rounded-xl lg:m-4 lg:row-span-4 lg:w-[515px] lg:h-[610px]"
               role="region"
               aria-label="Login Container"
             >
@@ -205,7 +205,7 @@ export const LogIn = () => {
                   <div className="flex justify-center pt-20">
                     <button
                       type="submit"
-                      className="bg-stone-100 submit-btn rounded-lg"
+                      className="bg-stone-100 rounded-lg w-40 h-12"
                     >
                       <span className="text-black font-semibold text-lg">
                         Ingresar

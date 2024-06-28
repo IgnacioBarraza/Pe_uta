@@ -1,5 +1,3 @@
-import './styles/organize-modal.css'
-
 export const OrganizeModal = () => {
   return (
     <>
