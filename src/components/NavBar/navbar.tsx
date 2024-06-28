@@ -39,7 +39,7 @@ export default function Navbar() {
         <NavbarOptions toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} iconSize={iconSize}/>
       </div>
       <div className="flex justify-center items-center lg:max-w-[500px] lg:w-full grow">
-        <div className="title-text flex items-center justify-center h-12">
+        <div className="title-text flex flex-col items-center justify-center h-12">
           <span className="font-bold text-lg lg:text-2xl text-navy-800 font-roboto">
             Feria de divulgación universitaria
           </span>

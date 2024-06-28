@@ -1,7 +1,7 @@
 import "./modal.css";
 import { Link } from "react-router-dom";
 
-export default function Modal({ show, close, name }) {
+export const Modal = ({ show, close, name }) => {
   return (
     <>
       {show ? (

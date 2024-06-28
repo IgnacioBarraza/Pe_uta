@@ -14,7 +14,7 @@ export default function Projects() {
   const getGroups = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/grupos-asignaturas"
+        "https://bak.torresproject.com/grupos-asignaturas"
       );
 
       const gruposIdAlmacenados = JSON.parse(

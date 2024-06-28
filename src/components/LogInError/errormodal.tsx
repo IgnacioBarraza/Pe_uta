@@ -1,6 +1,6 @@
 import "./errormodal.css";
 
-export default function ErrorModal({ show, close, error }) {
+export const ErrorModal = ({ show, close, error }) => {
   return (
     <>
       {show ? (

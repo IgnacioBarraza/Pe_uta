@@ -1,9 +1,8 @@
-import Calendario from "../components/Calendar/calendar";
-import Modal from "../components/LogInAdvice/modal";
-import ErrorModal from "../components/LogInError/errormodal";
-import "../styles/login.css";
+import {Calendario} from "../components/Calendar/calendar";
+import {Modal} from "../components/LogInAdvice/modal";
+import {ErrorModal} from "../components/LogInError/errormodal";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { OrganizeModal } from "../components/organize-modal";
@@ -17,7 +16,7 @@ type FormData = {
   name?: string
 };
 
-export default function LogIn() {
+export const LogIn = () => {
   const {
     register,
     handleSubmit,
@@ -25,12 +24,9 @@ export default function LogIn() {
   } = useForm<FormData>();
 
   const { setUserType, setTokenData, setUserName, setUserId, setUserRut, userName } = useProps()
-
-  const [registeredRut, setRegisteredRut] = useState("");
   const [error, setError] = useState("");
   const [modal, setModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [newUser, setNewUser] =  useState(false)
 
   const currentDate = new Date();
@@ -52,16 +48,15 @@ export default function LogIn() {
   const handleLogin = async (loginData: FormData) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/login",
+        "https://bak.torresproject.com/login",
         loginData
       );
       const {status, data } = res
       if (status === 200) {
-        console.log(data)
-        const { token, userID, userName, tipoID, rut, mensaje } = data;
+        const { token, userID, userName, tipoID, rut, mensaje, gruposEvaluados } = data;
         localStorage.setItem(
           "proyectosEvaluados",
-          JSON.stringify(data.gruposEvaluados)
+          JSON.stringify(gruposEvaluados)
         );
         saveUserData(token, userID, userName, tipoID, rut)
         navigate("/home");
@@ -81,7 +76,7 @@ export default function LogIn() {
   const handleRegister = async (registerData: FormData) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/registro",
+        "https://bak.torresproject.com/registro",
         registerData
       );
       const {status, data } = res
@@ -112,10 +107,6 @@ export default function LogIn() {
     setUserRut(rut)
   };
 
-  const handleResponsive = () => {
-    setIsSmallScreen(window.innerWidth <= 1050);
-  };
-
   const toastNotification = (message: string) => {
     toast({
       title: message,
@@ -125,31 +116,13 @@ export default function LogIn() {
     })
   }
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResponsive);
-
-    return () => {
-      window.removeEventListener("resize", handleResponsive);
-    };
-  }, [isSmallScreen]);
-
   return (
     <>
       <Box bgImage={"url(/fondo_login.jpg)"}>
         <div className="flex justify-center login">
-          <div
-            className={`bg-gray-100 self-center ${
-              isSmallScreen
-                ? "flex flex-col items-center main-container-mobile"
-                : "grid grid-flow-col main-container rounded-xl"
-            }`}
-          >
+          <div className="bg-gray-100 self-center flex flex-col items-center w-screen h-full lg:w-[1035px] lg:h-[640px] lg:grid lg:grid-flow-col lg:rounded-xl">
             <div
-              className={`bg-davy-gray ${
-                isSmallScreen
-                  ? "login-container-mobile mb-2 m-2"
-                  : "login-container row-span-4 rounded-lg m-4"
-              }`}
+              className="bg-davy-gray mb-2 m-2 w-[98%] rounded-xl lg:mb-0 lg:m-4 lg:row-span-4 lg:w-[510px] lg:h-[610px]"
               role="region"
               aria-label="Login Container"
             >
@@ -157,7 +130,7 @@ export default function LogIn() {
                 <img
                   src="/uta_logo.svg"
                   alt="Uta logo"
-                  className={`h-[100px] ${isSmallScreen ? "p-3" : "p-2"}`}
+                  className="h-[100px] p-3 lg:p-2"
                 />
                 <div
                   className="text-white flex flex-col justify-center items-center text-lg font-semibold"
@@ -173,7 +146,7 @@ export default function LogIn() {
                   aria-labelledby="login-form-heading"
                 >
                   {newUser && (
-                    <div className="rut-input flex flex-col m-auto pt-10 font-semibold">
+                    <div className="w-80 font-roboto flex flex-col m-auto pt-10 font-semibold">
                       <label htmlFor="nombre" className="text-white">Nombre</label>
                       <input
                         type="text"
@@ -192,7 +165,7 @@ export default function LogIn() {
                       )}
                     </div>
                   )}
-                  <div className="rut-input flex flex-col m-auto pt-10 font-semibold">
+                  <div className="w-80 font-roboto flex flex-col m-auto pt-10 font-semibold">
                     <label htmlFor="rut" className="text-white">Rut</label>
                     <input
                       type="text"
@@ -214,7 +187,7 @@ export default function LogIn() {
                       </span>
                     )}
                   </div>
-                  <div className="password-input flex flex-col m-auto pt-10 font-semibold">
+                  <div className="w-80 font-roboto flex flex-col m-auto pt-10 font-semibold">
                     <label htmlFor="pass" className="text-white">Contraseña</label>
                     <input
                       type="password"
@@ -258,13 +231,13 @@ export default function LogIn() {
                   <img
                     src="/upcoming_dates.svg"
                     alt="Organize icon"
-                    className="organize-icon p-3"
+                    className="p-3"
                   />
                   <span className="font-medium text-2xl text-white">
                     Proximas Fechas
                   </span>
                 </div>
-                <div className="important-day text-center mt-1 flex flex-col mb-2 text-white">
+                <div className="text-center mt-1 flex flex-col mb-2 text-white">
                   <span className="font-bold">Lugar: UTA Sede La Tirana</span>
                   <span className="font-bold">
                     Fecha: Viernes 28 de Junio {currentYear} - 09:00hrs

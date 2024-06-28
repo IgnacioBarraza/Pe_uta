@@ -1,7 +1,7 @@
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
-const BACKEND_URL = 'http://localhost:3000'
+const BACKEND_URL = 'https://bak.torresproject.com'
 
 type BackendContextType = {
   getGroups: () => Promise<any>

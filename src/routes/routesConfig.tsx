@@ -3,10 +3,10 @@ import Projects from "../shared/projects";
 import ProjectsBySubject from "../shared/projectsbysubject";
 import ProjectsEvaluated from "../shared/projectsevaluated";
 import EvaluateProject from "../shared/evaluateprojects";
-import LogIn from "../auth/login";
+import { LogIn } from "../auth/login";
 import ProtectedRoute from "./protectedRoute";
 import { MainPage } from "../shared/MainPage/mainpage";
-import { Page404 } from "../shared/page404"; // Ensure you have a 404 page
+import { Page404 } from "../shared/page404";
 
 const routes = [
   {

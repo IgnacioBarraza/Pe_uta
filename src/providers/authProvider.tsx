@@ -2,8 +2,8 @@ import axios from "axios";
 import { createContext } from "react";
 import { LoginData } from "../utils/interface";
 
-const DEV_BACKEND_URL = "http://localhost:3000"
-// const PROD_BACKEND_URL = "http://localhost:3000"
+const DEV_BACKEND_URL = "https://bak.torresproject.com"
+// const PROD_BACKEND_URL = "https://bak.torresproject.com"
 
 type AuthContextType = {
   signup: (rut, password) => void

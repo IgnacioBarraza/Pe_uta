@@ -6,7 +6,7 @@ interface CalendarioProps {
   month: number;
 }
 
-export default function Calendario({ year, month }: CalendarioProps) {
+export const Calendario = ({ year, month }: CalendarioProps) => {
   const daysInMonth = new Date(year, month, 0).getDate();
   const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

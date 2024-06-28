@@ -1,20 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import axios from "axios";
 import '../styles/projectsevaluated.css'
 
 
 export default function Projects() {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [gruposFiltrados, setGruposFiltrados] = useState([]);
-
-  const handleResponsive = () => {
-    setIsSmallScreen(window.innerWidth <= 1050);
-  };
-
   const getGroupsFiltered = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/grupos-asignaturas");
+      const response = await axios.get("https://bak.torresproject.com/grupos-asignaturas");
 
       const gruposIdAlmacenados = JSON.parse(localStorage.getItem("proyectosEvaluados"));
       // Verificar si hay algún grupo_id almacenado
@@ -28,7 +21,7 @@ export default function Projects() {
         // proyectosFiltrados ahora contiene solo los proyectos correspondientes a los grupo_id almacenados
         setGruposFiltrados(proyectosFiltrados);
       } else {
-        console.log("No hay grupo_id almacenados en localStorage.");
+        console.log("No hay grupo_id almacenados en el storage.");
       }
     } catch (error) {
       console.error(error);
@@ -36,13 +29,8 @@ export default function Projects() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResponsive);
     getGroupsFiltered();
-  
-    return () => {
-      window.removeEventListener("resize", handleResponsive);
-    };
-  }, [isSmallScreen]);
+  }, []);
 
   return (
     <>
@@ -53,7 +41,7 @@ export default function Projects() {
         </div>
         <div className="w-full h-[77vh] rounded-lg p-0 bg-davy-gray flex flex-col items-center">
           <div
-            className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto"
+            className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto w-full"
             role="region"
             aria-label="Proyectos disponibles"
           >
@@ -61,7 +49,7 @@ export default function Projects() {
               {gruposFiltrados.map((grupo) => (
                 <div
                 key={grupo.id_grupo}
-                className="bg-white rounded-lg shadow-lg transition-shadow hover:shadow-xl"
+                className="bg-white rounded-lg shadow-lg transition-shadow hover:shadow-xl lg:w-[350px]"
                 role="listitem"
               >
                 <img
