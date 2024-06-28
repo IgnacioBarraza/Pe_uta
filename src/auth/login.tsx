@@ -57,7 +57,12 @@ export default function LogIn() {
       );
       const {status, data } = res
       if (status === 200) {
+        console.log(data)
         const { token, userID, userName, tipoID, rut, mensaje } = data;
+        localStorage.setItem(
+          "proyectosEvaluados",
+          JSON.stringify(data.gruposEvaluados)
+        );
         saveUserData(token, userID, userName, tipoID, rut)
         navigate("/home");
         toastNotification(mensaje)
@@ -155,7 +160,7 @@ export default function LogIn() {
                   className={`h-[100px] ${isSmallScreen ? "p-3" : "p-2"}`}
                 />
                 <div
-                  className="text-white flex flex-col justify-center items-center text-lg"
+                  className="text-white flex flex-col justify-center items-center text-lg font-semibold"
                 >
                   <span>Feria de divulgación universitaria</span>
                   <span>Universidad de Tarapacá</span>

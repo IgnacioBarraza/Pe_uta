@@ -60,7 +60,7 @@ export default function Projects() {
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24">
               {gruposFiltrados.map((grupo) => (
                 <div
-                key={grupo.id}
+                key={grupo.id_grupo}
                 className="bg-white rounded-lg shadow-lg transition-shadow hover:shadow-xl"
                 role="listitem"
               >

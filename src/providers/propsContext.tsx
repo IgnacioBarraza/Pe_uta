@@ -49,11 +49,12 @@ export const PropsDataProvider = ({ children }) => {
     setUserType(null);
     setUserId(null);
     setUserRut(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userType");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userid");
-    localStorage.removeItem("userRut");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("userType");
+    // localStorage.removeItem("userName");
+    // localStorage.removeItem("userid");
+    // localStorage.removeItem("userRut");
+    localStorage.clear()
   };
 
   return (

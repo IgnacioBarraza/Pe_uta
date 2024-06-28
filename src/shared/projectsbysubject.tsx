@@ -8,7 +8,7 @@ const formatName = (rawName) => {
 };
 
 export default function ProjectsBySubject() {
-  const { subject_name, id } = useParams();
+  const { id } = useParams();
   const [projectName, setProjectName] = useState("");
   const [grupos, setGrupos] = useState([]);
 
@@ -57,7 +57,7 @@ export default function ProjectsBySubject() {
           Proyectos de {projectName}
         </h1>
       </div>
-      <div className="bg-stone-400 bg-cover bg-center w-full h-full bg-no-repeat flex flex-col rounded-lg">
+      <div className="bg-davy-gray bg-cover bg-center w-full h-full bg-no-repeat flex flex-col rounded-lg">
         <div className="flex-grow mt-8 mb-6 lg:mb-20 overflow-auto">
           <div
             className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-4 md:mx-24"
