@@ -1,15 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Projects() {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [grupos, setGrupos] = useState([]);
-
-  const handleResponsive = () => {
-    setIsSmallScreen(window.innerWidth <= 1050);
-  };
 
   const getGroups = async () => {
     try {
@@ -49,12 +43,8 @@ export default function Projects() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResponsive);
     getGroups();
-    return () => {
-      window.removeEventListener("resize", handleResponsive);
-    };
-  }, [isSmallScreen]);
+  }, []);
 
   return (
     <>

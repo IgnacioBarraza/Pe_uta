@@ -30,9 +30,10 @@ export default function ProjectsBySubject() {
       const response = await axios.get(
         "https://bak.torresproject.com/grupos-asignaturas"
       );
+      const gruposData = response.data
       const proyectosYaEvaluados = JSON.parse(localStorage.getItem("proyectosEvaluados"))
       // Filtrar los grupos por id_asignatura
-      const gruposFiltrados = grupos.filter(
+      const gruposFiltrados = gruposData.filter(
         (grupo) => 
           grupo.id_asignatura === parseInt(id, 10) &&
           !proyectosYaEvaluados.some((evaluado) => evaluado.grupo_id === grupo.id)
