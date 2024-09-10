@@ -1,60 +1,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { NavbarOptions } from "./components/navbarOptions";
-import { useProps } from "../../hooks/useProps";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
 
 export default function Navbar() {
-  const { logout } = useProps()
-  const navigate = useNavigate();
-
-  const iconSize = "xl";
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const handleResize = () => {
-    if (window.innerWidth >= 1280 && isMenuOpen) {
-      setIsMenuOpen(false);
-    }
-  };
-
-  const handleLogout = () => {
-    logout()
-    navigate("/");
-  }
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [isMenuOpen]);
 
   return (
-    <div className="flex justify-between items-center p-4 bg-gray-100 text-dark-gray">
-      <div className="flex items-center justify-center lg:max-w-[500px] lg:w-full">
-        <NavbarOptions toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} iconSize={iconSize}/>
-      </div>
-      <div className="flex justify-center items-center lg:max-w-[500px] lg:w-full grow">
-        <div className="title-text flex flex-col items-center justify-center h-12">
-          <span className="font-bold text-lg lg:text-2xl text-navy-800 font-roboto">
-            Feria de divulgación universitaria
-          </span>
-          <span className="text-navy-800 text-sm font-bold">Universidad de Tarapacá</span>
+    <header className="px-4 lg:px-6 h-14 flex items-center">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="lg:hidden">
+              <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <a href={"/"} className="flex items-center justify-center" >
+              <span className="text-xl font-bold">Feria de Ciencia</span>
+            </a>
+            <nav className="grid gap-4 sm:gap-6 py-6">
+              <a href={"/home"} className="text-sm font-medium hover:underline underline-offset-4">
+                Inicio
+              </a>
+              <a href={"/proyectos"} className="text-sm font-medium hover:underline underline-offset-4">
+                Proyectos
+              </a>
+              <a href={"/evaluar"} className="text-sm font-medium hover:underline underline-offset-4">
+                Evaluar
+              </a>
+            </nav>
+          </SheetContent>
+        </Sheet>
+        <div className="ml-auto hidden lg:flex gap-4 sm:gap-6">
+          <a href={"/home"} className="text-sm font-medium hover:underline underline-offset-4">
+            Inicio
+          </a>
+          <a href={"/proyectos"} className="text-sm font-medium hover:underline underline-offset-4">
+            Proyectos
+          </a>
+          <a href={"/evaluar"} className="text-sm font-medium hover:underline underline-offset-4">
+            Evaluar
+          </a>
         </div>
-      </div>
-      <div className="flex justify-end lg:max-w-[500px] lg:w-full">
-        <button
-          onClick={handleLogout}
-          aria-label="Cerrar Sesión"
-          className="text-dark-gray hover:text-deep-sky-blue hover:animate-beat-fade"
-        >
-          <FontAwesomeIcon icon={faRightToBracket} size={iconSize} />
-        </button>
-      </div>
-    </div>
+      </header>
   );
 }

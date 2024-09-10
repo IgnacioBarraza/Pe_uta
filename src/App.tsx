@@ -1,4 +1,4 @@
-import { AutoLogout } from "./auth/components/aoutlogout";
+import { AutoLogout } from "./auth/components/autologout";
 import { BackendProvider } from "./providers/backendContext";
 import { PropsDataProvider } from "./providers/propsContext";
 import Router from "./router/router";

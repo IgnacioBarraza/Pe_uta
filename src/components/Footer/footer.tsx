@@ -1,10 +1,9 @@
 export default function Footer() {
   return (
     <>
-      <div className="w-full bg-gray-100 h-20 flex flex-col justify-center items-center">
-        <span className="font-semibold text-lg lg:text-2xl text-navy-800">Feria de Ciencias 2024</span>
-        <span className="font-semibold text-sm text-navy-800">Desarrollado por Danny Torres e Ignacio Barraza - ICIN</span>
-      </div>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+        <p className="text-xs text-muted-foreground">&copy; 2024 Feria de Ciencia. Todos los derechos reservados.</p>
+      </footer>
     </>
   )
 }
