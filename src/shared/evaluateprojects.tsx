@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Footer from "../components/Footer/footer";
-import Navbar from "../components/NavBar/navbar";
 import "../styles/evaluateproject.css";
 import Formulario from "../components/formulario";
 
@@ -13,7 +11,6 @@ export default function EvaluateProject() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1050);
   const [nombreAsignatura, setNombreAsignatura] = useState("");
   const [nombreGrupo, setnombreGrupo] = useState("");
-  const [nombresIntegrantes, setNombresIntegrantes] = useState([]);
   const [integrantes, setIntegrantes] = useState([]);
   const [imagenGrupo, setimagenGrupo] = useState("");
   const [descripcion, setDescripcion] = useState("");

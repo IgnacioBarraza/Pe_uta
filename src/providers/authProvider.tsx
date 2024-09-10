@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext } from "react";
-import { LoginData } from "../utils/interface";
+import { LoginData } from "../utils/utils";
 
 const DEV_BACKEND_URL = "https://bak.torresproject.com"
 // const PROD_BACKEND_URL = "https://bak.torresproject.com"

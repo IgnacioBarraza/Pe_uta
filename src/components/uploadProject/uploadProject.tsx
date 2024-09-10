@@ -2,11 +2,9 @@ import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useBackend } from "../../hooks/useBackend";
-import { useToast } from "@chakra-ui/react";
 
 export const UploadProject = ({ asignaturas, handleInterface }) => {
   const { createGroup, createMembers } = useBackend();
-  const toast = useToast()
 
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [selectedAsignatura, setSelectedAsignatura] = useState<string | null>(null);
@@ -57,37 +55,15 @@ export const UploadProject = ({ asignaturas, handleInterface }) => {
             grupo_id: projectId,
           };
         });
-        toastNotification(data.mensaje)
         const res = await createMembers(newMembers);
-        if (res.status === 201) {
-          toastNotification(res.data.mensaje)
-        }
         setSuccess(true)
         handleInterface()
       }
     } catch (error) {
-      toastErrorNotification(error.response.data.mensaje)
       console.error(error);
     }
   };
 
-  const toastNotification = (message: string) => {
-    toast({
-      title: message,
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    })
-  }
-
-  const toastErrorNotification = (message: string) => {
-    toast({
-      title: message,
-      status: 'error',
-      duration: 5000,
-      isClosable: true,
-    })
-  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 sm:px-0 z-10">

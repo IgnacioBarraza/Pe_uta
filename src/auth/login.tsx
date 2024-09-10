@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { OrganizeModal } from "../components/organize-modal";
 import { Box } from "@chakra-ui/react";
 import { useProps } from "../hooks/useProps";
-import { useToast } from "@chakra-ui/react";
 
 type FormData = {
   rut: string;
@@ -35,7 +34,6 @@ export const LogIn = () => {
   const showModal = () => setModal(!modal);
   const showErrorModal = () => setErrorModal(!errorModal);
   const navigate = useNavigate();
-  const toast = useToast()
 
   const handleLoginOrRegister = (data: FormData) => {
     if (!data.name && !newUser) {
@@ -60,7 +58,6 @@ export const LogIn = () => {
         );
         saveUserData(token, userID, userName, tipoID, rut)
         navigate("/home");
-        toastNotification(mensaje)
       }
     } catch (error) {
       if (error.response.status === 404) {
@@ -84,7 +81,6 @@ export const LogIn = () => {
         const { token, userID, userName, tipoID, rut, mensaje } = data;
         saveUserData(token, userID, userName, tipoID, rut)
         showModal()
-        toastNotification(mensaje)
       }
     } catch (error) {
       if (error.response.status === 400) {
@@ -106,15 +102,6 @@ export const LogIn = () => {
     setUserId(userID);
     setUserRut(rut)
   };
-
-  const toastNotification = (message: string) => {
-    toast({
-      title: message,
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    })
-  }
 
   return (
     <>
