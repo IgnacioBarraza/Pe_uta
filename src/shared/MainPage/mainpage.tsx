@@ -1,4 +1,8 @@
-import { faFileExcel, faFileUpload, faKey } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileExcel,
+  faFileUpload,
+  faKey,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useProps } from "../../hooks/useProps";
 import { useEffect, useState } from "react";
@@ -7,6 +11,7 @@ import RecoverPassword from "../../components/RecoverPasswordModal/recover";
 import ProjectButton from "./components/ProjectButton";
 import "../../styles/mainpage.css";
 import { UploadProject } from "../../components/uploadProject/uploadProject";
+import { Link } from "react-router-dom";
 
 const SubjectProjects = [
   {
@@ -43,136 +48,54 @@ const SubjectProjects = [
     label: "Ir a Kinesiología",
     imgClass: "kine-img",
     subject: "Kinesiología",
-  }
-]
+  },
+];
 
-export const MainPage = () => {
-  const { userName, userType } = useProps();
-  const { exportExcel, getAsignaturas } = useBackend()
-
-  const [modal, setModal] = useState(false);
-  const [uploadInterface, setUploadInterface] = useState(false);
-  const [asignaturas, setAsignaturas] = useState(null)
-
-  const showModal = () => setModal(!modal);
-  const showInterface = () => setUploadInterface(!uploadInterface)
-  const date = new Date();
-  const currentYear = date.getFullYear();
-
-  const excel = async () => {
-    await exportExcel().then((response) => {
-        // Crear un enlace (link) temporal para el archivo Blob
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `evaluaciones_feria_ciencia_${currentYear}.xlsx`;
-        // Simular un clic en el enlace para iniciar la descarga
-        document.body.appendChild(a);
-        a.click();
-
-        // Limpiar el enlace y liberar recursos
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Error en la solicitud:", error);
-      });
-  };
-
-  const getAsignaturasData = async () => {
-    try {
-      const res = await getAsignaturas()
-      setAsignaturas(res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleInterface = () => {
-    setUploadInterface((prevState) => !prevState)
-  }
-
-  useEffect(() => {
-    getAsignaturasData()
-  }, [])
+export const Home = () => {
   return (
-    <>
-      <div className="flex justify-center items-center w-full h-14 rounded-lg bg-gray-100 mb-1 lg:mb-3">
-        <h1 className="font-semibold text-2xl text-navy-800 font-roboto">
-          ¡Bienvenid@, {userName}! 👋
-        </h1>
-      </div>
-      <div className="bg-davy-gray flex flex-col items-center rounded-lg w-full h-screen">
-        <div className="m-6 flex justify-center items-center rounded-lg h-12 w-96 bg-gray-100">
-          <span className="text-2xl font-bold text-navy-800 font-roboto">
-            Proyectos por asignatura
-          </span>
-        </div>
-        <div
-          className="projects-carousel-container flex flex-col lg:overflow-x-auto lg:whitespace-nowrap m-6"
-          role="region"
-          aria-label="Proyectos disponibles"
-        >
-          <div className="projects-wrapper-container flex">
-            {SubjectProjects.map((subject) => (
-              <ProjectButton
-                key={subject.key}
-                to={subject.to}
-                label={subject.label}
-                imgClass={subject.imgClass}
-                subject={subject.subject}
-              />
-            ))}
+    <section className="w-full py-12 md:py-24 lg:py-32">
+      <div className="container px-4 md:px-6 mx-auto">
+        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+          <div className="flex flex-col justify-center space-y-4">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                Descubre las maravillas de la ciencia
+              </h1>
+              <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                Únete a nosotros en un emocionante viaje al mundo de la
+                innovación en nuestra Expo de Ciencias, organizada por los
+                estudiantes del departamento de ingeniería. Descubre proyectos
+                de vanguardia, exhibiciones interactivas y presentaciones
+                dinámicas, todos diseñados por los futuros líderes en
+                tecnología. Participa en demostraciones prácticas y explora cómo
+                la creatividad estudiantil está dando forma al futuro de la
+                ciencia y la ingeniería.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <Link
+                to="proyectos"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                Explora los proyectos
+              </Link>
+              <Link
+                to="#"
+                className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                Get Tickets
+              </Link>
+            </div>
           </div>
-        </div>
-        <div
-          className={`admin-btns flex justify-around w-full items-center flex-col mt-10 lg:mt-16`}
-        >
-          {Number(userType) === 1 && (
-            <>
-              <div className="flex flex-row items-center justify-around w-full">
-                <div
-                  className="w-14 h-14 lg:w-64 lg:h-16 flex items-center justify-center rounded-full mb-4 lg:mb-0 bg-green-600"
-                >
-                  <button onClick={excel} className="h-full w-full flex items-center justify-center">
-                    <FontAwesomeIcon icon={faFileExcel} size="xl" />
-                    <span className="ml-3 font-bold text-2xl hidden lg:block">
-                      Descargar excel
-                    </span>
-                  </button>
-                </div>
-                <div
-                  className="w-14 h-14 flex items-center justify-center rounded-full mb-4 lg:mb-0 bg-gray-100 lg:w-80 lg:h-16"
-                >
-                  <button onClick={() => showInterface()} className="h-full w-full flex items-center justify-center">
-                    <FontAwesomeIcon icon={faFileUpload} size="xl" />
-                    <span className="ml-3 font-bold text-2xl hidden lg:flex text-navy-800">
-                      Subir proyecto
-                    </span>
-                  </button>
-                </div>
-                <div
-                  className={`w-14 h-14 lg:w-[350px] lg:h-16 flex items-center justify-center rounded-full mb-4 lg:mb-0 bg-gray-100`}
-                >
-                  <button
-                    className="h-full w-full flex items-center justify-center"
-                    onClick={() => showModal()}
-                  >
-                    <FontAwesomeIcon icon={faKey} size="xl" />
-                    <span className="ml-3 font-bold text-2xl text-navy-800 hidden lg:block">
-                      Recuperar contraseña
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </>
-          )}
+          <img
+            src="/placeholder.svg"
+            width="550"
+            height="550"
+            alt="Science Expo"
+            className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+          />
         </div>
       </div>
-      <RecoverPassword show={modal} close={showModal} />
-      {uploadInterface && (
-        <UploadProject asignaturas={asignaturas} handleInterface={handleInterface}/>
-      )}
-    </>
+    </section>
   );
 };

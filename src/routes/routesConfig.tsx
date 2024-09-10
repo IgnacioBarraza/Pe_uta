@@ -1,45 +1,33 @@
-import { HomePage } from "../shared/homepage";
+import { Layout } from "../shared/layout";
 import Projects from "../shared/projects";
-import ProjectsBySubject from "../shared/projectsbysubject";
 import ProjectsEvaluated from "../shared/projectsevaluated";
 import EvaluateProject from "../shared/evaluateprojects";
 import { LogIn } from "../auth/login";
 import ProtectedRoute from "./protectedRoute";
-import { MainPage } from "../shared/MainPage/mainpage";
+import { Home } from "../shared/MainPage/mainpage";
 import { Page404 } from "../shared/page404";
+import { Register } from "@/auth/register";
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
     component: <LogIn />,
   },
   {
-    path: "/home",
-    component: (
-      <ProtectedRoute roles={["user", "admin"]}>
-        <HomePage />
-      </ProtectedRoute>
-    ),
+    path: "/register",
+    component: <Register />
+  },
+  {
+    path: "/inicio",
+    component: <Layout />,
     routes: [
       {
         path: "",
-        component: <MainPage />,
+        component: <Home />,
       },
       {
-        path: "projects",
-        component: (
-          <ProtectedRoute roles={["user", "admin"]}>
-            <Projects />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "projects/:subject_name/:id",
-        component: (
-          <ProtectedRoute roles={["user", "admin"]}>
-            <ProjectsBySubject />
-          </ProtectedRoute>
-        ),
+        path: "proyectos",
+        component: <Projects />
       },
       {
         path: "project/:project_name/:id",
@@ -50,7 +38,7 @@ const routes = [
         ),
       },
       {
-        path: "evaluated",
+        path: "evaluar",
         component: (
           <ProtectedRoute roles={["user", "admin"]}>
             <ProjectsEvaluated />
