@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 
@@ -33,6 +31,9 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
+        <a href={"/"} className="hidden sm:flex items-center justify-center" >
+          <span className="text-xl font-bold">Feria de Ciencia</span>
+        </a>
         <div className="ml-auto hidden lg:flex gap-4 sm:gap-6">
           <a href="/inicio" className="text-sm font-medium hover:underline underline-offset-4">
             Inicio
