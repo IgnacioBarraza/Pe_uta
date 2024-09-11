@@ -1,11 +1,11 @@
-import { Layout } from "../shared/layout";
-import Projects from "../shared/projects";
+import { Layout } from "@/shared/layout";
+import { Projects } from "@/shared/project/projects";
 import ProjectsEvaluated from "../shared/projectsevaluated";
 import EvaluateProject from "../shared/evaluateprojects";
-import { LogIn } from "../auth/login";
+import { LogIn } from "@/auth/login";
 import ProtectedRoute from "./protectedRoute";
-import { Home } from "../shared/Home/home";
-import { Page404 } from "../shared/page404";
+import { Home } from "@/shared/Home/home";
+import { Page404 } from "@/shared/page404";
 import { Register } from "@/auth/register";
 
 const routes = [
@@ -30,7 +30,7 @@ const routes = [
         component: <Projects />
       },
       {
-        path: "project/:project_name/:id",
+        path: "evaluar/:project_name/:id",
         component: (
           <ProtectedRoute roles={["user", "admin"]}>
             <EvaluateProject />
@@ -38,7 +38,7 @@ const routes = [
         ),
       },
       {
-        path: "evaluar",
+        path: "evaluados",
         component: (
           <ProtectedRoute roles={["user", "admin"]}>
             <ProjectsEvaluated />

@@ -39,4 +39,66 @@ export const SubjectProjects = [
     description: "Estudia el movimiento del cuerpo humano y su aplicación en la rehabilitación y el rendimiento físico.",
     showInExpo: false
   },
-];
+]
+
+export const ProjectsInfo = [
+  {
+    id: "1",
+    projectName: "Estudio del Movimiento Pendular",
+    description: "Este proyecto investiga el movimiento armónico simple utilizando un péndulo para demostrar las leyes de la mecánica clásica.",
+    image: "/project-placeholder.jpg",
+    members: [
+      "Ana Gómez",
+      "Carlos Pérez",
+      "Lucía Rodríguez"
+    ],
+    subject: "Mecánica Clásica"
+  },
+  {
+    id: "2",
+    projectName: "Aplicaciones del Electromagnetismo en la Tecnología Moderna",
+    description: "El proyecto explora cómo se aplican los principios del electromagnetismo en dispositivos cotidianos como teléfonos móviles y computadoras.",
+    image: "/project-placeholder.jpg",
+    members: [
+      "Jorge Fernández",
+      "Marta López"
+    ],
+    subject: "Electromagnetismo"
+  },
+  {
+    id: "3",
+    projectName: "Energía Renovable a través de Celdas Solares",
+    description: "Este proyecto investiga la eficiencia de diferentes materiales en la fabricación de celdas solares para optimizar la producción de energía renovable.",
+    image: "/project-placeholder.jpg",
+    members: [
+      "Daniela Suárez",
+      "Pablo Martínez",
+      "Sofía Hernández"
+    ],
+    subject: "Física Contemporánea"
+  },
+  {
+    id: "4",
+    projectName: "Análisis Biomecánico en Rehabilitación Física",
+    description: "Un estudio sobre cómo la biomecánica puede mejorar los tratamientos de rehabilitación para pacientes con lesiones musculares y articulares.",
+    image: "/project-placeholder.jpg",
+    members: [
+      "Valentina Ruiz",
+      "Felipe Castillo"
+    ],
+    subject: "Kinesiología"
+  },
+  {
+    id: "5",
+    projectName: "Simulación de Partículas Cuánticas",
+    description: "El proyecto desarrolla un software que simula el comportamiento de partículas a nivel cuántico utilizando algoritmos de computación avanzada.",
+    image: "/project-placeholder.jpg",
+    members: [
+      "Santiago Álvarez",
+      "Clara Torres",
+      "Fernando Vargas"
+    ],
+    subject: "Física Contemporánea"
+  }
+]
+

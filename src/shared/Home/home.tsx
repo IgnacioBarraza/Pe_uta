@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Projects } from "./components/projects";
+import { Projects } from "./components/projectCards";
 import { Schedule } from "./components/schedule";
 
 export const Home = () => {
