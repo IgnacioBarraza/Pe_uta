@@ -67,7 +67,7 @@ export const LogIn = () => {
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faCalendar} className="h-5 w-5 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  October 1st - October 5th, 2024
+                  29 Noviembre, 2024
                 </p>
               </div>
               <div className="flex items-center gap-2">

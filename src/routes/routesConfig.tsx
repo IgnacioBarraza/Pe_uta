@@ -4,7 +4,7 @@ import ProjectsEvaluated from "../shared/projectsevaluated";
 import EvaluateProject from "../shared/evaluateprojects";
 import { LogIn } from "../auth/login";
 import ProtectedRoute from "./protectedRoute";
-import { Home } from "../shared/MainPage/home";
+import { Home } from "../shared/Home/home";
 import { Page404 } from "../shared/page404";
 import { Register } from "@/auth/register";
 
