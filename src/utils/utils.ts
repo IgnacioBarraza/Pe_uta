@@ -43,7 +43,7 @@ export const SubjectProjects = [
 
 export const ProjectsInfo = [
   {
-    id: "1",
+    id: "6503b4f1c29b8b3f2a1a4e91",
     projectName: "Estudio del Movimiento Pendular",
     description: "Este proyecto investiga el movimiento armónico simple utilizando un péndulo para demostrar las leyes de la mecánica clásica.",
     image: "/project-placeholder.jpg",
@@ -52,10 +52,11 @@ export const ProjectsInfo = [
       "Carlos Pérez",
       "Lucía Rodríguez"
     ],
-    subject: "Mecánica Clásica"
+    subject: "Mecánica Clásica",
+    to: "proyecto?subject=mecanica_clasica&id=6503b4f1c29b8b3f2a1a4e91"
   },
   {
-    id: "2",
+    id: "6503b4f1c29b8b3f2a1a4e92",
     projectName: "Aplicaciones del Electromagnetismo en la Tecnología Moderna",
     description: "El proyecto explora cómo se aplican los principios del electromagnetismo en dispositivos cotidianos como teléfonos móviles y computadoras.",
     image: "/project-placeholder.jpg",
@@ -63,10 +64,12 @@ export const ProjectsInfo = [
       "Jorge Fernández",
       "Marta López"
     ],
-    subject: "Electromagnetismo"
+    subject: "Electromagnetismo",
+    to: "proyecto?subject=electromagnetismo&id=6503b4f1c29b8b3f2a1a4e92"
+    
   },
   {
-    id: "3",
+    id: "6503b4f1c29b8b3f2a1a4e93",
     projectName: "Energía Renovable a través de Celdas Solares",
     description: "Este proyecto investiga la eficiencia de diferentes materiales en la fabricación de celdas solares para optimizar la producción de energía renovable.",
     image: "/project-placeholder.jpg",
@@ -75,10 +78,11 @@ export const ProjectsInfo = [
       "Pablo Martínez",
       "Sofía Hernández"
     ],
-    subject: "Física Contemporánea"
+    subject: "Física Contemporánea",
+    to: "proyecto?subject=fisica_contemporanea&id=6503b4f1c29b8b3f2a1a4e93"
   },
   {
-    id: "4",
+    id: "6503b4f1c29b8b3f2a1a4e94",
     projectName: "Análisis Biomecánico en Rehabilitación Física",
     description: "Un estudio sobre cómo la biomecánica puede mejorar los tratamientos de rehabilitación para pacientes con lesiones musculares y articulares.",
     image: "/project-placeholder.jpg",
@@ -86,10 +90,11 @@ export const ProjectsInfo = [
       "Valentina Ruiz",
       "Felipe Castillo"
     ],
-    subject: "Kinesiología"
+    subject: "Kinesiología",
+    to: "proyecto?subject=kinesiologia&id=6503b4f1c29b8b3f2a1a4e94"
   },
   {
-    id: "5",
+    id: "6503b4f1c29b8b3f2a1a4e95",
     projectName: "Simulación de Partículas Cuánticas",
     description: "El proyecto desarrolla un software que simula el comportamiento de partículas a nivel cuántico utilizando algoritmos de computación avanzada.",
     image: "/project-placeholder.jpg",
@@ -98,7 +103,8 @@ export const ProjectsInfo = [
       "Clara Torres",
       "Fernando Vargas"
     ],
-    subject: "Física Contemporánea"
+    subject: "Física Contemporánea",
+    to: "proyecto?subject=fisica_contemporanea&id=6503b4f1c29b8b3f2a1a4e95"
   }
 ]
 
