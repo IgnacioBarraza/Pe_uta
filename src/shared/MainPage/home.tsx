@@ -80,12 +80,6 @@ export const Home = () => {
                 >
                   Explora los proyectos
                 </Link>
-                <Link
-                  to="#"
-                  className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                >
-                  Get Tickets
-                </Link>
               </div>
             </div>
             <img
@@ -116,7 +110,7 @@ export const Home = () => {
           </div>
           <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
             <img
-              src="/placeholder.svg"
+              src="/expo_placeholder.jpeg"
               width="550"
               height="310"
               alt="Schedule"
