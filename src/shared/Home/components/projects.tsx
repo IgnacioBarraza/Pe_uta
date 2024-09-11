@@ -22,8 +22,8 @@ export const Projects = () => {
         <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
           {SubjectProjects.filter((project) => project.showInExpo).map(
             (project) => (
-              <Link to={'/'}>
-                <div className="grid gap-1" key={project.key}>
+              <Link to={`proyectos?subject=${project.key}`} key={project.key}>
+                <div className="grid gap-1">
                 <div className="inline-block rounded-lg bg-primary px-3 py-1 text-sm text-primary-foreground">
                   {project.subjectField}
                 </div>
