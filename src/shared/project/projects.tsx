@@ -24,13 +24,13 @@ export const Projects = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
             {ProjectsInfo.map((project) => (
-              <div className="bg-background p-6 rounded-lg shadow-lg">
+              <div className="bg-background p-6 rounded-lg shadow-lg" key={project.id}>
                 <img
                   src={project.image}
                   width="140"
                   height="70"
                   alt="Project 1"
-                  className="aspect-[2/1] overflow-hidden rounded-lg object-contain object-center"
+                  className="aspect-[2/1] overflow-hidden rounded-lg object-contain object-center mx-auto"
                 />
                 <div className="space-y-2 mt-4">
                   <h3 className="text-xl font-bold">{project.projectName}</h3>
