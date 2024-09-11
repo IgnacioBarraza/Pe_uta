@@ -14,7 +14,7 @@ export const Projects = () => {
               Explora las asignaturas
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Sumergete en los diversos campos de la ciencia y la física, y
+              Sumergete en los diversos campos de la ciencia y
               descubre novedosos proyectos de cada disciplina.
             </p>
           </div>
