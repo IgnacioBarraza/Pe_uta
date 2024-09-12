@@ -1,7 +1,7 @@
 import { Layout } from "@/shared/layout";
 import { Projects } from "@/shared/project/projects";
 import ProjectsEvaluated from "../shared/projectsevaluated";
-import EvaluateProject from "../shared/evaluateprojects";
+import { Evaluate } from "@/shared/evaluate/evaluate";
 import { LogIn } from "@/auth/login";
 import ProtectedRoute from "./protectedRoute";
 import { Home } from "@/shared/Home/home";
@@ -27,15 +27,11 @@ const routes = [
       },
       {
         path: "proyectos",
-        component: <Projects />
+        component: <Projects />,
       },
       {
-        path: "evaluar/:project_name/:id",
-        component: (
-          <ProtectedRoute roles={["user", "admin"]}>
-            <EvaluateProject />
-          </ProtectedRoute>
-        ),
+        path: "evaluar",
+        component: <Evaluate />
       },
       {
         path: "evaluados",

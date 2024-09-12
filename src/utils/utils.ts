@@ -3,6 +3,18 @@ export interface LoginData {
   password: string
 }
 
+export interface EvaluateData {
+  criterio_1: string;
+  criterio_2: string;
+  criterio_3: string;
+  criterio_4: string;
+  criterio_5: string;
+}
+
+export const formatEvaluations = (evaluations: EvaluateData) => {
+  return JSON.stringify(evaluations)
+}
+
 export const SubjectProjects = [
   {
     key: "1",
@@ -53,7 +65,7 @@ export const ProjectsInfo = [
       "Lucía Rodríguez"
     ],
     subject: "Mecánica Clásica",
-    to: "proyecto?subject=mecanica_clasica&id=6503b4f1c29b8b3f2a1a4e91"
+    to: "/inicio/evaluar?subject=mecanica_clasica&id=6503b4f1c29b8b3f2a1a4e91"
   },
   {
     id: "6503b4f1c29b8b3f2a1a4e92",
@@ -65,7 +77,7 @@ export const ProjectsInfo = [
       "Marta López"
     ],
     subject: "Electromagnetismo",
-    to: "proyecto?subject=electromagnetismo&id=6503b4f1c29b8b3f2a1a4e92"
+    to: "/inicio/evaluar?subject=electromagnetismo&id=6503b4f1c29b8b3f2a1a4e92"
     
   },
   {
@@ -79,7 +91,7 @@ export const ProjectsInfo = [
       "Sofía Hernández"
     ],
     subject: "Física Contemporánea",
-    to: "proyecto?subject=fisica_contemporanea&id=6503b4f1c29b8b3f2a1a4e93"
+    to: "/inicio/evaluar?subject=fisica_contemporanea&id=6503b4f1c29b8b3f2a1a4e93"
   },
   {
     id: "6503b4f1c29b8b3f2a1a4e94",
@@ -91,7 +103,7 @@ export const ProjectsInfo = [
       "Felipe Castillo"
     ],
     subject: "Kinesiología",
-    to: "proyecto?subject=kinesiologia&id=6503b4f1c29b8b3f2a1a4e94"
+    to: "/inicio/evaluar?subject=kinesiologia&id=6503b4f1c29b8b3f2a1a4e94"
   },
   {
     id: "6503b4f1c29b8b3f2a1a4e95",
@@ -104,7 +116,7 @@ export const ProjectsInfo = [
       "Fernando Vargas"
     ],
     subject: "Física Contemporánea",
-    to: "proyecto?subject=fisica_contemporanea&id=6503b4f1c29b8b3f2a1a4e95"
+    to: "/inicio/evaluar?subject=fisica_contemporanea&id=6503b4f1c29b8b3f2a1a4e95"
   }
 ]
 
