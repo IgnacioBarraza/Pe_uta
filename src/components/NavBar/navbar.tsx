@@ -24,6 +24,7 @@ export default function Navbar() {
               <span className="text-xl font-bold">Feria de Ciencia</span>
             </a>
             <nav className="grid gap-4 sm:gap-6 py-6">
+              <div className="text-sm font-medium">Bienvenido, Ignacio</div>
               <a href="/" className="text-sm font-medium hover:underline underline-offset-4">
                 Inicio
               </a>
@@ -43,6 +44,7 @@ export default function Navbar() {
           <span className="text-xl font-bold">Feria de Ciencia</span>
         </a>
         <div className="ml-auto hidden lg:flex gap-4 sm:gap-6">
+          <div className="text-sm font-medium">Bienvenido, Ignacio</div>
           <a href="/" className="text-sm font-medium hover:underline underline-offset-4">
             Inicio
           </a>
