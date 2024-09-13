@@ -7,6 +7,7 @@ import ProtectedRoute from "./protectedRoute";
 import { Home } from "@/shared/Home/home";
 import { Page404 } from "@/shared/page404";
 import { Register } from "@/auth/register";
+import Admin from "@/shared/admin/admin";
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
         ),
       },
     ],
+  },
+  {
+    path: "/admin",
+    component: <Admin />
   },
   {
     path: "*",
