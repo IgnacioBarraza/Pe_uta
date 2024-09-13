@@ -20,7 +20,7 @@ const routes = [
     component: <Register />
   },
   {
-    path: "",
+    path: "/inicio",
     component: <Layout />,
     routes: [
       {
@@ -54,8 +54,12 @@ const routes = [
     component: <Page404 />,
   },
   {
+    path: "/",
+    component: <Navigate to="/inicio" />
+  },
+  {
     path: "*",
-    component: <Navigate to="/404" />, // Redirige cualquier ruta no encontrada a /404
+    component: <Navigate to="/404" />
   },
 ];
 
