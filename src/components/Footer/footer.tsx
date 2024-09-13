@@ -1,5 +1,4 @@
-// Footer.tsx
-import packageJson from "../../../package.json"; // Ruta hacia el package.json
+import packageJson from "../../../package.json";
 
 export default function Footer() {
   return (
@@ -8,7 +7,7 @@ export default function Footer() {
         &copy; 2024 Feria de Ciencia. Todos los derechos reservados.
       </p>
       <p className="text-xs text-muted-foreground">
-        {packageJson.version} {/* Aquí se muestra la versión */}
+        {packageJson.version}
       </p>
     </footer>
   );
