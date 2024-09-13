@@ -8,6 +8,7 @@ import { Home } from "@/shared/Home/home";
 import { Page404 } from "@/shared/page404";
 import { Register } from "@/auth/register";
 import Admin from "@/shared/admin/admin";
+import { Navigate } from "react-router-dom";
 
 const routes = [
   {
@@ -49,8 +50,12 @@ const routes = [
     component: <Admin />
   },
   {
-    path: "*",
+    path: "/404",
     component: <Page404 />,
+  },
+  {
+    path: "*",
+    component: <Navigate to="/404" />, // Redirige cualquier ruta no encontrada a /404
   },
 ];
 

@@ -42,7 +42,7 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
-        <a href={"/"} className="hidden sm:flex items-center justify-center" >
+        <a href={"/inicio"} className="hidden sm:flex items-center justify-center" >
           <span className="text-xl font-bold">Feria de Ciencia</span>
         </a>
         <div className="ml-auto hidden lg:flex gap-4 sm:gap-6">
