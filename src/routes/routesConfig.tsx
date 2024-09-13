@@ -1,6 +1,6 @@
 import { Layout } from "@/shared/layout";
 import { Projects } from "@/shared/project/projects";
-import ProjectsEvaluated from "../shared/projectsevaluated";
+import ProjectsEvaluated from "../shared/evaluated/projectsevaluated";
 import Evaluate from "@/shared/evaluate/evaluate";
 import { LogIn } from "@/auth/login";
 import ProtectedRoute from "./protectedRoute";

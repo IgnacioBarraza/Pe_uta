@@ -31,6 +31,9 @@ export default function Navbar() {
               <a href="proyectos" className="text-sm font-medium hover:underline underline-offset-4">
                 Proyectos
               </a>
+              <a href="evaluados" className="text-sm font-medium hover:underline underline-offset-4">
+                Evaluados
+              </a>
               <a href="/login" className="text-sm font-medium hover:underline underline-offset-4">
                 Iniciar Sesión
               </a>
@@ -50,6 +53,9 @@ export default function Navbar() {
           </a>
           <a href="/proyectos" className="text-sm font-medium hover:underline underline-offset-4">
             Proyectos
+          </a>
+          <a href="evaluados" className="text-sm font-medium hover:underline underline-offset-4">
+            Evaluados
           </a>
           <a href="/login" className="text-sm font-medium hover:underline underline-offset-4">
             Iniciar Sesión
