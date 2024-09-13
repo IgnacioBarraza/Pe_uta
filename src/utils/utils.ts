@@ -11,6 +11,36 @@ export interface EvaluateData {
   criterio_5: string;
 }
 
+export interface QuestionsForm {
+  id: string,
+  label: string,
+  options: QuestionsOptions[]
+}
+
+interface QuestionsOptions {
+  value: string,
+  label: string
+}
+
+export interface FormProps {
+  questions: QuestionsForm[];
+}
+
+export interface ProjectData {
+  id: string,
+  projectName: string,
+  description: string,
+  image: string,
+  members: string[],
+  subject: string,
+  to?: string
+}
+
+export interface ProjectDataProps {
+  project: ProjectData;
+}
+
+
 export const formatEvaluations = (evaluations: EvaluateData) => {
   return JSON.stringify(evaluations)
 }
@@ -120,7 +150,7 @@ export const ProjectsInfo = [
   }
 ]
 
-export const Questions = [
+export const Questions: QuestionsForm[] = [
   {
     id: "q1",
     label: "How would you rate the project overall?",
