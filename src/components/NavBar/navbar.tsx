@@ -20,18 +20,15 @@ export default function Navbar() {
             <VisuallyHidden>
               <DialogTitle>Navigation Menu</DialogTitle>
             </VisuallyHidden>
-            <a href="/inicio" className="flex items-center justify-center" >
+            <a href="/" className="flex items-center justify-center" >
               <span className="text-xl font-bold">Feria de Ciencia</span>
             </a>
             <nav className="grid gap-4 sm:gap-6 py-6">
-              <a href="/inicio" className="text-sm font-medium hover:underline underline-offset-4">
+              <a href="/" className="text-sm font-medium hover:underline underline-offset-4">
                 Inicio
               </a>
-              <a href="/inicio/proyectos" className="text-sm font-medium hover:underline underline-offset-4">
+              <a href="proyectos" className="text-sm font-medium hover:underline underline-offset-4">
                 Proyectos
-              </a>
-              <a href="/inicio/evaluar" className="text-sm font-medium hover:underline underline-offset-4">
-                Evaluar
               </a>
               <a href="/login" className="text-sm font-medium hover:underline underline-offset-4">
                 Iniciar Sesión
@@ -42,18 +39,15 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
-        <a href={"/inicio"} className="hidden sm:flex items-center justify-center" >
+        <a href={"/"} className="hidden sm:flex items-center justify-center" >
           <span className="text-xl font-bold">Feria de Ciencia</span>
         </a>
         <div className="ml-auto hidden lg:flex gap-4 sm:gap-6">
-          <a href="/inicio" className="text-sm font-medium hover:underline underline-offset-4">
+          <a href="/" className="text-sm font-medium hover:underline underline-offset-4">
             Inicio
           </a>
-          <a href="/inicio/proyectos" className="text-sm font-medium hover:underline underline-offset-4">
+          <a href="/proyectos" className="text-sm font-medium hover:underline underline-offset-4">
             Proyectos
-          </a>
-          <a href="/inicio/evaluar" className="text-sm font-medium hover:underline underline-offset-4">
-            Evaluar
           </a>
           <a href="/login" className="text-sm font-medium hover:underline underline-offset-4">
             Iniciar Sesión

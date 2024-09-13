@@ -20,7 +20,7 @@ const routes = [
     component: <Register />
   },
   {
-    path: "/inicio",
+    path: "",
     component: <Layout />,
     routes: [
       {
