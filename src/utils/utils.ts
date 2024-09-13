@@ -207,3 +207,36 @@ export const Questions: QuestionsForm[] = [
     ],
   },
 ]
+
+export const EvaluatedProjects = [
+  {
+    id: 1,
+    name: "Project A",
+    rating: 4,
+    satisfaction: 4,
+    recommendation: 5,
+    deliverables: 4,
+    teamCollaboration: 5,
+    comments: "Great project overall, team did an excellent job.",
+  },
+  {
+    id: 2,
+    name: "Project B",
+    rating: 3,
+    satisfaction: 3,
+    recommendation: 3,
+    deliverables: 3,
+    teamCollaboration: 4,
+    comments: "Average project, some areas could be improved.",
+  },
+  {
+    id: 3,
+    name: "Project C",
+    rating: 5,
+    satisfaction: 5,
+    recommendation: 5,
+    deliverables: 5,
+    teamCollaboration: 5,
+    comments: "Exceptional project, exceeded all expectations.",
+  },
+]
