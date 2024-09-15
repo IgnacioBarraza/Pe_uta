@@ -1,22 +1,29 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
-  roles?: string[];
-  children?: ReactNode
+  roles?: string[]; // Allowed roles
+  children?: ReactNode;
 }
 
-function ProtectedRoute({ roles, children }: ProtectedRouteProps) {
+function ProtectedRoute({ roles = [], children }: ProtectedRouteProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [userRole, setUserRole] = useState<string | null>(null);
-  const isAuthenticated = localStorage.getItem("token");
+
+  const isAuthenticated = !!localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
+  const storedUserRole = localStorage.getItem("userRole");
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login");
-    } 
-  }, [isAuthenticated, userId, roles, userRole, navigate]);
+      navigate("/login", { state: { from: location } });
+    } else if (roles.length && storedUserRole && !roles.includes(storedUserRole)) {
+      navigate("/inicio");
+    } else {
+      setUserRole(storedUserRole); // Set the user role if authenticated
+    }
+  }, [isAuthenticated, roles, storedUserRole, location, navigate]);
 
   return isAuthenticated ? (children ? children : <Outlet />) : null;
 }

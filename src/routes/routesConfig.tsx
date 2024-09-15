@@ -8,7 +8,7 @@ import { Page404 } from "@/shared/page404";
 import { Register } from "@/auth/register";
 import Admin from "@/shared/admin/admin";
 import { Navigate } from "react-router-dom";
-import Evaluated from "../shared/evaluated/evaluated";
+import Evaluated from "@/shared/evaluated/evaluated";
 
 const routes = [
   {
@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: "/register",
-    component: <Register />
+    component: <Register />,
   },
   {
     path: "/inicio",
@@ -33,29 +33,20 @@ const routes = [
       },
       {
         path: "evaluar",
-        component: (
-          // <ProtectedRoute roles={["user", "admin"]}>
-            <Evaluate />
-          // </ProtectedRoute>
-        )
+        protection: { roles: ["user", "admin"] },
+        component: <Evaluate />,
       },
       {
         path: "evaluados",
-        component: (
-          // <ProtectedRoute roles={["user", "admin"]}>
-            <Evaluated />
-          // </ProtectedRoute>
-        ),
+        protection: { roles: ["user", "admin"] },
+        component: <Evaluated />,
       },
     ],
   },
   {
     path: "/admin",
-    component: (
-    // <ProtectedRoute roles={["admin"]}>
-        <Admin />
-    // </ProtectedRoute>
-    )
+    protection: { roles: ["admin"] },
+    component: <Admin />,
   },
   {
     path: "/404",
@@ -63,11 +54,11 @@ const routes = [
   },
   {
     path: "/",
-    component: <Navigate to="/inicio" />
+    component: <Navigate to="/inicio" />,
   },
   {
     path: "*",
-    component: <Navigate to="/404" />
+    component: <Navigate to="/404" />,
   },
 ];
 

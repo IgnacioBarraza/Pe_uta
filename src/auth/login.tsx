@@ -1,18 +1,35 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { LoginUserDto } from "@/utils/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 export const LogIn = () => {
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginUserDto>()
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Logged')
+  // Get the previous page or default to home (if not coming from another page)
+  const from = location.state?.from?.pathname || '/inicio';
+  console.log(from)
+  const onSubmit = async (loginUserData) => {
+    try {
+      const response = await login(loginUserData)
+      console.log(response)
+      const { data, status } = response
+      if (status === 201) {
+        navigate(from)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -31,14 +48,21 @@ export const LogIn = () => {
                 Ingresa tu rut y contraseña para ingresar.
               </p>
             </div>
-            <form className="grid gap-4" onSubmit={handleSubmit}>
+            <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
-                <Label htmlFor="username">Rut</Label>
+                <Label htmlFor="rut">Rut</Label>
                 <Input
-                  id="username"
+                  id="rut"
                   type="text"
-                  placeholder="Ingresa tu rut"
+                  placeholder="Ingresa tu rut en formato 11.111.111-1"
+                  {...register('rut', { 
+                    required: 'Ingrese el rut', 
+                    pattern: {
+                    value: /^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$/,
+                    message: "Formato de RUT no válido"
+                  }})}
                 />
+                { errors.rut && (<span className="text-red-600 font-roboto">{errors.rut.message}</span>)}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Contraseña</Label>
@@ -46,7 +70,9 @@ export const LogIn = () => {
                   id="password"
                   type="password"
                   placeholder="Ingresa tu contraseña"
+                  {...register('password', { required: 'Debe ingresar una contraseña', minLength: 8 })}
                 />
+                { errors.password && (<span className="text-red-600 font-roboto">{errors.password.message}</span>)}
               </div>
               <Button type="submit" className="mt-4">
                 Ingresar
@@ -81,7 +107,7 @@ export const LogIn = () => {
                 <p className="text-muted-foreground">9:00 AM - 3:00 PM</p>
               </div>
               <div className="flex flex-col items-center">
-                <Calendar selected={date} onSelect={setDate}/>
+                <Calendar selected={new Date('2024-10-26')}/>
               </div>
             </div>
           </div>

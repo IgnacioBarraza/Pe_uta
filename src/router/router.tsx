@@ -1,25 +1,27 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Page404 } from "../shared/page404";
+import ProtectedRoute from "../routes/protectedRoute";
 
 export default function Router(props) {
+    // Function to recursively render routes
     const renderRoutes = (routes) => {
-        return routes.map((element) => {
-            if (!element.protection) {
-                return (
-                    <Route
-                        key={element.path}
-                        path={element.path}
-                        element={element.component}
-                    >
-                        {element.routes && renderRoutes(element.routes)}
-                    </Route>
-                );
-            }
+        return routes.map((route) => {
+            // Check if route requires protection
+            const element = route.protection ? (
+                <ProtectedRoute roles={route.protection.roles}>
+                    {route.component}
+                </ProtectedRoute>
+            ) : (
+                route.component
+            );
+
             return (
-                <Route key={element.path} element={element.protection}>
-                    <Route path={element.path} element={element.component}>
-                        {element.routes && renderRoutes(element.routes)}
-                    </Route>
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    element={element}
+                >
+                    {route.routes && renderRoutes(route.routes)}
                 </Route>
             );
         });
@@ -29,7 +31,7 @@ export default function Router(props) {
         <BrowserRouter>
             <Routes>
                 {renderRoutes(props.routes)}
-                <Route path='*' element={<Page404 />} />
+                <Route path="*" element={<Page404 />} />
             </Routes>
         </BrowserRouter>
     );

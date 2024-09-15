@@ -1,14 +1,19 @@
-export interface LoginData {
+export interface LoginUserDto {
   rut: string,
   password: string
 }
 
-export interface EvaluateData {
-  criterio_1: string;
-  criterio_2: string;
-  criterio_3: string;
-  criterio_4: string;
-  criterio_5: string;
+export interface LoginApiResponse {
+  data: {
+    accessToken: string;
+  }
+  status: number;
+}
+
+export interface RegisterUserDto {
+  rut: string;
+  password: string;
+  name: string;
 }
 
 export interface QuestionsForm {
@@ -41,9 +46,9 @@ export interface ProjectDataProps {
 }
 
 
-export const formatEvaluations = (evaluations: EvaluateData) => {
-  return JSON.stringify(evaluations)
-}
+// export const formatEvaluations = (evaluations: EvaluateData) => {
+//   return JSON.stringify(evaluations)
+// }
 
 export const SubjectProjects = [
   {
