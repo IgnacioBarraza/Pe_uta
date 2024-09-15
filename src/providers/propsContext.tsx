@@ -1,3 +1,4 @@
+import { clearUserData } from "@/utils/authHelpers"
 import { useState, createContext, useEffect } from "react"
 
 type PropsDataProviderType = {
@@ -49,12 +50,7 @@ export const PropsDataProvider = ({ children }) => {
     setUserType(null);
     setUserId(null);
     setUserRut(null);
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("userType");
-    // localStorage.removeItem("userName");
-    // localStorage.removeItem("userid");
-    // localStorage.removeItem("userRut");
-    localStorage.clear()
+    clearUserData();
   };
 
   return (

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,23 +8,26 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { LoginUserDto } from "@/utils/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { decodeToken, saveUserData } from "@/utils/authHelpers";
 
 export const LogIn = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginUserDto>()
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation();
+  const from = location.state?.from || '/inicio'; // Get the previous page or default to home (if not coming from another page)
 
-  // Get the previous page or default to home (if not coming from another page)
-  const from = location.state?.from?.pathname || '/inicio';
-  console.log(from)
   const onSubmit = async (loginUserData) => {
     try {
       const response = await login(loginUserData)
-      console.log(response)
       const { data, status } = response
       if (status === 201) {
-        navigate(from)
+        const token = data.accessToken
+        const decodedToken = decodeToken(token)
+        if (decodeToken) {
+          saveUserData(decodedToken)
+          navigate(from)
+        } 
       }
     } catch (error) {
       console.error(error)
