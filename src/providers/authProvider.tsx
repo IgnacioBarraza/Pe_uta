@@ -1,13 +1,13 @@
 import axios from "axios";
 import { createContext, ReactNode } from "react";
-import { LoginApiResponse, LoginUserDto } from "@/utils/utils";
+import { AuthApiResponse, LoginUserDto, RegisterUserDto } from "@/utils/utils";
 
 const DEV_BACKEND_URL = "http://localhost:3000"
 // const PROD_BACKEND_URL = "https://bak.torresproject.com"
 
 type AuthContextType = {
-  register: (rut, password) => void
-  login: (loginUserDto: LoginUserDto) => Promise<LoginApiResponse>;
+  login: (loginUserDto: LoginUserDto) => Promise<AuthApiResponse>;
+  registerUser: (registerUserDto: RegisterUserDto) => Promise<AuthApiResponse>;
 }
 
 type AuthProviderProps = {
@@ -15,18 +15,23 @@ type AuthProviderProps = {
 };
 
 export const AuthContext = createContext<AuthContextType>({
-  register: () => {},
   login: () => Promise.resolve({
     data: {
       accessToken: ''
     },
     status: 0
-  })
+  }),
+  registerUser: () => Promise.resolve({
+    data: {
+      accessToken: ''
+    },
+    status: 0
+  }),
 })
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const login = (loginUserDto: LoginUserDto): Promise<LoginApiResponse> => axios.post(`${DEV_BACKEND_URL}/user/login`, loginUserDto)
-  const register = () => {}
+  const login = (loginUserDto: LoginUserDto): Promise<AuthApiResponse> => axios.post(`${DEV_BACKEND_URL}/user/login`, loginUserDto);
+  const registerUser = (registerUserDto: RegisterUserDto): Promise<AuthApiResponse> => axios.post(`${DEV_BACKEND_URL}/user/register`, registerUserDto)
 
-  return <AuthContext.Provider value={{ login, register }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ login, registerUser }}>{children}</AuthContext.Provider>
 }

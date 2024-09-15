@@ -33,7 +33,7 @@ export default function Navbar() {
           </a>
           <nav className="grid gap-4 sm:gap-6 py-6">
             {isAuthenticated && (
-              <div className="text-sm font-medium">Bienvenido, {userName}</div>
+              <div className="text-sm font-medium">Bienvenid@, {userName}</div>
             )}
             <a
               href="/inicio"
@@ -87,7 +87,7 @@ export default function Navbar() {
       </a>
       <div className="ml-auto hidden lg:flex gap-4 sm:gap-6">
         {isAuthenticated && (
-          <div className="text-sm font-medium">Bienvenido, {userName}</div>
+          <div className="text-sm font-medium">Bienvenid@, {userName}</div>
         )}
         <a
           href="/inicio"

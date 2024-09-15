@@ -3,7 +3,7 @@ export interface LoginUserDto {
   password: string
 }
 
-export interface LoginApiResponse {
+export interface AuthApiResponse {
   data: {
     accessToken: string;
   }

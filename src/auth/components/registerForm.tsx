@@ -1,29 +1,30 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { RegisterUserDto } from "@/utils/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useProps } from "@/hooks/useProps";
 import { decodeToken, saveUserData } from "@/utils/authHelpers";
-import { LoginUserDto } from "@/utils/utils";
-import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginUserDto>();
-  const { login } = useAuth();
-  const { setUserName, setUserId, setTokenData, setUserType } = useProps()
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from || "/inicio"; // Get the previous page or default to home (if not coming from another page)
+  } = useForm<RegisterUserDto>();
 
-  const onSubmit = async (loginUserData) => {
+  const { registerUser } = useAuth();
+  const { setUserName, setUserId, setTokenData, setUserType } = useProps()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || "/inicio"
+
+  const onSubmit = async (registerUserData) => {
     try {
       console.log("Logged");
-      const response = await login(loginUserData);
+      const response = await registerUser(registerUserData)
       const { data, status } = response;
       if (status === 201) {
         const token = data.accessToken;
@@ -38,18 +39,29 @@ export const LoginForm = () => {
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   };
-
   return (
     <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid gap-2">
+        <Label htmlFor="name">Nombre</Label>
+        <Input
+          id="name"
+          type="text"
+          placeholder="Ingresa tu nombre"
+          {...register("name", { required: "Ingresa un nombre" })}
+        />
+        {errors.name && (
+          <span className="text-red-600 font-roboto">{errors.name.message}</span>
+        )}
+      </div>
       <div className="grid gap-2">
         <Label htmlFor="rut">Rut</Label>
         <Input
           id="rut"
           type="text"
-          placeholder="Ingresa tu rut en formato 11.111.111-1"
+          placeholder="Ingresa tu rut"
           {...register("rut", {
             required: "Ingrese un rut valido",
             pattern: {
@@ -80,14 +92,14 @@ export const LoginForm = () => {
         )}
       </div>
       <Button type="submit" className="mt-4">
-        Ingresar
+        Registrarse
       </Button>
       <div className="text-center">
         <Link
-          to="/register"
+          to="/login"
           className="text-sm font-medium hover:underline underline-offset-4"
         >
-          Registrarse
+          Iniciar sesión
         </Link>
       </div>
     </form>
