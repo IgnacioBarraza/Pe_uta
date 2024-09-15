@@ -1,3 +1,5 @@
+import Footer from "./components/Footer/footer";
+import Navbar from "./components/NavBar/navbar";
 import { AuthProvider } from "./providers/authProvider";
 import { BackendProvider } from "./providers/backendContext";
 import { PropsDataProvider } from "./providers/propsContext";
@@ -9,7 +11,13 @@ function App() {
     <AuthProvider>
       <BackendProvider>
         <PropsDataProvider>
-          <Router routes={routes} />
+          <div className="flex flex-col min-h-[100dvh]">
+            <Navbar />
+            <main className="flex-1">
+              <Router routes={routes} />
+            </main>
+            <Footer />
+          </div>
         </PropsDataProvider>
       </BackendProvider>
     </AuthProvider>

@@ -1,38 +1,9 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { LoginUserDto } from "@/utils/utils";
-import { useAuth } from "@/hooks/useAuth";
-import { decodeToken, saveUserData } from "@/utils/authHelpers";
+import { LoginForm } from "./components/loginForm";
 
 export const LogIn = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginUserDto>()
-  const { login } = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation();
-  const from = location.state?.from || '/inicio'; // Get the previous page or default to home (if not coming from another page)
-
-  const onSubmit = async (loginUserData) => {
-    try {
-      const response = await login(loginUserData)
-      const { data, status } = response
-      if (status === 201) {
-        const token = data.accessToken
-        const decodedToken = decodeToken(token)
-        if (decodeToken) {
-          saveUserData(decodedToken)
-          navigate(from)
-        } 
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 my-auto h-full">
@@ -50,44 +21,7 @@ export const LogIn = () => {
                 Ingresa tu rut y contraseña para ingresar.
               </p>
             </div>
-            <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid gap-2">
-                <Label htmlFor="rut">Rut</Label>
-                <Input
-                  id="rut"
-                  type="text"
-                  placeholder="Ingresa tu rut en formato 11.111.111-1"
-                  {...register('rut', { 
-                    required: 'Ingrese el rut', 
-                    pattern: {
-                    value: /^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$/,
-                    message: "Formato de RUT no válido"
-                  }})}
-                />
-                { errors.rut && (<span className="text-red-600 font-roboto">{errors.rut.message}</span>)}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Contraseña</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Ingresa tu contraseña"
-                  {...register('password', { required: 'Debe ingresar una contraseña', minLength: 8 })}
-                />
-                { errors.password && (<span className="text-red-600 font-roboto">{errors.password.message}</span>)}
-              </div>
-              <Button type="submit" className="mt-4">
-                Ingresar
-              </Button>
-              <div className="text-center">
-                <Link
-                  to="/register"
-                  className="text-sm font-medium hover:underline underline-offset-4"
-                >
-                  Registrarse
-                </Link>
-              </div>
-            </form>
+            <LoginForm />
           </div>
           <div className="flex flex-col justify-center items-center space-y-4">
             <div className="space-y-2">

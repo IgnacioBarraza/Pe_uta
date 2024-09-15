@@ -5,11 +5,12 @@ import { Button } from "../ui/button";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { clearUserData } from "@/utils/authHelpers";
+import { useProps } from "@/hooks/useProps";
 
 export default function Navbar() {
-  const userName = localStorage.getItem("userName");
-  const isAuthenticated = !!localStorage.getItem("token");
-
+  const { userToken, userName } = useProps()
+  const isAuthenticated = !!userToken
+  
   const handleLogout = () => {
     clearUserData();
   };

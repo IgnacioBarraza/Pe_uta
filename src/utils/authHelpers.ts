@@ -1,6 +1,10 @@
 import { jwtDecode } from "jwt-decode";
 
-// Function to decode the JWT token
+/**
+ * Function to decode the JWT token
+ * @param token token to be decoded
+ * @returns decoded token to be used to access data
+ */
 export const decodeToken = (token: string) => {
   try {
     return jwtDecode(token);
@@ -10,22 +14,28 @@ export const decodeToken = (token: string) => {
   }
 };
 
-// Function to save user data to localStorage
 /**
- * 
- * @param decodedToken 
+ * Function to save user data to localStorage
+ * @param decodedToken decodedToken to extract the necessary data
+ * @param token token to authenticated user and grant permission if needed
+ * @returns id, name, user_type, evaluated and token to set them to be used along the app
  */
-export const saveUserData = (decodedToken: any) => {
-  const { userId, name, user_type, evaluations } = decodedToken;
+export const saveUserData = (decodedToken: any, token: string) => {
+  const { id, name, user_type, evaluated } = decodedToken;
 
-  localStorage.setItem('token', decodedToken.token);
-  localStorage.setItem('userId', userId);
+  localStorage.setItem('token', token);
+  localStorage.setItem('userId', id);
   localStorage.setItem('userName', name);
   localStorage.setItem('userRole', user_type);
-  localStorage.setItem('userEvaluations', JSON.stringify(evaluations));
+  localStorage.setItem('userEvaluations', JSON.stringify(evaluated));
+
+  return {id, name, user_type, evaluated, token}
 };
 
-// Function to clear user data (if needed, for logout or token expiration)
+/**
+ * Function to clear user data (if needed, for logout or token expiration)
+ * and return to home page
+ */
 export const clearUserData = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('userId');

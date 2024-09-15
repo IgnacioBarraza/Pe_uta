@@ -1,23 +1,19 @@
-import { clearUserData } from "@/utils/authHelpers"
 import { useState, createContext, useEffect } from "react"
 
 type PropsDataProviderType = {
   setUserType: (userType: string) => void
-  userType: string | null
+  userRole: string | null
   setTokenData: (token: string) => void
   userToken: string | null
   setUserName: (username: string) => void
   userName: string | null
   logout: () => void
   setUserId: (id_usuario: string) => void
-  userId: string | null
-  setUserRut: (rut: string) => void
-  userRut: string | null
-}
+  userId: string | null}
 
 export const PropsContext = createContext<PropsDataProviderType>({
   setUserType: () => {},
-  userType: null,
+  userRole: null,
   setTokenData: () => {},
   userToken: null,
   setUserName: () => {},
@@ -25,42 +21,35 @@ export const PropsContext = createContext<PropsDataProviderType>({
   logout: () => {},
   setUserId: () => {},
   userId: null,
-  setUserRut: () => {},
-  userRut: null
 })
 
 export const PropsDataProvider = ({ children }) => {
-  const [userType, setUserType] = useState<string | null>(localStorage.getItem("userType") || "");
+  const [userRole, setUserType] = useState<string | null>(localStorage.getItem("userRole") || "");
   const [userToken, setTokenData] = useState<string | null>(localStorage.getItem("token") || "");
   const [userName, setUserName] = useState<string | null>(localStorage.getItem("userName") || "");
-  const [userId, setUserId] = useState<string | null>(localStorage.getItem("userid") || "");
-  const [userRut, setUserRut] = useState<string | null>(localStorage.getItem("userRut") || "");
+  const [userId, setUserId] = useState<string | null>(localStorage.getItem("userId") || "");
 
   useEffect(() => {
-    localStorage.setItem("userType", userType || "");
+    localStorage.setItem("userRole", userRole || "");
     localStorage.setItem("token", userToken || "");
     localStorage.setItem("userName", userName || "");
-    localStorage.setItem("userid", userId || "");
-    localStorage.setItem("userRut", userRut || "");
-  }, [userType, userToken, userName, userId, userRut]);
+    localStorage.setItem("userId", userId || "");
+  }, [userRole, userToken, userName, userId]);
 
   const logout = () => {
     setUserName(null);
     setTokenData(null);
     setUserType(null);
     setUserId(null);
-    setUserRut(null);
-    clearUserData();
   };
 
   return (
     <PropsContext.Provider value={{ 
-      userType, setUserType,
+      userRole, setUserType,
       userToken, setTokenData, 
       userName, setUserName,
       logout,
       userId, setUserId,
-      userRut, setUserRut
     }}>{children}</PropsContext.Provider>
   );
 };
