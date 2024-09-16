@@ -45,6 +45,15 @@ export interface ProjectDataProps {
   project: ProjectData;
 }
 
+export interface CreateSubjectDto {
+  subject_name: string;
+  showOnExpo: boolean;
+}
+
+export interface UpdateSubjectDto {
+  subject_name?: string;
+  showOnExpo?: boolean;
+}
 
 // export const formatEvaluations = (evaluations: EvaluateData) => {
 //   return JSON.stringify(evaluations)
