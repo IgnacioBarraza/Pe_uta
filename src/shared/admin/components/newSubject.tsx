@@ -12,6 +12,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { CreateSubjectDto } from "@/utils/utils";
 import { useBackend } from "@/hooks/useBackend";
+import { useToast } from "@/hooks/use-toast";
 
 export const NewSubjectForm = () => {
   const {
@@ -21,14 +22,24 @@ export const NewSubjectForm = () => {
     formState: { errors },
   } = useForm<CreateSubjectDto>();
   const { createSubject } = useBackend();
+  const { toast } = useToast()
 
   const onSubmit = async (subjectData) => {
-    console.log(subjectData);
     try {
       const response = await createSubject(subjectData)
-      console.log(response)
+      const { data, status } = response
+      if (status === 201) {
+        toast({
+          title: 'Asignatura agregada con exito',
+          variant: 'default'
+        })
+      }
     } catch (error) {
       console.error(error)
+      toast({
+        title: 'Hubo un problema al agregar la asignatura',
+        variant: 'destructive'
+      })
     }
   };
 
@@ -45,7 +56,7 @@ export const NewSubjectForm = () => {
               <Input
                 id="subjectName"
                 placeholder="Ingrese nueva asignatura"
-                {...register("subject_name")}
+                {...register("subject_name", { required: true })}
               />
               {errors.subject_name && (
                 <span className="text-red-500">Este campo es obligatorio</span>

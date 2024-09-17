@@ -55,6 +55,15 @@ export interface UpdateSubjectDto {
   showOnExpo?: boolean;
 }
 
+export interface SubjectApiResponse {
+  data: {
+    id: string;
+    showOnExpo: boolean;
+    subject_name: string;
+  };
+  status: number;
+}
+
 // export const formatEvaluations = (evaluations: EvaluateData) => {
 //   return JSON.stringify(evaluations)
 // }
