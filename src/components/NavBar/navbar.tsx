@@ -8,7 +8,7 @@ import { clearUserData } from "@/utils/authHelpers";
 import { useProps } from "@/hooks/useProps";
 
 export default function Navbar() {
-  const { userToken, userName } = useProps()
+  const { userToken, userName, userRole } = useProps()
   const isAuthenticated = !!userToken
   
   const handleLogout = () => {
@@ -53,6 +53,14 @@ export default function Navbar() {
             >
               Evaluados
             </a>
+            {isAuthenticated && userRole && userRole === "admin" && (
+              <a
+                href="/admin"
+                className="text-sm font-medium hover:underline underline-offset-4"
+              >
+                Admin
+              </a>
+            )}
             {isAuthenticated ? (
               <button
                 className="text-sm font-medium hover:underline underline-offset-4"
@@ -107,6 +115,14 @@ export default function Navbar() {
         >
           Evaluados
         </a>
+        {isAuthenticated && userRole && userRole === "admin" && (
+              <a
+                href="/admin"
+                className="text-sm font-medium hover:underline underline-offset-4"
+              >
+                Admin
+              </a>
+            )}
         {isAuthenticated ? (
           <button
             className="text-sm font-medium hover:underline underline-offset-4"
