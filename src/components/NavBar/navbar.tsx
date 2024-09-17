@@ -29,6 +29,7 @@ export default function Navbar() {
             <DialogTitle>Navigation Menu</DialogTitle>
           </VisuallyHidden>
           <a href="/inicio" className="flex items-center justify-center">
+            <img src="/expo_logo.svg" alt="Logo feria de ciencias" className="w-8 h-8"/>
             <span className="text-xl font-bold">Feria de Ciencia</span>
           </a>
           <nav className="grid gap-4 sm:gap-6 py-6">
@@ -87,6 +88,7 @@ export default function Navbar() {
           </nav>
         </SheetContent>
       </Sheet>
+      <img src="/expo_logo.svg" alt="Logo feria de ciencias" className="w-8 h-8 hidden sm:block"/>
       <a
         href={"/inicio"}
         className="hidden sm:flex items-center justify-center"
