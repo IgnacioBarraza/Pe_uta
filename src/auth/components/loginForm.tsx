@@ -7,6 +7,7 @@ import { decodeToken, saveUserData } from "@/utils/authHelpers";
 import { LoginUserDto } from "@/utils/utils";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export const LoginForm = () => {
   const {
@@ -15,6 +16,7 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginUserDto>();
   const { login } = useAuth();
+  const { toast } = useToast()
   const { setUserName, setUserId, setTokenData, setUserType } = useProps()
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,11 +36,20 @@ export const LoginForm = () => {
           setUserId(savedData.id)
           setUserType(savedData.user_type)
           setTokenData(token)
+          toast({
+            title: 'Inicio de sesión correcto',
+            description: 'Disfruta de la feria de ciencias!!!',
+            variant: 'default'
+          })
           navigate(from);
         }
       }
     } catch (error) {
       console.error(error);
+      toast({
+        title: 'Hubo un error al iniciar sesión',
+        variant: 'destructive'
+      })
     }
   };
 

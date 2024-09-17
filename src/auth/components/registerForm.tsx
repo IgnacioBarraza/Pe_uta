@@ -7,6 +7,7 @@ import { RegisterUserDto } from "@/utils/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useProps } from "@/hooks/useProps";
 import { decodeToken, saveUserData } from "@/utils/authHelpers";
+import { useToast } from "@/hooks/use-toast";
 
 export const RegisterForm = () => {
   const {
@@ -17,6 +18,7 @@ export const RegisterForm = () => {
 
   const { registerUser } = useAuth();
   const { setUserName, setUserId, setTokenData, setUserType } = useProps()
+  const { toast } = useToast()
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || "/inicio"
@@ -35,11 +37,20 @@ export const RegisterForm = () => {
           setUserId(savedData.id)
           setUserType(savedData.user_type)
           setTokenData(token)
+          toast({
+            title: 'Registro de sesión correcto',
+            description: 'Disfruta de la feria de ciencias!!!',
+            variant: 'default'
+          })
           navigate(from);
         }
       }
     } catch (error) {
       console.error(error)
+      toast({
+        title: 'Hubo un error al registrar la sesión',
+        variant: 'destructive'
+      })
     }
   };
   return (
