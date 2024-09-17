@@ -1,0 +1,155 @@
+import { useBackend } from "@/hooks/useBackend";
+import { Subject, UpdateSubjectDto } from "@/utils/utils";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useForm, Controller } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast";
+
+export const EditSubject = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset
+  } = useForm<UpdateSubjectDto>();
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const { getSubjects, updateSubject } = useBackend();
+  const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
+  const { toast } = useToast()
+
+  const getAllSubjects = async () => {
+    try {
+      const response = await getSubjects();
+      const { data, status } = response;
+      if (status === 200) {
+        const subjectsArray = Array.isArray(data) ? data : [data];
+        setSubjects(subjectsArray);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onSubmit = async (updateSubjectData: UpdateSubjectDto) => {
+    try {
+      const response = await updateSubject(selectedSubject.id, updateSubjectData)
+      const { data, status } = response
+      if (status === 200) {
+        toast({
+          title: 'Asignatura actualizada con exito',
+          variant: 'default'
+        })
+        setSelectedSubject(null);
+        reset();
+      }
+    } catch (error) {
+      console.error(error)
+      toast({
+        title: 'Hubo un problema al actualizar la asignatura',
+        variant: 'destructive'
+      })
+    }
+  };
+
+  const handleSubjectSelect = (subjectId) => {
+    const selected = subjects.find((subject) => subject.id === subjectId);
+    setSelectedSubject(selected || null);
+  };
+
+  useEffect(() => {
+    if (subjects.length === 0) {
+      getAllSubjects();
+    }
+  }, [subjects]);
+  return (
+    <Card className="w-full max-w-4xl mx-auto">
+      <CardHeader>
+        <CardTitle>Editar asignatura</CardTitle>
+        <CardDescription>Selecciona la asignatura a editar</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-6">
+          <div className="space-y-2">
+            <Label htmlFor="subject">Seleccionar una asignatura</Label>
+            <Select
+              key="subject"
+              value={selectedSubject?.id}
+              onValueChange={handleSubjectSelect}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar asignatura" />
+              </SelectTrigger>
+              <SelectContent>
+                {subjects.map((subject) => (
+                  <SelectItem key={subject.id} value={`${subject.id}`}>
+                    {subject.subject_name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {selectedSubject && (
+            <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nombre de la asignatura</Label>
+                  <Input
+                    id="subjectName"
+                    placeholder="Ingrese nueva asignatura"
+                    {...register("subject_name", {value: selectedSubject.subject_name})}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Mostrar en la feria</Label>
+                  <Controller
+                    name="showOnExpo"
+                    control={control}
+                    defaultValue={selectedSubject?.showOnExpo || false}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={(value) =>
+                          field.onChange(value === "true")
+                        }
+                        value={field.value ? "true" : "false"}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona una opción" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="true">Sí</SelectItem>
+                          <SelectItem value="false">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
+              </div>
+              <CardFooter className="flex justify-end">
+                <Button type="submit">Actualizar proyecto</Button>
+              </CardFooter>
+            </form>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};

@@ -6,9 +6,9 @@ const BACKEND_URL = 'http://localhost:3000'
 
 type BackendContextType = {
   /** Subjects **/
-  getSubjects: () => void;
+  getSubjects: () => Promise<SubjectApiResponse>;
   createSubject: (createSubjectDto: CreateSubjectDto) => Promise<SubjectApiResponse>;
-  updateSubject: (id: string, updateSubjectDto: UpdateSubjectDto) => void;
+  updateSubject: (id: string, updateSubjectDto: UpdateSubjectDto) => Promise<SubjectApiResponse>;
   deleteSubject: (id: string) => void;
   /** Projects **/
 }
@@ -20,7 +20,14 @@ type BackendProviderProps = {
 
 export const BackendContext = createContext<BackendContextType>({
   /** Subjects **/
-  getSubjects: () => {},
+  getSubjects: () => Promise.resolve({
+    data: {
+      id: '',
+      showOnExpo: true,
+      subject_name: ''
+    },
+    status: 0
+  }),
   createSubject:  () => Promise.resolve({
     data: {
       id: '',
@@ -29,16 +36,23 @@ export const BackendContext = createContext<BackendContextType>({
     },
     status: 0
   }),
-  updateSubject: () => {},
+  updateSubject: () => Promise.resolve({
+    data: {
+      id: '',
+      showOnExpo: true,
+      subject_name: ''
+    },
+    status: 0
+  }),
   deleteSubject: () => {},
   /** Projects **/
 })
 
 export const BackendProvider = ({children}: BackendProviderProps) => {
   /** Subjects functions **/
-  const getSubjects = () => axios.get(`${BACKEND_URL}/subjects`);
+  const getSubjects = (): Promise<SubjectApiResponse> => axios.get(`${BACKEND_URL}/subjects`);
   const createSubject = (createSubjectDto: CreateSubjectDto): Promise<SubjectApiResponse> => axios.post(`${BACKEND_URL}/subjects`, createSubjectDto);
-  const updateSubject = (id: string, updateSubjectDto: UpdateSubjectDto) => axios.put(`${BACKEND_URL}/subjects/${id}`, updateSubjectDto);
+  const updateSubject = (id: string, updateSubjectDto: UpdateSubjectDto): Promise<SubjectApiResponse> => axios.put(`${BACKEND_URL}/subjects/${id}`, updateSubjectDto);
   const deleteSubject = (id: string) => axios.delete(`${BACKEND_URL}/subjects/${id}`);
 
   /** Projects functions **/

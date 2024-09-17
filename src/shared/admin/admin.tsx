@@ -1,6 +1,7 @@
 import { NewProjectForm } from "./components/newProject";
 import { EditProjectForm } from "./components/editProject";
 import { NewSubjectForm } from "./components/newSubject";
+import { EditSubject } from "./components/editSubject";
 
 export default function Admin() {
   return (
@@ -10,7 +11,7 @@ export default function Admin() {
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Administrar proyectos
+                Administrar Feria
               </h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
                 Gestiona los proyectos y asignaturas desde aca.
@@ -21,8 +22,9 @@ export default function Admin() {
               <NewSubjectForm />
             </div>
           </div>
-          <div className="lg:block sm:mt-28">
+          <div className="grid sm:mt-28 gap-4">
             <EditProjectForm />
+            <EditSubject />
           </div>
         </div>
       </div>

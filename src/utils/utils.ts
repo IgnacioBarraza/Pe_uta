@@ -64,6 +64,11 @@ export interface SubjectApiResponse {
   status: number;
 }
 
+export interface Subject {
+  id: string;
+  subject_name: string;
+  showOnExpo: boolean;
+}
 // export const formatEvaluations = (evaluations: EvaluateData) => {
 //   return JSON.stringify(evaluations)
 // }
