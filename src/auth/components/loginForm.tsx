@@ -3,9 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useProps } from "@/hooks/useProps";
-import { decodeToken, saveUserData } from "@/utils/authHelpers";
+import { decodeToken, formatRut, saveUserData } from "@/utils/authHelpers";
 import { LoginUserDto } from "@/utils/utils";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -13,6 +13,7 @@ export const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<LoginUserDto>();
   const { login } = useAuth();
@@ -22,7 +23,7 @@ export const LoginForm = () => {
   const location = useLocation();
   const from = location.state?.from || "/inicio"; // Get the previous page or default to home (if not coming from another page)
 
-  const onSubmit = async (loginUserData) => {
+  const onSubmit = async (loginUserData: LoginUserDto) => {
     try {
       console.log("Logged");
       const response = await login(loginUserData);
@@ -57,17 +58,25 @@ export const LoginForm = () => {
     <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-2">
         <Label htmlFor="rut">Rut</Label>
-        <Input
-          id="rut"
-          type="text"
-          placeholder="Ingresa tu rut en formato 11.111.111-1"
-          {...register("rut", {
-            required: "Ingrese un rut valido",
+        <Controller
+          name="rut"
+          control={control}
+          rules={{
+            required: "Ingrese un rut válido",
             pattern: {
               value: /^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$/,
               message: "Formato de RUT no válido",
             },
-          })}
+          }}
+          render={({ field }) => (
+            <Input
+              {...field}
+              id="rut"
+              placeholder="Ingresa tu rut"
+              value={formatRut(field.value)}
+              onChange={(e) => field.onChange(formatRut(e.target.value))}
+            />
+          )}
         />
         {errors.rut && (
           <span className="text-red-600 font-roboto">{errors.rut.message}</span>

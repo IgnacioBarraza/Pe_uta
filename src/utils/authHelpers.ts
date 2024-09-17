@@ -44,3 +44,30 @@ export const clearUserData = () => {
   localStorage.removeItem('userEvaluations');
   window.location.replace('/inicio')
 };
+
+/**
+ * Function to format the rut and apply the points and hyppen automatically
+ * @param rut receive the rut to be formatted
+ * @returns formatted rut
+ */
+export const formatRut = (rut: string) => {
+  if (!rut) return "";
+
+  // Remueve cualquier carácter que no sea un número o la letra K
+  rut = rut.replace(/[^0-9kK]/g, "");
+
+  // Si tiene 1 o 2 dígitos, no hagas nada
+  if (rut.length <= 1) return rut;
+
+  // Aplica formato progresivo
+  if (rut.length <= 4) {
+    // Solo añade el guion si tiene más de 1 dígito
+    return `${rut.slice(0, -1)}-${rut.slice(-1)}`;
+  } else if (rut.length <= 7) {
+    // Añade un punto antes de los 3 últimos dígitos
+    return `${rut.slice(0, -4)}.${rut.slice(-4, -1)}-${rut.slice(-1)}`;
+  } else {
+    // Añade puntos y guion completo
+    return `${rut.slice(0, -7)}.${rut.slice(-7, -4)}.${rut.slice(-4, -1)}-${rut.slice(-1)}`;
+  }
+};
