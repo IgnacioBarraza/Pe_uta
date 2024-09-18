@@ -2,8 +2,34 @@ import { NewProjectForm } from "./components/newProject";
 import { EditProjectForm } from "./components/editProject";
 import { NewSubjectForm } from "./components/newSubject";
 import { EditSubject } from "./components/editSubject";
+import { DeleteSubject } from "./components/deleteSubject";
+import { useBackend } from "@/hooks/useBackend";
+import { Subject } from "@/utils/utils";
+import { useEffect, useState } from "react";
 
 export default function Admin() {
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const { getSubjects, updateSubject } = useBackend();
+
+  const getAllSubjects = async () => {
+    try {
+      const response = await getSubjects();
+      const { data, status } = response;
+      if (status === 200) {
+        const subjectsArray = Array.isArray(data) ? data : [data];
+        setSubjects(subjectsArray);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (subjects.length === 0) {
+      getAllSubjects();
+    }
+  }, [subjects]);
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 mx-auto">
@@ -24,7 +50,8 @@ export default function Admin() {
           </div>
           <div className="grid sm:mt-28 gap-4">
             <EditProjectForm />
-            <EditSubject />
+            <EditSubject subjects={subjects}/>
+            <DeleteSubject subjects={subjects}/> 
           </div>
         </div>
       </div>

@@ -64,11 +64,21 @@ export interface SubjectApiResponse {
   status: number;
 }
 
+export interface SubjectDeleteApiResponse {
+  data: string;
+  status: number;
+}
+
 export interface Subject {
   id: string;
   subject_name: string;
   showOnExpo: boolean;
 }
+
+export interface SubjectProps {
+  subjects: Subject[]
+}
+
 // export const formatEvaluations = (evaluations: EvaluateData) => {
 //   return JSON.stringify(evaluations)
 // }

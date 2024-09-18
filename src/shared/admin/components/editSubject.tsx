@@ -1,6 +1,6 @@
 import { useBackend } from "@/hooks/useBackend";
-import { Subject, UpdateSubjectDto } from "@/utils/utils";
-import { useEffect, useState } from "react";
+import { Subject, SubjectProps, UpdateSubjectDto } from "@/utils/utils";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,30 +22,16 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 
-export const EditSubject = () => {
+export const EditSubject = ({ subjects }: SubjectProps) => {
   const {
     register,
     handleSubmit,
     control,
     reset
   } = useForm<UpdateSubjectDto>();
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const { getSubjects, updateSubject } = useBackend();
+  const { updateSubject } = useBackend();
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
   const { toast } = useToast()
-
-  const getAllSubjects = async () => {
-    try {
-      const response = await getSubjects();
-      const { data, status } = response;
-      if (status === 200) {
-        const subjectsArray = Array.isArray(data) ? data : [data];
-        setSubjects(subjectsArray);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const onSubmit = async (updateSubjectData: UpdateSubjectDto) => {
     try {
@@ -73,11 +59,6 @@ export const EditSubject = () => {
     setSelectedSubject(selected || null);
   };
 
-  useEffect(() => {
-    if (subjects.length === 0) {
-      getAllSubjects();
-    }
-  }, [subjects]);
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
@@ -144,7 +125,7 @@ export const EditSubject = () => {
                 </div>
               </div>
               <CardFooter className="flex justify-end">
-                <Button type="submit">Actualizar proyecto</Button>
+                <Button type="submit">Actualizar asignatura</Button>
               </CardFooter>
             </form>
           )}

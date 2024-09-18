@@ -1,4 +1,4 @@
-import { CreateSubjectDto, SubjectApiResponse, UpdateSubjectDto } from "@/utils/utils";
+import { CreateSubjectDto, SubjectApiResponse, SubjectDeleteApiResponse, UpdateSubjectDto } from "@/utils/utils";
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
@@ -9,7 +9,7 @@ type BackendContextType = {
   getSubjects: () => Promise<SubjectApiResponse>;
   createSubject: (createSubjectDto: CreateSubjectDto) => Promise<SubjectApiResponse>;
   updateSubject: (id: string, updateSubjectDto: UpdateSubjectDto) => Promise<SubjectApiResponse>;
-  deleteSubject: (id: string) => void;
+  deleteSubject: (id: string) => Promise<SubjectDeleteApiResponse>;
   /** Projects **/
 }
 
@@ -44,7 +44,10 @@ export const BackendContext = createContext<BackendContextType>({
     },
     status: 0
   }),
-  deleteSubject: () => {},
+  deleteSubject: () => Promise.resolve({
+    data: '',
+    status: 0
+  }),
   /** Projects **/
 })
 
