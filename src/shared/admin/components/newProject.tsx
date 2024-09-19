@@ -17,28 +17,45 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useBackend } from "@/hooks/useBackend";
+import { CreateProjectDto, SubjectProps } from "@/utils/utils";
+import { useForm, Controller } from "react-hook-form";
 
-export const NewProjectForm = () => {
-  const [newProject, setNewProject] = useState({
-    name: "",
-    description: "",
-    subject: "",
-    members: "",
-  });
+export const NewProjectForm = ({ subjects }: SubjectProps) => {
+  const { 
+    register, 
+    handleSubmit, 
+    control, 
+    reset,
+    formState: { errors }
+  } = useForm<CreateProjectDto>();
+  const { createProject } = useBackend()
+  const { toast } = useToast()
 
-  const handleNewProjectChange = (e) => {
-    const { name, value } = e.target;
-    setNewProject({ ...newProject, [name]: value });
-  };
+  const onSubmit = async (createProjectData) => {
+    const membersArray = createProjectData.members
+      .split(",")
+      .map((member) => member.trim());
 
-  const handleSubjectChange = (value) => {
-    setNewProject({ ...newProject, subject: value });
-  };
+    const projectData: CreateProjectDto = {
+      ...createProjectData,
+      members: membersArray,
+    };
 
-  const handleNewProjectSubmit = (e) => {
-    e.preventDefault();
-    console.log("New project:", newProject);
+    try {
+      const response = await createProject(projectData);
+      console.log(response);
+      const { data, status } = response
+      if (status === 201) {
+        toast({
+          title: 'Proyecto creado con exito'
+        })
+        reset()
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -51,17 +68,19 @@ export const NewProjectForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="grid gap-6" onSubmit={handleNewProjectSubmit}>
+        <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Nombre del Proyecto</Label>
+              <Label htmlFor="project_name">Nombre del Proyecto</Label>
               <Input
-                id="name"
-                name="name"
+                id="project_name"
+                name="project_name"
                 placeholder="Ingresa el nombre del proyecto"
-                value={newProject.name}
-                onChange={handleNewProjectChange}
+                {...register('project_name', { required: true })}
               />
+              {errors.project_name && (
+                <span className="text-red-500">Este campo es obligatorio</span>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="description">Descripción</Label>
@@ -69,33 +88,54 @@ export const NewProjectForm = () => {
                 id="description"
                 name="description"
                 placeholder="Describe el proyecto"
-                value={newProject.description}
-                onChange={handleNewProjectChange}
+                {...register('description', { required: true })}
               />
+              {errors.description && (
+                <span className="text-red-500">Este campo es obligatorio</span>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="image">Imagen del Proyecto</Label>
-              <Input id="image" type="file" />
+              <Input id="image" type="file" {...register('image_url', { required: true })}/>
+              {errors.image_url && (
+                <span className="text-red-500">Este campo es obligatorio</span>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="subject">Asignatura del proyecto</Label>
-              <Select
-                key="subject"
-                value={newProject.subject}
-                onValueChange={handleSubjectChange}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una asignatura" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="marketing">Marketing</SelectItem>
-                  <SelectItem value="engineering">Engineering</SelectItem>
-                  <SelectItem value="design">Design</SelectItem>
-                  <SelectItem value="finance">Finance</SelectItem>
-                </SelectContent>
-              </Select>
+              <Controller
+                name="subject"
+                control={control}
+                defaultValue="Seleccionar asignatura"
+                render={({ field }) => (
+                  <Select
+                    value={field.value || ""}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue>
+                        {field.value
+                          ? subjects.find(
+                              (subject) => subject.id === field.value
+                            )?.subject_name
+                          : "Seleccionar asignatura" }
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {subjects.map((subject) => (
+                        <SelectItem key={subject.id} value={subject.id}>
+                          {subject.subject_name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.subject && (
+                <span className="text-red-500">Este campo es obligatorio</span>
+              )}
             </div>
           </div>
           <div className="space-y-2">
@@ -104,9 +144,11 @@ export const NewProjectForm = () => {
               id="members"
               name="members"
               placeholder="Ingresa los nombres de los miembros del proyecto separados por comas"
-              value={newProject.members}
-              onChange={handleNewProjectChange}
+              {...register('members', { required: true })}
             />
+            {errors.image_url && (
+              <span className="text-red-500">Este campo es obligatorio</span>
+            )}
           </div>
           <CardFooter className="flex justify-end">
             <Button type="submit">Guardar proyecto</Button>

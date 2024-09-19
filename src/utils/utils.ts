@@ -56,11 +56,7 @@ export interface UpdateSubjectDto {
 }
 
 export interface SubjectApiResponse {
-  data: {
-    id: string;
-    showOnExpo: boolean;
-    subject_name: string;
-  };
+  data: Subject[];
   status: number;
 }
 
@@ -79,9 +75,43 @@ export interface SubjectProps {
   subjects: Subject[]
 }
 
-// export const formatEvaluations = (evaluations: EvaluateData) => {
-//   return JSON.stringify(evaluations)
-// }
+export interface Project {
+  id: string;
+  project_name: string;
+  description: string;
+  image_url: string;
+  members: string[];
+  subject: string;
+}
+
+export interface CreateProjectApiResponse {
+  data: {
+    id: string;
+    project_name: string;
+    description: string;
+    image_url: string;
+    members: string[];
+    subject: Subject;
+  };
+  status: number;
+}
+
+export interface CreateProjectDto {
+  project_name: string;
+  description: string;
+  image_url: string;
+  members: string[];
+  subject: string;
+}
+
+export interface UpdateProjectDto {
+  project_name?: string;
+  description?: string;
+  image_url?: string;
+  members?: string[];
+  subject?: string;
+}
+
 
 export const SubjectProjects = [
   {

@@ -4,12 +4,13 @@ import { NewSubjectForm } from "./components/newSubject";
 import { EditSubject } from "./components/editSubject";
 import { DeleteSubject } from "./components/deleteSubject";
 import { useBackend } from "@/hooks/useBackend";
-import { Subject } from "@/utils/utils";
+import { Project, Subject } from "@/utils/utils";
 import { useEffect, useState } from "react";
 
 export default function Admin() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
-  const { getSubjects, updateSubject } = useBackend();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const { getSubjects, getProjects } = useBackend();
 
   const getAllSubjects = async () => {
     try {
@@ -24,11 +25,26 @@ export default function Admin() {
     }
   }
 
+  const getAllProjects = async () => {
+    try {
+      const response = await getProjects();
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     if (subjects.length === 0) {
       getAllSubjects();
     }
   }, [subjects]);
+
+  useEffect(() => {
+    if (projects.length === 0) {
+      getAllProjects();
+    }
+  }, [projects]);
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
@@ -44,7 +60,7 @@ export default function Admin() {
               </p>
             </div>
             <div className="grid gap-4">
-              <NewProjectForm />
+              <NewProjectForm subjects={subjects}/>
               <NewSubjectForm />
             </div>
           </div>
