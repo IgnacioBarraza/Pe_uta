@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -22,10 +21,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
 import { useFirebase } from "@/hooks/useFirebase";
 import { CreateProjectDto, SubjectProps } from "@/utils/utils";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { ProgressModal } from "./progressModal";
+import { ErrorModal } from "./errorModal";
 
 export const NewProjectForm = ({ subjects }: SubjectProps) => {
   const {
@@ -42,7 +41,6 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleUploadImage = (image: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -51,7 +49,6 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
         (progress) => setProgress(progress),
         (error) => {
           setError(error);
-          setIsModalOpen(true);
           reject(error);
         },
         (downloadUrl) => {
@@ -64,7 +61,6 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
   const onSubmit = async (createProjectData) => {
     if (!image) {
       setError("Debes cargar una imagen para continuar");
-      setIsModalOpen(true);
       return;
     }
     try {
@@ -151,17 +147,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
                 </div>
               )}
               {progress > 0 && (
-                <div className="mt-2">
-                  <div className="bg-gray-200 rounded-full">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    {progress.toFixed(0)}% Uploading...
-                  </p>
-                </div>
+                <ProgressModal progress={progress}/>
               )}
             </div>
             <div className="space-y-2">
@@ -216,20 +202,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
         </form>
       </CardContent>
       {error && (
-        <Dialog>
-          <DialogContent className="sm:max-w-[425px]">
-            <div className="flex flex-col items-center justify-center gap-4 py-8">
-              <FontAwesomeIcon icon={faCircleXmark} className="size-12 text-red-500" />
-              <p className="text-lg font-medium">Subida de imagen fallida</p>
-              <p className="text-muted-foreground">{error}</p>
-            </div>
-            <DialogFooter>
-              <div>
-                <Button type="button">OK</Button>
-              </div>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <ErrorModal error={error}/>
       )}
     </Card>
   );

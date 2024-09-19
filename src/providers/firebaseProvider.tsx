@@ -24,7 +24,7 @@ export const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     if (image) {
 
       if (!userToken && userRole === 'admin') return alert('Permisos insuficientes para subir imagenes.')
-      console.log(image)
+
       const storageRef = ref(storage, `projects/${image.name}`);
       const uploadTask = uploadBytesResumable(storageRef, image);
 
