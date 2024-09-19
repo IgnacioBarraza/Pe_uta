@@ -6,22 +6,25 @@ import { BackendProvider } from "@/providers/backendContext";
 import { PropsDataProvider } from "@/providers/propsContext";
 import Router from "@/router/router";
 import routes from "@/routes/routesConfig";
+import { FirebaseProvider } from "./providers/firebaseProvider";
 
 function App() {
   return (
     <AuthProvider>
-      <BackendProvider>
-        <PropsDataProvider>
-          <div className="flex flex-col min-h-[100dvh]">
-            <Navbar />
-            <main className="flex-1">
-              <Router routes={routes} />
-              <Toaster />
-            </main>
-            <Footer />
-          </div>
-        </PropsDataProvider>
-      </BackendProvider>
+      <FirebaseProvider>
+        <BackendProvider>
+          <PropsDataProvider>
+            <div className="flex flex-col min-h-[100dvh]">
+              <Navbar />
+              <main className="flex-1">
+                <Router routes={routes} />
+                <Toaster />
+              </main>
+              <Footer />
+            </div>
+          </PropsDataProvider>
+        </BackendProvider>
+      </FirebaseProvider>
     </AuthProvider>
   );
 }

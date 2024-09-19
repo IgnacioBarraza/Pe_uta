@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -19,42 +20,88 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
+import { useFirebase } from "@/hooks/useFirebase";
 import { CreateProjectDto, SubjectProps } from "@/utils/utils";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 export const NewProjectForm = ({ subjects }: SubjectProps) => {
-  const { 
-    register, 
-    handleSubmit, 
-    control, 
+  const {
+    register,
+    handleSubmit,
+    control,
     reset,
-    formState: { errors }
+    formState: { errors },
   } = useForm<CreateProjectDto>();
-  const { createProject } = useBackend()
-  const { toast } = useToast()
+  const { createProject } = useBackend();
+  const { toast } = useToast();
+  const { uploadProjectImage } = useFirebase();
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleUploadImage = (image: File) => {
+    return new Promise<string>((resolve, reject) => {
+      uploadProjectImage(
+        image,
+        (progress) => setProgress(progress),
+        (error) => {
+          setError(error);
+          setIsModalOpen(true);
+          reject(error);
+        },
+        (downloadUrl) => {
+          resolve(downloadUrl);
+        }
+      );
+    });
+  };
 
   const onSubmit = async (createProjectData) => {
-    const membersArray = createProjectData.members
-      .split(",")
-      .map((member) => member.trim());
-
-    const projectData: CreateProjectDto = {
-      ...createProjectData,
-      members: membersArray,
-    };
-
+    if (!image) {
+      setError("Debes cargar una imagen para continuar");
+      setIsModalOpen(true);
+      return;
+    }
     try {
+      const membersArray = createProjectData.members
+        .split(",")
+        .map((member) => member.trim());
+      const image_url = await handleUploadImage(image);
+
+      const projectData: CreateProjectDto = {
+        ...createProjectData,
+        members: membersArray,
+        image_url: image_url,
+      };
+
       const response = await createProject(projectData);
-      console.log(response);
-      const { data, status } = response
+
+      const { data, status } = response;
       if (status === 201) {
         toast({
-          title: 'Proyecto creado con exito'
-        })
-        reset()
+          title: "Proyecto creado con exito",
+        });
+        reset();
+        setImage(null);
+        setPreview(null);
+        setProgress(0);
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+      setError(null); // Reset error when a file is selected
     }
   };
 
@@ -74,9 +121,8 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
               <Label htmlFor="project_name">Nombre del Proyecto</Label>
               <Input
                 id="project_name"
-                name="project_name"
                 placeholder="Ingresa el nombre del proyecto"
-                {...register('project_name', { required: true })}
+                {...register("project_name", { required: true })}
               />
               {errors.project_name && (
                 <span className="text-red-500">Este campo es obligatorio</span>
@@ -86,9 +132,8 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
               <Label htmlFor="description">Descripción</Label>
               <Textarea
                 id="description"
-                name="description"
                 placeholder="Describe el proyecto"
-                {...register('description', { required: true })}
+                {...register("description", { required: true })}
               />
               {errors.description && (
                 <span className="text-red-500">Este campo es obligatorio</span>
@@ -98,9 +143,25 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="image">Imagen del Proyecto</Label>
-              <Input id="image" type="file" {...register('image_url', { required: true })}/>
-              {errors.image_url && (
-                <span className="text-red-500">Este campo es obligatorio</span>
+              <Input id="image" type="file" onChange={handleImageFile} />
+              {error && <span className="text-red-500">{error}</span>}
+              {preview && (
+                <div className="mt-2">
+                  <img src={preview} alt="Preview" className="w-full h-auto" />
+                </div>
+              )}
+              {progress > 0 && (
+                <div className="mt-2">
+                  <div className="bg-gray-200 rounded-full">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    {progress.toFixed(0)}% Uploading...
+                  </p>
+                </div>
               )}
             </div>
             <div className="space-y-2">
@@ -108,7 +169,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
               <Controller
                 name="subject"
                 control={control}
-                defaultValue="Seleccionar asignatura"
+                defaultValue=""
                 render={({ field }) => (
                   <Select
                     value={field.value || ""}
@@ -120,7 +181,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
                           ? subjects.find(
                               (subject) => subject.id === field.value
                             )?.subject_name
-                          : "Seleccionar asignatura" }
+                          : "Seleccionar asignatura"}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
@@ -142,11 +203,10 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
             <Label htmlFor="members">Miembros del Proyecto</Label>
             <Textarea
               id="members"
-              name="members"
               placeholder="Ingresa los nombres de los miembros del proyecto separados por comas"
-              {...register('members', { required: true })}
+              {...register("members", { required: true })}
             />
-            {errors.image_url && (
+            {errors.members && (
               <span className="text-red-500">Este campo es obligatorio</span>
             )}
           </div>
@@ -155,6 +215,22 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
           </CardFooter>
         </form>
       </CardContent>
+      {error && (
+        <Dialog>
+          <DialogContent className="sm:max-w-[425px]">
+            <div className="flex flex-col items-center justify-center gap-4 py-8">
+              <FontAwesomeIcon icon={faCircleXmark} className="size-12 text-red-500" />
+              <p className="text-lg font-medium">Subida de imagen fallida</p>
+              <p className="text-muted-foreground">{error}</p>
+            </div>
+            <DialogFooter>
+              <div>
+                <Button type="button">OK</Button>
+              </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </Card>
   );
 };
