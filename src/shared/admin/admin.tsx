@@ -28,7 +28,11 @@ export default function Admin() {
   const getAllProjects = async () => {
     try {
       const response = await getProjects();
-      console.log(response)
+      const { data, status } = response
+      if (status === 200) {
+        const projectsArray = Array.isArray(data) ? data : [data]
+        setProjects(projectsArray)
+      }
     } catch (error) {
       console.error(error)
     }
@@ -65,7 +69,7 @@ export default function Admin() {
             </div>
           </div>
           <div className="grid sm:mt-28 gap-4">
-            <EditProjectForm />
+            <EditProjectForm projects={projects} subjects={subjects}/>
             <EditSubject subjects={subjects}/>
             <DeleteSubject subjects={subjects}/> 
           </div>

@@ -75,13 +75,22 @@ export interface SubjectProps {
   subjects: Subject[]
 }
 
+export interface ProjectProps {
+  projects: Project[]
+}
+
 export interface Project {
   id: string;
   project_name: string;
   description: string;
   image_url: string;
   members: string[];
-  subject: string;
+  subject: Subject;
+}
+
+export interface ProjectApiResponse {
+  data: Project[],
+  status: number;
 }
 
 export interface CreateProjectApiResponse {

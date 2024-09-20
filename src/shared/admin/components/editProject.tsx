@@ -17,38 +17,120 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { useBackend } from "@/hooks/useBackend";
+import { useFirebase } from "@/hooks/useFirebase";
+import { Project, Subject, UpdateProjectDto } from "@/utils/utils";
 import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { ProgressModal } from "./progressModal";
+import { ErrorModal } from "./errorModal";
 
-export const EditProjectForm = () => {
-  const [projects, setProjects] = useState([
-    { id: 1, name: "Project A", description: "Description for Project A" },
-    { id: 2, name: "Project B", description: "Description for Project B" },
-    { id: 3, name: "Project C", description: "Description for Project C" },
-  ]);
-  const [editProject, setEditProject] = useState({
-    id: "",
-    name: "",
-    description: "",
-    subject: "",
-    members: "",
-  });
-  const [selectedProject, setSelectedProject] = useState(null);
-  const handleProjectSelect = (project) => {
-    setSelectedProject(project);
+export const EditProjectForm = ({
+  projects,
+  subjects,
+}: {
+  projects: Project[];
+  subjects: Subject[];
+}) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<UpdateProjectDto>();
+  const { updateProject } = useBackend();
+  const { toast } = useToast();
+  const { uploadProjectImage, deleteProjectImage } = useFirebase();
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const handleProjectSelect = (projectId) => {
+    const selected = projects.find((project) => project.id === projectId)
+    setSelectedProject(selected || null);
   };
 
-  const handleSubjectChange = (value) => {
-    setEditProject({ ...editProject, subject: value });
+  const onSubmit = async (updateProjectDto) => {
+    let image_url;
+    
+    // Si se subió una nueva imagen, subirla y eliminar la imagen anterior
+    if (image) {
+      deletePreviousImage(selectedProject.image_url);
+      image_url = await handleUploadImage(image);
+    }
+  
+    try {
+      // Comprobar si el campo members es vacío o no. Si no es vacío, formatear los miembros.
+      const membersArray = updateProjectDto.members?.trim().length 
+        ? updateProjectDto.members.split(",").map((member) => member.trim())
+        : selectedProject.members;
+      // Crear el objeto projectData, verificando si cada campo en updateProjectDto está vacío.
+      const projectData = {
+        project_name: updateProjectDto.project_name?.trim().length ? updateProjectDto.project_name : selectedProject.project_name,
+        subject: updateProjectDto.subject?.id ? updateProjectDto.subject.id : selectedProject.subject.id,
+        description: updateProjectDto.description?.trim().length ? updateProjectDto.description : selectedProject.description,
+        members: membersArray,
+        image_url: image_url || selectedProject.image_url,
+      };
+  
+      // Enviar los datos al backend para actualizar el proyecto
+      const response = await updateProject(selectedProject.id, projectData);
+      console.log(response)
+      if (response.status === 201) {
+        toast({
+          title: "Proyecto actualizado con éxito",
+        });
+        reset();
+        setImage(null);
+        setPreview(null);
+        setProgress(0);
+        setSelectedProject(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  
+
+  const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+      setError(null); // Reset error when a file is selected
+    }
   };
 
-  const handleEditProjectSubmit = (e) => {
-    e.preventDefault();
-    console.log("Edited project:", editProject);
+  const handleUploadImage = (image: File) => {
+    return new Promise<string>((resolve, reject) => {
+      uploadProjectImage(
+        image,
+        (progress) => setProgress(progress),
+        (error) => {
+          setError(error);
+          reject(error);
+        },
+        (downloadUrl) => {
+          resolve(downloadUrl);
+        }
+      );
+    });
   };
 
-  const handleEditProjectChange = (e) => {
-    setEditProject({ ...editProject, [e.target.name]: e.target.value });
-  };
+  const deletePreviousImage = (url: string) => {
+    console.log(url)
+    const decodedURL = decodeURIComponent(url);
+    const parts = decodedURL.split('/');
+    const fileNameWithToken = parts.pop();
+    const fileName = fileNameWithToken.split('?')[0];
+    console.log(fileName)
+    deleteProjectImage(fileName)
+  }
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -71,64 +153,85 @@ export const EditProjectForm = () => {
               <SelectContent>
                 {projects.map((project) => (
                   <SelectItem key={project.id} value={`${project.id}`}>
-                    {project.name}
+                    {project.project_name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
           {selectedProject && (
-            <form className="grid gap-6" onSubmit={handleEditProjectSubmit}>
+            <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nombre del Proyecto</Label>
+                  <Label htmlFor="project_name">Nombre del Proyecto</Label>
                   <Input
-                    id="name"
-                    name="name"
-                    defaultValue={selectedProject.name}
-                    onChange={handleEditProjectChange}
+                    id="project_name"
                     placeholder="Ingresa el nombre del proyecto"
+                    {...register("project_name")}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="description">Descripción</Label>
                   <Textarea
                     id="description"
-                    name="description"
-                    defaultValue={selectedProject.description}
-                    onChange={handleEditProjectChange}
                     placeholder="Describe el proyecto"
+                    {...register("description")}
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="image">Project Image</Label>
-                  <Input id="image" type="file" />
+                  <Label htmlFor="image">Imagen del Proyecto</Label>
+                  <Input id="image" type="file" onChange={handleImageFile} />
+                  {preview && (
+                    <div className="mt-2">
+                      <img
+                        src={preview}
+                        alt="Preview"
+                        className="w-full h-auto"
+                      />
+                    </div>
+                  )}
+                  {progress > 0 && <ProgressModal progress={progress} />}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="subject">Project Subject</Label>
-                  <Select key="subject" value={editProject.subject} onValueChange={handleSubjectChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select subject" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="marketing">Marketing</SelectItem>
-                      <SelectItem value="engineering">Engineering</SelectItem>
-                      <SelectItem value="design">Design</SelectItem>
-                      <SelectItem value="finance">Finance</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="subject">Asignatura del proyecto</Label>
+                  <Controller
+                    name="subject"
+                    control={control}
+                    defaultValue={selectedProject.subject.subject_name || ""}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value || ""}
+                        onValueChange={(value) => field.onChange(value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue>
+                            {field.value
+                              ? subjects.find(
+                                  (subject) => subject.id === field.value
+                                )?.subject_name
+                              : "Seleccionar asignatura"}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {subjects.map((subject) => (
+                            <SelectItem key={subject.id} value={subject.id}>
+                              {subject.subject_name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="members">Miembros del proyecto</Label>
+                <Label htmlFor="members">Miembros del Proyecto</Label>
                 <Textarea
                   id="members"
-                  name="members"
-                  value={editProject.members}
-                  onChange={handleEditProjectChange}
-                  placeholder="Ingresa los nombres de los miembros del proyecto separados por comas."
+                  placeholder="Ingresa los nombres de los miembros del proyecto separados por comas"
+                  {...register("members")}
                 />
               </div>
               <CardFooter className="flex justify-end">
@@ -138,6 +241,7 @@ export const EditProjectForm = () => {
           )}
         </div>
       </CardContent>
+      {error && <ErrorModal error={error} />}
     </Card>
   );
 };

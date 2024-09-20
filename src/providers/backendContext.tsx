@@ -1,4 +1,4 @@
-import { Project, CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, SubjectDeleteApiResponse, UpdateProjectDto, UpdateSubjectDto } from "@/utils/utils";
+ import { Project, CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, SubjectDeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse } from "@/utils/utils";
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
@@ -11,10 +11,10 @@ type BackendContextType = {
   updateSubject: (id: string, updateSubjectDto: UpdateSubjectDto) => Promise<SubjectApiResponse>;
   deleteSubject: (id: string) => Promise<SubjectDeleteApiResponse>;
   /** Projects **/
-  getProjects: () => void;
+  getProjects: () => Promise<ProjectApiResponse>;
   getProjectById: (id: string) => void;
   createProject: (createProjectDto: CreateProjectDto) => Promise<CreateProjectApiResponse>;
-  updateProject: (id: string, updateProjectDto: UpdateProjectDto) => void;
+  updateProject: (id: string, updateProjectDto: UpdateProjectDto) => Promise<CreateProjectApiResponse>;
   deleteProject: (id: string) => void
 }
 
@@ -54,7 +54,10 @@ export const BackendContext = createContext<BackendContextType>({
     status: 0
   }),
   /** Projects **/
-  getProjects: () => {},
+  getProjects: () => Promise.resolve({
+    data: [],
+    status: 0
+  }),
   getProjectById: () => {},
   createProject: () => Promise.resolve({
     data: {
@@ -71,7 +74,21 @@ export const BackendContext = createContext<BackendContextType>({
     },
     status: 0
   }),
-  updateProject: () => {},
+  updateProject: () => Promise.resolve({
+    data: {
+      id: '',
+      project_name: '',
+      description: '',
+      image_url: '',
+      members: [],
+      subject: {
+        id: '',
+        subject_name: '',
+        showOnExpo: true
+      }
+    },
+    status: 0
+  }),
   deleteProject: () => {}
 })
 
