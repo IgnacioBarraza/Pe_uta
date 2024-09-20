@@ -1,8 +1,8 @@
-import { NewProjectForm } from "./components/newProject";
-import { EditProjectForm } from "./components/editProject";
-import { NewSubjectForm } from "./components/newSubject";
-import { EditSubject } from "./components/editSubject";
-import { DeleteSubject } from "./components/deleteSubject";
+import { NewProjectForm } from "./components/projects/newProject";
+import { EditProjectForm } from "./components/projects/editProject";
+import { NewSubjectForm } from "./components/subject/newSubject";
+import { EditSubject } from "./components/subject/editSubject";
+import { DeleteSubject } from "./components/subject/deleteSubject";
 import { useBackend } from "@/hooks/useBackend";
 import { Project, Subject } from "@/utils/utils";
 import { useEffect, useState } from "react";

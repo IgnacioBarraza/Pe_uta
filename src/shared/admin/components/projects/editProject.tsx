@@ -23,8 +23,8 @@ import { useFirebase } from "@/hooks/useFirebase";
 import { Project, Subject, UpdateProjectDto } from "@/utils/utils";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { ProgressModal } from "./progressModal";
-import { ErrorModal } from "./errorModal";
+import { ProgressModal } from "../progressModal";
+import { ErrorModal } from "../errorModal";
 
 export const EditProjectForm = ({
   projects,
