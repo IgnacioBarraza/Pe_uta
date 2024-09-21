@@ -1,4 +1,4 @@
- import { Project, CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, SubjectDeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse } from "@/utils/utils";
+ import { Project, CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse } from "@/utils/utils";
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
@@ -9,13 +9,13 @@ type BackendContextType = {
   getSubjects: () => Promise<SubjectApiResponse>;
   createSubject: (createSubjectDto: CreateSubjectDto) => Promise<SubjectApiResponse>;
   updateSubject: (id: string, updateSubjectDto: UpdateSubjectDto) => Promise<SubjectApiResponse>;
-  deleteSubject: (id: string) => Promise<SubjectDeleteApiResponse>;
+  deleteSubject: (id: string) => Promise<DeleteApiResponse>;
   /** Projects **/
   getProjects: () => Promise<ProjectApiResponse>;
   getProjectById: (id: string) => void;
   createProject: (createProjectDto: CreateProjectDto) => Promise<CreateProjectApiResponse>;
   updateProject: (id: string, updateProjectDto: UpdateProjectDto) => Promise<CreateProjectApiResponse>;
-  deleteProject: (id: string) => void
+  deleteProject: (id: string) => Promise<DeleteApiResponse>
 }
 
 type BackendProviderProps = {
@@ -89,7 +89,11 @@ export const BackendContext = createContext<BackendContextType>({
     },
     status: 0
   }),
-  deleteProject: () => {}
+  deleteProject: () => Promise.resolve({
+    data: '',
+    status: 0
+  }),
+  /** Questions **/
 })
 
 export const BackendProvider = ({children}: BackendProviderProps) => {

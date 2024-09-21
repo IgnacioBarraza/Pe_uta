@@ -60,7 +60,7 @@ export interface SubjectApiResponse {
   status: number;
 }
 
-export interface SubjectDeleteApiResponse {
+export interface DeleteApiResponse {
   data: string;
   status: number;
 }
