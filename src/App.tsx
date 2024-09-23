@@ -7,22 +7,25 @@ import { PropsDataProvider } from "@/providers/propsContext";
 import Router from "@/router/router";
 import routes from "@/routes/routesConfig";
 import { FirebaseProvider } from "./providers/firebaseProvider";
+import { DataProvider } from "./providers/dataProvider";
 
 function App() {
   return (
     <AuthProvider>
       <FirebaseProvider>
         <BackendProvider>
-          <PropsDataProvider>
-            <div className="flex flex-col min-h-[100dvh]">
-              <Navbar />
-              <main className="flex-1">
-                <Router routes={routes} />
-                <Toaster />
-              </main>
-              <Footer />
-            </div>
-          </PropsDataProvider>
+          <DataProvider>
+            <PropsDataProvider>
+              <div className="flex flex-col min-h-[100dvh]">
+                <Navbar />
+                <main className="flex-1">
+                  <Router routes={routes} />
+                  <Toaster />
+                </main>
+                <Footer />
+              </div>
+            </PropsDataProvider>
+          </DataProvider>
         </BackendProvider>
       </FirebaseProvider>
     </AuthProvider>
