@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Projects } from "./components/projectCards";
+import { SubjectCards } from "./components/subjectCards";
 import { Schedule } from "./components/schedule";
 
 export const Home = () => {
@@ -44,7 +44,7 @@ export const Home = () => {
         </div>
       </section>
       <Schedule />
-      <Projects />
+      <SubjectCards />
     </>
   );
 };

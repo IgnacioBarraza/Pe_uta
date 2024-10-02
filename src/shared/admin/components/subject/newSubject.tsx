@@ -19,6 +19,7 @@ export const NewSubjectForm = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<CreateSubjectDto>();
   const { createSubject } = useBackend();
@@ -33,6 +34,7 @@ export const NewSubjectForm = () => {
           title: 'Asignatura agregada con exito',
           variant: 'default'
         })
+        reset()
       }
     } catch (error) {
       console.error(error)
