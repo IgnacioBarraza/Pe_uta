@@ -7,6 +7,8 @@ interface DataContextProps {
   subjects: Subject[];
   loading: boolean;
   error: string | null;
+  refreshData: () => void;
+  addSubjectLocally: (newSubject: Subject[]) => void;
 }
 
 export const DataContext = createContext<DataContextProps | undefined>(undefined)
@@ -42,12 +44,20 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const addSubjectLocally = (newSubject: Subject[]) => {
+    // Ensure newSubject is always an array
+    const subjectsArray = Array.isArray(newSubject) ? newSubject : [newSubject];
+  
+    setSubjects((prevSubjects) => [...prevSubjects, ...subjectsArray]);
+  };
+  
+
   useEffect(() => {
     fetchData(); // Fetch data on mount
   }, []);
 
   return (
-    <DataContext.Provider value={{ projects, subjects, loading, error }}>
+    <DataContext.Provider value={{ projects, subjects, loading, error, refreshData: fetchData, addSubjectLocally }}>
       {children}
     </DataContext.Provider>
   );

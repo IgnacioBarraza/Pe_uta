@@ -43,14 +43,14 @@ export const SubjectCards = () => {
                 <Link to={`proyectos?subject=${subject.id}`} key={subject.id}>
                   <div className="grid gap-1">
                     <div className="inline-block rounded-lg bg-primary px-3 py-1 text-sm text-primary-foreground">
-                      {subject.subject_name || "Asignatura"}{" "}
+                      {subject.subject_field || "Asignatura"}{" "}
                     </div>
                     <h3 className="text-xl font-bold">
                       {subject.subject_name}
                     </h3>
-                    {/* <p className="text-muted-foreground">
+                    <p className="text-muted-foreground">
                       {subject.description || "Sin descripción"}
-                    </p> */}
+                    </p>
                   </div>
                 </Link>
               ))}

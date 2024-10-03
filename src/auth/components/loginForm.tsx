@@ -25,7 +25,7 @@ export const LoginForm = () => {
 
   const onSubmit = async (loginUserData: LoginUserDto) => {
     try {
-      console.log("Logged");
+      
       const response = await login(loginUserData);
       const { data, status } = response;
       if (status === 201) {
@@ -42,6 +42,7 @@ export const LoginForm = () => {
             description: 'Disfruta de la feria de ciencias!!!',
             variant: 'default'
           })
+          console.log("Logged");
           navigate(from);
         }
       }

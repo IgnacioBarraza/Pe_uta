@@ -13,6 +13,8 @@ import { useForm, Controller } from "react-hook-form";
 import { CreateSubjectDto } from "@/utils/utils";
 import { useBackend } from "@/hooks/useBackend";
 import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea"; // Assuming you have a Textarea component
+import { useDataProvider } from "@/hooks/useData";
 
 export const NewSubjectForm = () => {
   const {
@@ -23,25 +25,27 @@ export const NewSubjectForm = () => {
     formState: { errors },
   } = useForm<CreateSubjectDto>();
   const { createSubject } = useBackend();
-  const { toast } = useToast()
+  const { addSubjectLocally } = useDataProvider()
+  const { toast } = useToast();
 
-  const onSubmit = async (subjectData) => {
+  const onSubmit = async (subjectData: CreateSubjectDto) => {
     try {
-      const response = await createSubject(subjectData)
-      const { data, status } = response
+      const response = await createSubject(subjectData);
+      const { data, status } = response;
       if (status === 201) {
+        addSubjectLocally(data);
         toast({
-          title: 'Asignatura agregada con exito',
-          variant: 'default'
-        })
-        reset()
+          title: "Asignatura agregada con éxito",
+          variant: "default",
+        });
+        reset();
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
-        title: 'Hubo un problema al agregar la asignatura',
-        variant: 'destructive'
-      })
+        title: "Hubo un problema al agregar la asignatura",
+        variant: "destructive",
+      });
     }
   };
 
@@ -53,8 +57,9 @@ export const NewSubjectForm = () => {
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-2 grid-cols-2">
+            {/* Subject Name */}
             <div className="space-y-2">
-              <Label htmlFor="subject">Asignatura</Label>
+              <Label htmlFor="subjectName">Asignatura</Label>
               <Input
                 id="subjectName"
                 placeholder="Ingrese nueva asignatura"
@@ -64,6 +69,7 @@ export const NewSubjectForm = () => {
                 <span className="text-red-500">Este campo es obligatorio</span>
               )}
             </div>
+            {/* Show on Expo */}
             <div className="space-y-2">
               <Label htmlFor="showOnExpo">Mostrar en la feria</Label>
               <Controller
@@ -86,6 +92,30 @@ export const NewSubjectForm = () => {
                 )}
               />
               {errors.showOnExpo && (
+                <span className="text-red-500">Este campo es obligatorio</span>
+              )}
+            </div>
+            {/* Description */}
+            <div className="col-span-2 space-y-2">
+              <Label htmlFor="description">Descripción</Label>
+              <Textarea
+                id="description"
+                placeholder="Descripción de la asignatura"
+                {...register("description", { required: true })}
+              />
+              {errors.description && (
+                <span className="text-red-500">Este campo es obligatorio</span>
+              )}
+            </div>
+            {/* Subject Field */}
+            <div className="space-y-2 col-span-2">
+              <Label htmlFor="subjectField">Campo de la asignatura</Label>
+              <Input
+                id="subjectField"
+                placeholder="Ingrese el campo de la asignatura (e.g., Ciencia, Tecnología)"
+                {...register("subject_field", { required: true })}
+              />
+              {errors.subject_field && (
                 <span className="text-red-500">Este campo es obligatorio</span>
               )}
             </div>
