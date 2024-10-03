@@ -21,36 +21,36 @@ import {
 } from "@/components/ui/select";
 import { useForm, Controller } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
 
 export const EditSubject = ({ subjects }: SubjectProps) => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset
-  } = useForm<UpdateSubjectDto>();
+  const { register, handleSubmit, control, reset } =
+    useForm<UpdateSubjectDto>();
   const { updateSubject } = useBackend();
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const onSubmit = async (updateSubjectData: UpdateSubjectDto) => {
     try {
-      const response = await updateSubject(selectedSubject.id, updateSubjectData)
-      const { data, status } = response
+      const response = await updateSubject(
+        selectedSubject.id,
+        updateSubjectData
+      );
+      const { data, status } = response;
       if (status === 200) {
         toast({
-          title: 'Asignatura actualizada con exito',
-          variant: 'default'
-        })
+          title: "Asignatura actualizada con exito",
+          variant: "default",
+        });
         setSelectedSubject(null);
         reset();
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
-        title: 'Hubo un problema al actualizar la asignatura',
-        variant: 'destructive'
-      })
+        title: "Hubo un problema al actualizar la asignatura",
+        variant: "destructive",
+      });
     }
   };
 
@@ -94,7 +94,9 @@ export const EditSubject = ({ subjects }: SubjectProps) => {
                   <Input
                     id="subjectName"
                     placeholder="Ingrese nueva asignatura"
-                    {...register("subject_name", {value: selectedSubject.subject_name})}
+                    {...register("subject_name", {
+                      value: selectedSubject.subject_name,
+                    })}
                   />
                 </div>
               </div>
@@ -121,6 +123,23 @@ export const EditSubject = ({ subjects }: SubjectProps) => {
                         </SelectContent>
                       </Select>
                     )}
+                  />
+                </div>
+                <div className="col-span-2 space-y-2">
+                  <Label htmlFor="description">Descripción</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Descripción de la asignatura"
+                    {...register("description", { value: selectedSubject.description })}
+                  />
+                </div>
+                {/* Subject Field */}
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="subjectField">Campo de la asignatura</Label>
+                  <Input
+                    id="subjectField"
+                    placeholder="Ingrese el campo de la asignatura (e.g., Ciencia, Tecnología)"
+                    {...register("subject_field", { value: selectedSubject.subject_field })}
                   />
                 </div>
               </div>
