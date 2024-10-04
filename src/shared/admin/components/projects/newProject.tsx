@@ -25,6 +25,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ProgressModal } from "../progressModal";
 import { ErrorModal } from "../errorModal";
+import { useDataProvider } from "@/hooks/useData";
 
 export const NewProjectForm = ({ subjects }: SubjectProps) => {
   const {
@@ -37,6 +38,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
   const { createProject } = useBackend();
   const { toast } = useToast();
   const { uploadProjectImage } = useFirebase();
+  const { addProjectLocally } = useDataProvider();
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -79,6 +81,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
 
       const { data, status } = response;
       if (status === 201) {
+        addProjectLocally(data);
         toast({
           title: "Proyecto creado con exito",
         });

@@ -9,6 +9,7 @@ interface DataContextProps {
   error: string | null;
   refreshData: () => void;
   addSubjectLocally: (newSubject: Subject[]) => void;
+  addProjectLocally: (newProject: Project) => void;
 }
 
 export const DataContext = createContext<DataContextProps | undefined>(undefined)
@@ -50,6 +51,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   
     setSubjects((prevSubjects) => [...prevSubjects, ...subjectsArray]);
   };
+
+  const addProjectLocally = (newProject: Project) => {
+    // Ensure newProject is treated as an array
+    const projectsArray = Array.isArray(newProject) ? newProject : [newProject];
+  
+    // Update the projects state with the new array of projects
+    setProjects((prevProjects) => [...prevProjects, ...projectsArray]);
+  };
+  
   
 
   useEffect(() => {
@@ -57,7 +67,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{ projects, subjects, loading, error, refreshData: fetchData, addSubjectLocally }}>
+    <DataContext.Provider value={{ projects, subjects, loading, error, refreshData: fetchData, addSubjectLocally, addProjectLocally }}>
       {children}
     </DataContext.Provider>
   );
