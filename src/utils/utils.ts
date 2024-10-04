@@ -32,12 +32,12 @@ export interface FormProps {
 }
 
 export interface ProjectData {
-  id: string,
-  projectName: string,
-  description: string,
-  image: string,
-  members: string[],
-  subject: string,
+  id: string;
+  project_name: string;
+  description: string;
+  image_url: string;
+  members: string[];
+  subject: Subject;
   to?: string
 }
 

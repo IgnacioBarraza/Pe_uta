@@ -4,15 +4,16 @@ import { ProjectsInfo, Questions, QuestionsForm } from "@/utils/utils";
 import { Loader } from "./components/loader";
 import { Form } from "./components/form";
 import { ProjectDescription } from "./components/description";
+import { useDataProvider } from "@/hooks/useData";
 
 export default function Evaluate() {
   const [searchParams] = useSearchParams();
+  const { projects } = useDataProvider()
   const [loading, setLoading] = useState(true)
   const [questions, setQuestions] = useState<QuestionsForm[]>([])
   const navigate = useNavigate();
   const id = searchParams.get("id");
-  const project = ProjectsInfo.find((project) => project.id === id);
-  
+  const project = projects.find((project) => project.id === id);
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,8 +29,7 @@ export default function Evaluate() {
   }, [project, navigate]);
 
   if (!project) return null
-  
-  
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 mx-auto">

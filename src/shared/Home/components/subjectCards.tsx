@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const SubjectCards = () => {
-  const { subjects, loading, error } = useDataProvider();
+  const { subjects, loading } = useDataProvider();
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
