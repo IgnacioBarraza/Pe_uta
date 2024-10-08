@@ -6,6 +6,7 @@ import { DeleteSubject } from "./components/subject/deleteSubject";
 import { DeleteProject } from "./components/projects/deleteProject";
 import { useDataProvider } from "@/hooks/useData";
 import { Skeleton } from "@/components/ui/skeleton";
+import { NewQuestions } from "./components/questions/newQuestions";
 
 export default function Admin() {
   const { projects, subjects, loading, error } = useDataProvider();
@@ -55,13 +56,14 @@ export default function Admin() {
             <div className="grid gap-4 ">
               <NewProjectForm subjects={subjects} />
               <NewSubjectForm />
-              <DeleteProject projects={projects} />
+              <NewQuestions />
             </div>
           </div>
           <div className="grid sm:mt-28 gap-4">
             <EditProjectForm projects={projects} subjects={subjects} />
             <EditSubject subjects={subjects} />
             <DeleteSubject subjects={subjects} />
+            <DeleteProject projects={projects} />
           </div>
         </div>
       </div>
