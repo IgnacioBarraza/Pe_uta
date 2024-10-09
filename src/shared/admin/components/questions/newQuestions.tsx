@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useBackend } from "@/hooks/useBackend";
 import { CreateQuestionsDto } from "@/utils/utils";
 import { useFieldArray, useForm } from "react-hook-form";
 
@@ -23,11 +24,18 @@ export const NewQuestions = () => {
     control,
     name: "options",
   });
+
+  const { createQuestion } = useBackend()
   
-  const onSubmit = (data: CreateQuestionsDto) => {
-    console.log("Submitted data", data);
-    // Handle form submission (e.g., save question)
-    reset();
+  const onSubmit = async (data: CreateQuestionsDto) => {
+    try {
+      console.log("Submitted data", data);
+      reset();
+      const response = await createQuestion(data)
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   return (

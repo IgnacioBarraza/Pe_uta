@@ -1,4 +1,4 @@
- import { Project, CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse } from "@/utils/utils";
+import { CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse, CreateQuestionsDto } from "@/utils/utils";
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
@@ -16,6 +16,10 @@ type BackendContextType = {
   createProject: (createProjectDto: CreateProjectDto) => Promise<CreateProjectApiResponse>;
   updateProject: (id: string, updateProjectDto: UpdateProjectDto) => Promise<CreateProjectApiResponse>;
   deleteProject: (id: string) => Promise<DeleteApiResponse>
+  /** Questions **/
+  getQuestions: () => void
+  createQuestion: (createQuestionDto: CreateQuestionsDto) => void;
+  deleteQuestion: (id: string) => void
 }
 
 type BackendProviderProps = {
@@ -29,7 +33,9 @@ export const BackendContext = createContext<BackendContextType>({
     data: [{
       id: '',
       showOnExpo: true,
-      subject_name: ''
+      subject_name: '',
+      subject_field: '',
+      description: ''
     }],
     status: 0
   }),
@@ -37,7 +43,9 @@ export const BackendContext = createContext<BackendContextType>({
     data: [{
       id: '',
       showOnExpo: true,
-      subject_name: ''
+      subject_name: '',
+      subject_field: '',
+      description: ''
     }],
     status: 0
   }),
@@ -45,7 +53,9 @@ export const BackendContext = createContext<BackendContextType>({
     data: [{
       id: '',
       showOnExpo: true,
-      subject_name: ''
+      subject_name: '',
+      subject_field: '',
+      description: ''
     }],
     status: 0
   }),
@@ -69,7 +79,9 @@ export const BackendContext = createContext<BackendContextType>({
       subject: {
         id: '',
         subject_name: '',
-        showOnExpo: true
+        showOnExpo: true,
+        subject_field: '',
+        description: ''
       }
     },
     status: 0
@@ -84,7 +96,9 @@ export const BackendContext = createContext<BackendContextType>({
       subject: {
         id: '',
         subject_name: '',
-        showOnExpo: true
+        showOnExpo: true,
+        subject_field: '',
+        description: ''
       }
     },
     status: 0
@@ -94,6 +108,9 @@ export const BackendContext = createContext<BackendContextType>({
     status: 0
   }),
   /** Questions **/
+  getQuestions: () => {},
+  createQuestion: () => {},
+  deleteQuestion: () => {}
 })
 
 export const BackendProvider = ({children}: BackendProviderProps) => {
@@ -110,11 +127,18 @@ export const BackendProvider = ({children}: BackendProviderProps) => {
   const updateProject = (id: string, updateProjectDto: UpdateProjectDto) => axios.put(`${BACKEND_URL}/projects/${id}`, updateProjectDto)
   const deleteProject = (id: string) => axios.delete(`${BACKEND_URL}/projects/${id}`)
 
+  /** Questions functions **/
+  const getQuestions = () => axios.get(`${BACKEND_URL}/questions`)
+  const createQuestion = (createQuestionDto: CreateQuestionsDto) => axios.post(`${BACKEND_URL}/questions`, createQuestionDto)
+  const deleteQuestion = (id: string) => axios.delete(`${BACKEND_URL}/questions/${id}`)
+  
+
   return (
     <BackendContext.Provider 
       value={{ 
         getSubjects, createSubject, updateSubject, deleteSubject, 
-        getProjects, getProjectById, createProject, updateProject, deleteProject
+        getProjects, getProjectById, createProject, updateProject, deleteProject,
+        getQuestions, createQuestion, deleteQuestion
       }}>{children}</BackendContext.Provider>
   )
 }
