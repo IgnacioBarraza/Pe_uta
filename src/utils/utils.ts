@@ -16,10 +16,15 @@ export interface RegisterUserDto {
   name: string;
 }
 
-export interface QuestionsForm {
+export interface Questions {
   id: string,
   label: string,
   options: QuestionsOptions[]
+}
+
+export interface QuestionsApiResponse {
+  data: Questions[]
+  status: number
 }
 
 interface QuestionsOptions {
@@ -33,7 +38,7 @@ export interface CreateQuestionsDto {
 }
 
 export interface FormProps {
-  questions: QuestionsForm[];
+  questions: Questions[];
 }
 
 export interface ProjectData {
@@ -131,64 +136,6 @@ export interface UpdateProjectDto {
   members?: string[];
   subject?: string;
 }
-
-export const Questions: QuestionsForm[] = [
-  {
-    id: "q1",
-    label: "How would you rate the project overall?",
-    options: [
-      { value: "1", label: "1 - Poor" },
-      { value: "2", label: "2 - Fair" },
-      { value: "3", label: "3 - Average" },
-      { value: "4", label: "4 - Good" },
-      { value: "5", label: "5 - Excellent" },
-    ],
-  },
-  {
-    id: "q2",
-    label: "How satisfied are you with the project's progress?",
-    options: [
-      { value: "1", label: "1 - Very Dissatisfied" },
-      { value: "2", label: "2 - Dissatisfied" },
-      { value: "3", label: "3 - Neutral" },
-      { value: "4", label: "4 - Satisfied" },
-      { value: "5", label: "5 - Very Satisfied" },
-    ],
-  },
-  {
-    id: "q3",
-    label: "How likely are you to recommend this project to others?",
-    options: [
-      { value: "1", label: "1 - Not at all likely" },
-      { value: "2", label: "2 - Slightly likely" },
-      { value: "3", label: "3 - Moderately likely" },
-      { value: "4", label: "4 - Very likely" },
-      { value: "5", label: "5 - Extremely likely" },
-    ],
-  },
-  {
-    id: "q4",
-    label: "How would you rate the quality of the project's deliverables?",
-    options: [
-      { value: "1", label: "1 - Poor" },
-      { value: "2", label: "2 - Fair" },
-      { value: "3", label: "3 - Average" },
-      { value: "4", label: "4 - Good" },
-      { value: "5", label: "5 - Excellent" },
-    ],
-  },
-  {
-    id: "q5",
-    label: "How well did the project team communicate and collaborate?",
-    options: [
-      { value: "1", label: "1 - Very Poor" },
-      { value: "2", label: "2 - Poor" },
-      { value: "3", label: "3 - Average" },
-      { value: "4", label: "4 - Good" },
-      { value: "5", label: "5 - Excellent" },
-    ],
-  },
-]
 
 export const EvaluatedProjects = [
   {

@@ -18,7 +18,7 @@ export const Form = ({ questions }: FormProps) => {
           <Label htmlFor={question.id}>{question.label}</Label>
           <Select key={question.id}>
             <SelectTrigger>
-              <SelectValue placeholder="Select a rating" />
+              <SelectValue placeholder="Seleccione el puntaje" />
             </SelectTrigger>
             <SelectContent>
               {question.options.map((option) => (
@@ -31,11 +31,11 @@ export const Form = ({ questions }: FormProps) => {
         </div>
       ))}
       <div className="grid gap-2">
-        <Label htmlFor="comment">Additional Comments</Label>
+        <Label htmlFor="comment">Comentarios adicionales</Label>
         <Textarea
           id="comment"
           rows={4}
-          placeholder="Enter your comments here..."
+          placeholder="Ingrese los comentarios aqui..."
         />
       </div>
       <Button type="submit" className="mt-4">

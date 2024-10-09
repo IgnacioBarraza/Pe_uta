@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ProjectsInfo, Questions, QuestionsForm } from "@/utils/utils";
 import { Loader } from "./components/loader";
 import { Form } from "./components/form";
 import { ProjectDescription } from "./components/description";
@@ -8,16 +7,14 @@ import { useDataProvider } from "@/hooks/useData";
 
 export default function Evaluate() {
   const [searchParams] = useSearchParams();
-  const { projects } = useDataProvider()
+  const { projects, questions } = useDataProvider()
   const [loading, setLoading] = useState(true)
-  const [questions, setQuestions] = useState<QuestionsForm[]>([])
   const navigate = useNavigate();
   const id = searchParams.get("id");
   const project = projects.find((project) => project.id === id);
 
   useEffect(() => {
     setTimeout(() => {
-      setQuestions(Questions)
       setLoading(false)
     }, 2000)
   }, [])

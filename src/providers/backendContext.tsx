@@ -1,4 +1,4 @@
-import { CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse, CreateQuestionsDto } from "@/utils/utils";
+import { CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse, CreateQuestionsDto, QuestionsApiResponse } from "@/utils/utils";
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
@@ -17,7 +17,7 @@ type BackendContextType = {
   updateProject: (id: string, updateProjectDto: UpdateProjectDto) => Promise<CreateProjectApiResponse>;
   deleteProject: (id: string) => Promise<DeleteApiResponse>
   /** Questions **/
-  getQuestions: () => void
+  getQuestions: () => Promise<QuestionsApiResponse>
   createQuestion: (createQuestionDto: CreateQuestionsDto) => void;
   deleteQuestion: (id: string) => void
 }
@@ -108,7 +108,17 @@ export const BackendContext = createContext<BackendContextType>({
     status: 0
   }),
   /** Questions **/
-  getQuestions: () => {},
+  getQuestions: () => Promise.resolve({
+    data: [{
+      id: '',
+      label: '',
+      options: [{
+        label: '',
+        value: ''
+      }]
+    }],
+    status: 0
+  }),
   createQuestion: () => {},
   deleteQuestion: () => {}
 })

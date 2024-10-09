@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Link, useLocation } from "react-router-dom";
-import { ProjectsInfo } from "@/utils/utils";
 import { useDataProvider } from "@/hooks/useData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
@@ -81,7 +80,7 @@ export const Projects = () => {
                         {project.description}
                       </p>
                       <Link
-                        to={`/inicio/evaluar?subject=${project.subject.subject_name}&id=${project.id}`}
+                        to={`/inicio/evaluar?subject=${project.subject.id}&id=${project.id}`}
                         className="inline-flex h-8 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                       >
                         Ver más
