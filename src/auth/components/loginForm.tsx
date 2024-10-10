@@ -107,8 +107,9 @@ export const LoginForm = () => {
         <Link
           to="/register"
           className="text-sm font-medium hover:underline underline-offset-4"
+          state={{ from: location.state?.from }}
         >
-          Registrarse
+          ¿No tienes cuenta? Registrate aquí
         </Link>
       </div>
     </form>

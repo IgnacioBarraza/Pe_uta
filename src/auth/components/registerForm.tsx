@@ -26,13 +26,13 @@ export const RegisterForm = () => {
 
   const onSubmit = async (registerUserData) => {
     try {
-      console.log("Logged");
       const response = await registerUser(registerUserData)
       const { data, status } = response;
       if (status === 201) {
         const token = data.accessToken;
         const decodedToken = decodeToken(token);
         if (decodeToken) {
+          console.log("Logged");
           const savedData = saveUserData(decodedToken, token);
           setUserName(savedData.name)
           setUserId(savedData.id)
@@ -119,7 +119,7 @@ export const RegisterForm = () => {
           to="/login"
           className="text-sm font-medium hover:underline underline-offset-4"
         >
-          Iniciar sesión
+          ¿Ya tienes cuenta? Inicia sesión aquí
         </Link>
       </div>
     </form>
