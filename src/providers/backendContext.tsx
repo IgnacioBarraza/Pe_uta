@@ -18,8 +18,8 @@ type BackendContextType = {
   deleteProject: (id: string) => Promise<DeleteApiResponse>
   /** Questions **/
   getQuestions: () => Promise<QuestionsApiResponse>
-  createQuestion: (createQuestionDto: CreateQuestionsDto) => void;
-  deleteQuestion: (id: string) => void
+  createQuestion: (createQuestionDto: CreateQuestionsDto) => Promise<QuestionsApiResponse>;
+  deleteQuestion: (id: string) => Promise<DeleteApiResponse>
 }
 
 type BackendProviderProps = {
@@ -119,8 +119,22 @@ export const BackendContext = createContext<BackendContextType>({
     }],
     status: 0
   }),
-  createQuestion: () => {},
-  deleteQuestion: () => {}
+  createQuestion: () => Promise.resolve({
+    data: [{
+      id: '',
+      label: '',
+      options: [{
+        label: '',
+        value: ''
+      }]
+    }],
+    status: 0
+  }),
+  deleteQuestion: () => Promise.resolve({
+    data: '',
+    status: 0
+  }),
+  /** Evaluate **/
 })
 
 export const BackendProvider = ({children}: BackendProviderProps) => {
@@ -138,9 +152,9 @@ export const BackendProvider = ({children}: BackendProviderProps) => {
   const deleteProject = (id: string) => axios.delete(`${BACKEND_URL}/projects/${id}`)
 
   /** Questions functions **/
-  const getQuestions = () => axios.get(`${BACKEND_URL}/questions`)
-  const createQuestion = (createQuestionDto: CreateQuestionsDto) => axios.post(`${BACKEND_URL}/questions`, createQuestionDto)
-  const deleteQuestion = (id: string) => axios.delete(`${BACKEND_URL}/questions/${id}`)
+  const getQuestions = (): Promise<QuestionsApiResponse> => axios.get(`${BACKEND_URL}/questions`)
+  const createQuestion = (createQuestionDto: CreateQuestionsDto): Promise<QuestionsApiResponse> => axios.post(`${BACKEND_URL}/questions`, createQuestionDto)
+  const deleteQuestion = (id: string): Promise<DeleteApiResponse> => axios.delete(`${BACKEND_URL}/questions/${id}`)
   
 
   return (

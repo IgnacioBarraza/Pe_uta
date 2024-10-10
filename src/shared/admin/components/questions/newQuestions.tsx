@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
+import { useDataProvider } from "@/hooks/useData";
 import { CreateQuestionsDto } from "@/utils/utils";
 import { useFieldArray, useForm } from "react-hook-form";
 
@@ -26,13 +28,21 @@ export const NewQuestions = () => {
   });
 
   const { createQuestion } = useBackend()
+  const { toast } = useToast()
+  const { addQuestionLocally } = useDataProvider()
   
-  const onSubmit = async (data: CreateQuestionsDto) => {
+  const onSubmit = async (questionData: CreateQuestionsDto) => {
     try {
-      console.log("Submitted data", data);
-      reset();
-      const response = await createQuestion(data)
+      const response = await createQuestion(questionData)
       console.log(response)
+      const { data, status } = response
+      if (status === 201) {
+        addQuestionLocally(data)
+        toast({
+          title: 'Pregunta agregada con exito'
+        })
+        reset()
+      }
     } catch (error) {
       console.error(error)
     }

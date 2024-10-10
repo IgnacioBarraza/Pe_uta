@@ -11,7 +11,7 @@ interface DataContextProps {
   refreshData: () => void;
   addSubjectLocally: (newSubject: Subject[]) => void;
   addProjectLocally: (newProject: Project) => void;
-  addQuestionLocally: (newQuestion: Questions) => void;
+  addQuestionLocally: (newQuestion: Questions[]) => void;
 }
 
 export const DataContext = createContext<DataContextProps | undefined>(undefined)
@@ -67,7 +67,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     setProjects((prevProjects) => [...prevProjects, ...projectsArray]);
   };
   
-  const addQuestionLocally = (newQuestion: Questions) => {
+  const addQuestionLocally = (newQuestion: Questions[]) => {
     // Ensure newQuestion is treated as an array
     const questionsArray = Array.isArray(newQuestion) ? newQuestion : [newQuestion];
   

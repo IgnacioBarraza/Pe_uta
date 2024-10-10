@@ -7,9 +7,10 @@ import { DeleteProject } from "./components/projects/deleteProject";
 import { useDataProvider } from "@/hooks/useData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewQuestions } from "./components/questions/newQuestions";
+import { DeleteQuestion } from "./components/questions/deleteQuestion";
 
 export default function Admin() {
-  const { projects, subjects, loading, error } = useDataProvider();
+  const { projects, subjects, questions, loading, error } = useDataProvider();
 
   if (loading) {
     return(
@@ -64,6 +65,7 @@ export default function Admin() {
             <EditSubject subjects={subjects} />
             <DeleteSubject subjects={subjects} />
             <DeleteProject projects={projects} />
+            <DeleteQuestion questions={questions} />
           </div>
         </div>
       </div>
