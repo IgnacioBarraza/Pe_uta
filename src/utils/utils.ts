@@ -137,6 +137,44 @@ export interface UpdateProjectDto {
   subject?: string;
 }
 
+export interface EvaluationFormData {
+  userId: string;
+  projectId: string;
+  comment: string;
+  scores: {
+    [questionId: string]: string;
+  };
+}
+
+export interface EvaluationData {
+  user: {
+    id: string;
+  };
+  project: {
+    id: string;
+  };
+  total_evaluation_score: number;
+  question_scores: {
+    id: string;
+    score: number;
+  }[];
+  comment: string;
+}
+
+export interface EvaluationFormProps extends FormProps {
+  userId: string;
+  projectId: string;
+}
+
+export interface Evaluation extends EvaluationData{
+  id: string
+}
+
+export interface EvaluationApiResponse {
+  data: Evaluation[]
+  status: number
+}
+
 export const EvaluatedProjects = [
   {
     id: 1,

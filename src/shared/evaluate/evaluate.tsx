@@ -4,10 +4,12 @@ import { Loader } from "./components/loader";
 import { Form } from "./components/form";
 import { ProjectDescription } from "./components/description";
 import { useDataProvider } from "@/hooks/useData";
+import { useProps } from "@/hooks/useProps";
 
 export default function Evaluate() {
   const [searchParams] = useSearchParams();
   const { projects, questions } = useDataProvider()
+  const { userId } = useProps()
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
   const id = searchParams.get("id");
@@ -44,7 +46,7 @@ export default function Evaluate() {
                     Por favor envíe sus comentarios sobre el proyecto.
                   </p>
                 </div>
-                <Form questions={questions}/>
+                <Form questions={questions} userId={userId} projectId={project.id}/>
               </div>
             )}
           </div>

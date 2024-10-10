@@ -1,4 +1,4 @@
-import { CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse, CreateQuestionsDto, QuestionsApiResponse } from "@/utils/utils";
+import { CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectApiResponse, DeleteApiResponse, UpdateProjectDto, UpdateSubjectDto, ProjectApiResponse, CreateQuestionsDto, QuestionsApiResponse, EvaluationData, EvaluationApiResponse } from "@/utils/utils";
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
@@ -20,6 +20,10 @@ type BackendContextType = {
   getQuestions: () => Promise<QuestionsApiResponse>
   createQuestion: (createQuestionDto: CreateQuestionsDto) => Promise<QuestionsApiResponse>;
   deleteQuestion: (id: string) => Promise<DeleteApiResponse>
+  /** Evaluation **/
+  getEvaluations: () => Promise<EvaluationApiResponse>
+  getEvaluationsByUser: (id: string) => Promise<EvaluationApiResponse>
+  submitEvaluation: (createEvaluation: EvaluationData) => Promise<EvaluationApiResponse>
 }
 
 type BackendProviderProps = {
@@ -109,25 +113,11 @@ export const BackendContext = createContext<BackendContextType>({
   }),
   /** Questions **/
   getQuestions: () => Promise.resolve({
-    data: [{
-      id: '',
-      label: '',
-      options: [{
-        label: '',
-        value: ''
-      }]
-    }],
+    data: [],
     status: 0
   }),
   createQuestion: () => Promise.resolve({
-    data: [{
-      id: '',
-      label: '',
-      options: [{
-        label: '',
-        value: ''
-      }]
-    }],
+    data: [],
     status: 0
   }),
   deleteQuestion: () => Promise.resolve({
@@ -135,6 +125,18 @@ export const BackendContext = createContext<BackendContextType>({
     status: 0
   }),
   /** Evaluate **/
+  getEvaluations: () => Promise.resolve({
+    data: [],
+    status: 0
+  }),
+  getEvaluationsByUser: () => Promise.resolve({
+    data: [],
+    status: 0
+  }),
+  submitEvaluation: () => Promise.resolve({
+    data: [],
+    status: 0
+  })
 })
 
 export const BackendProvider = ({children}: BackendProviderProps) => {
@@ -156,13 +158,18 @@ export const BackendProvider = ({children}: BackendProviderProps) => {
   const createQuestion = (createQuestionDto: CreateQuestionsDto): Promise<QuestionsApiResponse> => axios.post(`${BACKEND_URL}/questions`, createQuestionDto)
   const deleteQuestion = (id: string): Promise<DeleteApiResponse> => axios.delete(`${BACKEND_URL}/questions/${id}`)
   
+  /** Evaluation functions **/
+  const getEvaluations = () => axios.get(`${BACKEND_URL}/evaluation`)
+  const getEvaluationsByUser = (id: string) => axios.get(`${BACKEND_URL}/evaluation/user/${id}`)
+  const submitEvaluation = (createEvaluation: EvaluationData) => axios.post(`${BACKEND_URL}/evaluation`, createEvaluation)
 
   return (
     <BackendContext.Provider 
       value={{ 
         getSubjects, createSubject, updateSubject, deleteSubject, 
         getProjects, getProjectById, createProject, updateProject, deleteProject,
-        getQuestions, createQuestion, deleteQuestion
+        getQuestions, createQuestion, deleteQuestion,
+        getEvaluations, getEvaluationsByUser, submitEvaluation
       }}>{children}</BackendContext.Provider>
   )
 }

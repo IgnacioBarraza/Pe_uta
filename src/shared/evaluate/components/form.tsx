@@ -8,26 +8,88 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { FormProps } from "@/utils/utils";
+import { useToast } from "@/hooks/use-toast";
+import { useBackend } from "@/hooks/useBackend";
+import { EvaluationData, EvaluationFormData, EvaluationFormProps } from "@/utils/utils";
+import { useForm, Controller } from "react-hook-form";
 
-export const Form = ({ questions }: FormProps) => {
+export const Form = ({ questions, userId, projectId }: EvaluationFormProps) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<EvaluationFormData>();
+  const { submitEvaluation } = useBackend()
+  const { toast } = useToast()
+
+  const calculateTotalScore = (scores: { [questionId: string]: string }): number => {
+    const scoreValues = Object.values(scores).map(Number);
+    const total = scoreValues.reduce((acc, score) => acc + score, 0);
+    return scoreValues.length ? total / scoreValues.length : 0; // Calculate the average score
+  }
+
+  const onSubmit = async (formData: EvaluationFormData) => {
+    const scores = formData.scores;
+    const total_evaluation_score = calculateTotalScore(scores);
+
+    const evaluationData: EvaluationData = {
+      user: { id: userId },
+      project: { id: projectId },
+      total_evaluation_score: total_evaluation_score,
+      question_scores: questions.map((question) => ({
+        id: question.id, // Include question ID
+        score: parseInt(scores[question.id] || "0", 10),
+      })),
+      comment: formData.comment,
+    };
+
+    try {
+      const response = await submitEvaluation(evaluationData)
+      const { data, status } = response
+      if (status === 201) {
+        toast({
+          title: 'Evaluación enviada con exito!',
+          description: 'Gracias por evaluar a este grupo!'
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      toast({
+        title: 'Error en la evaluación.',
+        description: error.response.data.message,
+        variant: 'destructive'
+      })
+    }
+  }
+
   return (
-    <form className="grid gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
       {questions.map((question) => (
         <div key={question.id} className="grid gap-2">
           <Label htmlFor={question.id}>{question.label}</Label>
-          <Select key={question.id}>
-            <SelectTrigger>
-              <SelectValue placeholder="Seleccione el puntaje" />
-            </SelectTrigger>
-            <SelectContent>
-              {question.options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Controller
+            name={`scores.${question.id}`} // Register the score for this question
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione el puntaje" />
+                </SelectTrigger>
+                <SelectContent>
+                  {question.options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors.scores?.[question.id] && (
+            <span className="text-red-500">Seleccione un puntaje</span>
+          )}
         </div>
       ))}
       <div className="grid gap-2">
@@ -36,7 +98,11 @@ export const Form = ({ questions }: FormProps) => {
           id="comment"
           rows={4}
           placeholder="Ingrese los comentarios aqui..."
+          {...register("comment", { required: true })}
         />
+        {errors.comment && (
+          <span className="text-red-500">Este campo es obligatorio</span>
+        )}
       </div>
       <Button type="submit" className="mt-4">
         Submit Evaluation
