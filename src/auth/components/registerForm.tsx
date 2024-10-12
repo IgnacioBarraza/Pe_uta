@@ -38,6 +38,7 @@ export const RegisterForm = () => {
           setUserId(savedData.id)
           setUserType(savedData.user_type)
           setTokenData(token)
+          localStorage.removeItem('redirected');
           toast({
             title: 'Registro de sesión correcto',
             description: 'Disfruta de la feria de ciencias!!!',

@@ -37,6 +37,7 @@ export const LoginForm = () => {
           setUserId(savedData.id)
           setUserType(savedData.user_type)
           setTokenData(token)
+          localStorage.removeItem('redirected');
           toast({
             title: 'Inicio de sesión correcto',
             description: 'Disfruta de la feria de ciencias!!!',

@@ -37,12 +37,21 @@ export const saveUserData = (decodedToken: any, token: string) => {
  * and return to home page
  */
 export const clearUserData = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('userId');
-  localStorage.removeItem('userName');
-  localStorage.removeItem('userRole');
-  localStorage.removeItem('userEvaluations');
-  window.location.replace('/inicio')
+  // Check if the redirection already occurred
+  if (!localStorage.getItem('redirected')) {
+    // Set the flag to indicate the redirect has happened
+    localStorage.setItem('redirected', 'true');
+
+    // Clear the user data
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userEvaluations');
+    
+    // Perform the redirection once
+    window.location.replace('/inicio');
+  }
 };
 
 /**
