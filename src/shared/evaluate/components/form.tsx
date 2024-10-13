@@ -19,6 +19,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<EvaluationFormData>();
   const { submitEvaluation } = useBackend()
@@ -51,9 +52,9 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
     try {
       const response = await submitEvaluation(evaluationData)
       const { data, status } = response
-      console.log(data)
       if (status === 201) {
         addEvaluationLocally(data)
+        reset()
         toast({
           title: 'Evaluación enviada con exito!',
           description: 'Gracias por evaluar a este grupo!'
