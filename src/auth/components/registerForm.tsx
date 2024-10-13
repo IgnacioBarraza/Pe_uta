@@ -33,7 +33,7 @@ export const RegisterForm = () => {
         const decodedToken = decodeToken(token);
         if (decodeToken) {
           console.log("Logged");
-          const savedData = saveUserData(decodedToken, token);
+          const savedData = saveUserData(decodedToken, token, data.evaluations);
           setUserName(savedData.name)
           setUserId(savedData.id)
           setUserType(savedData.user_type)
