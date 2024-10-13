@@ -161,7 +161,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
                 defaultValue=""
                 render={({ field }) => (
                   <Select
-                    value={field.value || ""}
+                    value={field.value || "Seleccionar asignatura"}
                     onValueChange={(value) => field.onChange(value)}
                   >
                     <SelectTrigger>

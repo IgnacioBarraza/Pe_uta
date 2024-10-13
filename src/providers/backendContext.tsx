@@ -34,33 +34,15 @@ type BackendProviderProps = {
 export const BackendContext = createContext<BackendContextType>({
   /** Subjects **/
   getSubjects: () => Promise.resolve({
-    data: [{
-      id: '',
-      showOnExpo: true,
-      subject_name: '',
-      subject_field: '',
-      description: ''
-    }],
+    data: [],
     status: 0
   }),
   createSubject:  () => Promise.resolve({
-    data: [{
-      id: '',
-      showOnExpo: true,
-      subject_name: '',
-      subject_field: '',
-      description: ''
-    }],
+    data: [],
     status: 0
   }),
   updateSubject: () => Promise.resolve({
-    data: [{
-      id: '',
-      showOnExpo: true,
-      subject_name: '',
-      subject_field: '',
-      description: ''
-    }],
+    data: [],
     status: 0
   }),
   deleteSubject: () => Promise.resolve({
