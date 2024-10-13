@@ -2,8 +2,7 @@ import axios from "axios";
 import { createContext, ReactNode } from "react";
 import { AuthApiResponse, LoginUserDto, RegisterUserDto } from "@/utils/utils";
 
-const DEV_BACKEND_URL = "http://localhost:3000"
-// const PROD_BACKEND_URL = "https://bak.torresproject.com"
+const DEV_BACKEND_URL = "https://peuta.up.railway.app"
 
 type AuthContextType = {
   login: (loginUserDto: LoginUserDto) => Promise<AuthApiResponse>;
@@ -17,13 +16,15 @@ type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextType>({
   login: () => Promise.resolve({
     data: {
-      accessToken: ''
+      accessToken: '',
+      evaluations: []
     },
     status: 0
   }),
   registerUser: () => Promise.resolve({
     data: {
-      accessToken: ''
+      accessToken: '',
+      evaluations: []
     },
     status: 0
   }),
