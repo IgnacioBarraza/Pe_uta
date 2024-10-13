@@ -6,6 +6,7 @@ export interface LoginUserDto {
 export interface AuthApiResponse {
   data: {
     accessToken: string;
+    evaluations
   }
   status: number;
 }
@@ -163,7 +164,6 @@ export interface EvaluationData {
 
 export interface EvaluationFormProps extends FormProps {
   userId: string;
-  projectId: string;
 }
 
 export interface Evaluation extends EvaluationData{

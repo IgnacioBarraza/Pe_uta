@@ -46,7 +46,7 @@ export default function Evaluate() {
                     Por favor envíe sus comentarios sobre el proyecto.
                   </p>
                 </div>
-                <Form questions={questions} userId={userId} projectId={project.id}/>
+                <Form questions={questions} userId={userId}/>
               </div>
             )}
           </div>

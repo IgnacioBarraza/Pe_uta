@@ -10,10 +10,11 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
+import { useDataProvider } from "@/hooks/useData";
 import { EvaluationData, EvaluationFormData, EvaluationFormProps } from "@/utils/utils";
 import { useForm, Controller } from "react-hook-form";
 
-export const Form = ({ questions, userId, projectId }: EvaluationFormProps) => {
+export const Form = ({ questions, userId }: EvaluationFormProps) => {
   const {
     register,
     handleSubmit,
@@ -22,6 +23,9 @@ export const Form = ({ questions, userId, projectId }: EvaluationFormProps) => {
   } = useForm<EvaluationFormData>();
   const { submitEvaluation } = useBackend()
   const { toast } = useToast()
+  const { addEvaluationLocally } = useDataProvider()
+
+  const projectId = new URLSearchParams(location.search).get('id')
 
   const calculateTotalScore = (scores: { [questionId: string]: string }): number => {
     const scoreValues = Object.values(scores).map(Number);
@@ -47,7 +51,9 @@ export const Form = ({ questions, userId, projectId }: EvaluationFormProps) => {
     try {
       const response = await submitEvaluation(evaluationData)
       const { data, status } = response
+      console.log(data)
       if (status === 201) {
+        addEvaluationLocally(data)
         toast({
           title: 'Evaluación enviada con exito!',
           description: 'Gracias por evaluar a este grupo!'
@@ -98,11 +104,8 @@ export const Form = ({ questions, userId, projectId }: EvaluationFormProps) => {
           id="comment"
           rows={4}
           placeholder="Ingrese los comentarios aqui..."
-          {...register("comment", { required: true })}
+          {...register("comment")}
         />
-        {errors.comment && (
-          <span className="text-red-500">Este campo es obligatorio</span>
-        )}
       </div>
       <Button type="submit" className="mt-4">
         Submit Evaluation
