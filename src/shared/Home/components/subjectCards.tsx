@@ -1,5 +1,4 @@
 import { useDataProvider } from "@/hooks/useData";
-import { SubjectProjects } from "@/utils/utils";
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 
