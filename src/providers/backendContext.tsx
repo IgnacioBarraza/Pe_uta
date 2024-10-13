@@ -2,7 +2,7 @@ import { CreateProjectDto, CreateSubjectDto, CreateProjectApiResponse, SubjectAp
 import axios from "axios"
 import { ReactNode, createContext } from "react";
 
-const BACKEND_URL = 'http://localhost:3000'
+const BACKEND_URL = 'https://peuta.up.railway.app'
 
 type BackendContextType = {
   /** Subjects **/
