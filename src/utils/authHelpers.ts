@@ -20,16 +20,16 @@ export const decodeToken = (token: string) => {
  * @param token token to authenticated user and grant permission if needed
  * @returns id, name, user_type, evaluated and token to set them to be used along the app
  */
-export const saveUserData = (decodedToken: any, token: string) => {
-  const { id, name, user_type, evaluated } = decodedToken;
+export const saveUserData = (decodedToken: any, token: string, evaluations) => {
+  const { id, name, user_type } = decodedToken;
 
   localStorage.setItem('token', token);
   localStorage.setItem('userId', id);
   localStorage.setItem('userName', name);
   localStorage.setItem('userRole', user_type);
-  localStorage.setItem('userEvaluations', JSON.stringify(evaluated));
+  localStorage.setItem('userEvaluations', JSON.stringify(evaluations));
 
-  return {id, name, user_type, evaluated, token}
+  return {id, name, user_type, evaluations, token}
 };
 
 /**

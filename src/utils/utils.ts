@@ -155,10 +155,7 @@ export interface EvaluationData {
     id: string;
   };
   total_evaluation_score: number;
-  question_scores: {
-    id: string;
-    score: number;
-  }[];
+  question_scores: QuestionScore[];
   comment: string;
 }
 
@@ -166,8 +163,25 @@ export interface EvaluationFormProps extends FormProps {
   userId: string;
 }
 
-export interface Evaluation extends EvaluationData{
+export interface Evaluation{
   id: string
+  total_evaluation_score: number
+  question_scores: QuestionScore[]
+  comment: string
+  user: User
+  project: Project
+}
+
+interface QuestionScore {
+  id: string
+  score: number
+}
+
+interface User {
+  id: string
+  name: string
+  rut: string
+  user_type: string
 }
 
 export interface EvaluationApiResponse {

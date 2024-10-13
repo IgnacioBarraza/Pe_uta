@@ -8,6 +8,7 @@ import { LoginUserDto } from "@/utils/utils";
 import { useForm, Controller } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useDataProvider } from "@/hooks/useData";
 
 export const LoginForm = () => {
   const {
@@ -19,6 +20,7 @@ export const LoginForm = () => {
   const { login } = useAuth();
   const { toast } = useToast()
   const { setUserName, setUserId, setTokenData, setUserType } = useProps()
+  const { addEvaluationLocally } = useDataProvider()
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/inicio"; // Get the previous page or default to home (if not coming from another page)
@@ -32,11 +34,12 @@ export const LoginForm = () => {
         const token = data.accessToken;
         const decodedToken = decodeToken(token);
         if (decodeToken) {
-          const savedData = saveUserData(decodedToken, token);
+          const savedData = saveUserData(decodedToken, token, data.evaluations);
           setUserName(savedData.name)
           setUserId(savedData.id)
           setUserType(savedData.user_type)
           setTokenData(token)
+          addEvaluationLocally(data.evaluations)
           localStorage.removeItem('redirected');
           toast({
             title: 'Inicio de sesión correcto',
