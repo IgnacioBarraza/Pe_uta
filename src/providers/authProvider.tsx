@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, ReactNode } from "react";
 import { AuthApiResponse, LoginUserDto, RegisterUserDto } from "@/utils/utils";
 
-const DEV_BACKEND_URL = "https://peuta.up.railway.app"
+const DEV_BACKEND_URL = "https://peuta-develop.up.railway.app"
 
 type AuthContextType = {
   login: (loginUserDto: LoginUserDto) => Promise<AuthApiResponse>;
@@ -31,8 +31,8 @@ export const AuthContext = createContext<AuthContextType>({
 })
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const login = (loginUserDto: LoginUserDto): Promise<AuthApiResponse> => axios.post(`${DEV_BACKEND_URL}/user/login`, loginUserDto);
-  const registerUser = (registerUserDto: RegisterUserDto): Promise<AuthApiResponse> => axios.post(`${DEV_BACKEND_URL}/user/register`, registerUserDto)
+  const login = (loginUserDto: LoginUserDto): Promise<AuthApiResponse> => axios.post(`${DEV_BACKEND_URL}/api/user/login`, loginUserDto);
+  const registerUser = (registerUserDto: RegisterUserDto): Promise<AuthApiResponse> => axios.post(`${DEV_BACKEND_URL}/api/user/register`, registerUserDto)
 
   return <AuthContext.Provider value={{ login, registerUser }}>{children}</AuthContext.Provider>
 }

@@ -46,25 +46,25 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       const [projectsResponse, subjectsResponse, questionResponse] =
         await Promise.all([getProjects(), getSubjects(), getQuestions()]);
 
-      if (projectsResponse.status === 200) {
+      if (projectsResponse) {
         setProjects(
-          Array.isArray(projectsResponse.data)
-            ? projectsResponse.data
-            : [projectsResponse.data]
+          Array.isArray(projectsResponse)
+            ? projectsResponse
+            : [projectsResponse]
         );
       }
-      if (subjectsResponse.status === 200) {
+      if (subjectsResponse) {
         setSubjects(
-          Array.isArray(subjectsResponse.data)
-            ? subjectsResponse.data
-            : [subjectsResponse.data]
+          Array.isArray(subjectsResponse)
+            ? subjectsResponse
+            : [subjectsResponse]
         );
       }
-      if (questionResponse.status === 200) {
+      if (questionResponse) {
         setQuestions(
-          Array.isArray(questionResponse.data)
-            ? questionResponse.data
-            : [questionResponse.data]
+          Array.isArray(questionResponse)
+            ? questionResponse
+            : [questionResponse]
         );
       }
 
