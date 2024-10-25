@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const FilteredProjects = ({filteredProjects}) => {
+  const [showFullDescription, setShowFullDescription] = useState(false)
+  const descriptionLimit = 150
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
               {filteredProjects.length > 0 ? (
@@ -21,7 +25,12 @@ export const FilteredProjects = ({filteredProjects}) => {
                         {project.project_name}
                       </h3>
                       <p className="text-muted-foreground">
-                        {project.description}
+                        {showFullDescription 
+                        ? project.description
+                        : `${project.description.slice(
+                          0,
+                          descriptionLimit
+                        )}...`}
                       </p>
                       <Link
                         to={`/inicio/evaluar?subject=${project.subject.id}&id=${project.id}`}
