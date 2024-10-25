@@ -1,3 +1,6 @@
+import { ReactNode } from "react";
+import { Location } from "react-router-dom";
+
 export interface LoginUserDto {
   rut: string,
   password: string
@@ -187,4 +190,12 @@ interface User {
 export interface EvaluationApiResponse {
   data: Evaluation[]
   status: number
+}
+
+export interface ContextProviderProps {
+  children: ReactNode;
+}
+
+export interface LocationContextProps {
+  location: Location
 }
