@@ -39,7 +39,7 @@ export const Schedule = () => {
               <li>
                 <div className="grid gap-1">
                   <h3 className="text-xl font-bold">
-                    Presentacións interactivas - 10:00 AM
+                    Presentaciones interactivas - 10:00 AM
                   </h3>
                   <p className="text-muted-foreground">
                     Participa en actividades interactivas y experimentos

@@ -15,7 +15,7 @@ export const ProjectDescription = ({project}: ProjectDataProps) => {
       <div className="space-y-2">
         <h2 className="text-3xl font-bold">{project.project_name}</h2>
         <p className="text-muted-foreground text-lg">{project.description}</p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-start gap-2">
           <FontAwesomeIcon
             icon={faUsers}
             className="h-5 w-5 text-muted-foreground"
