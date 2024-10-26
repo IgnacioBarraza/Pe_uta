@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, ReactNode } from "react";
 import { AuthApiResponse, LoginUserDto, RegisterUserDto } from "@/utils/utils";
 
-const DEV_BACKEND_URL = "https://peuta-develop.up.railway.app"
+const DEV_BACKEND_URL = "https://peuta.up.railway.app"
 
 type AuthContextType = {
   login: (loginUserDto: LoginUserDto) => Promise<AuthApiResponse>;

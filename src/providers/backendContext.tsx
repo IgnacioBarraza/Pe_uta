@@ -18,7 +18,7 @@ import {
 import axios from 'axios'
 import { ReactNode, createContext, useState, useEffect } from 'react'
 
-const BACKEND_URL = 'https://peuta-develop.up.railway.app'
+const BACKEND_URL = 'https://peuta.up.railway.app'
 
 type BackendContextType = {
   /** Subjects **/

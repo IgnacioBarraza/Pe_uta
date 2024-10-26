@@ -17,7 +17,7 @@ function ProtectedRoute({ roles = [], children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login", { state: { from: location.pathname + location.search } });
+      navigate("/auth", { state: { from: location.pathname + location.search } });
     } else if (roles.length && storedUserRole && !roles.includes(storedUserRole)) {
       navigate("/inicio");
     } else {
