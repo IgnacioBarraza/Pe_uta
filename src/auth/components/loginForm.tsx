@@ -10,7 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useDataProvider } from "@/hooks/useData";
 
-export const LoginForm = () => {
+export const LoginForm = ({setIsLogin}) => {
   const {
     register,
     handleSubmit,
@@ -108,13 +108,13 @@ export const LoginForm = () => {
         Ingresar
       </Button>
       <div className="text-center">
-        <Link
-          to="/register"
+        <button
+          onClick={() => setIsLogin(false)}
+          type="button"
           className="text-sm font-medium hover:underline underline-offset-4"
-          state={{ from: location.state?.from }}
         >
           ¿No tienes cuenta? Registrate aquí
-        </Link>
+        </button>
       </div>
     </form>
   );

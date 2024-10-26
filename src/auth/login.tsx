@@ -2,26 +2,20 @@ import { Calendar } from "@/components/ui/calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { LoginForm } from "./components/loginForm";
+import AuthHeader from "./components/authHeader";
+import { useState } from "react";
+import { RegisterForm } from "./components/registerForm";
 
-export const LogIn = () => {
+export default function Auth() {
+  const [isLogin, setIsLogin] = useState(true)
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 my-auto h-full">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
           <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Feria de ciencias 
-              </h1>
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                "Amplia tus conocimientos"
-              </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                Ingresa tu rut y contraseña para ingresar.
-              </p>
-            </div>
-            <LoginForm />
+            {isLogin ? <AuthHeader isLoginOrRegister={'login'} /> : <AuthHeader isLoginOrRegister={'register'} />}
+            {isLogin ? <LoginForm setIsLogin={setIsLogin}/> : <RegisterForm setIsLogin={setIsLogin}/>}
           </div>
           <div className="flex flex-col justify-center items-center space-y-4">
             <div className="space-y-2">
@@ -51,4 +45,4 @@ export const LogIn = () => {
       </div>
     </section>
   );
-};
+}

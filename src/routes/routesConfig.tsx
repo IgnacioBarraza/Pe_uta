@@ -1,22 +1,17 @@
 import { Layout } from "@/shared/layout";
 import { Projects } from "@/shared/project/projects";
 import Evaluate from "@/shared/evaluate/evaluate";
-import { LogIn } from "@/auth/login";
+import Auth from "@/auth/login";
 import { Home } from "@/shared/Home/home";
 import { Page404 } from "@/shared/page404";
-import { Register } from "@/auth/register";
 import Admin from "@/shared/admin/admin";
 import { Navigate } from "react-router-dom";
 import Evaluated from "@/shared/evaluated/evaluated";
 
 const routes = [
   {
-    path: "/login",
-    component: <LogIn />,
-  },
-  {
-    path: "/register",
-    component: <Register />,
+    path: "/auth",
+    component: <Auth />,
   },
   {
     path: "/inicio",

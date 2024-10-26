@@ -9,7 +9,7 @@ import { useProps } from "@/hooks/useProps";
 import { decodeToken, formatRut, saveUserData } from "@/utils/authHelpers";
 import { useToast } from "@/hooks/use-toast";
 
-export const RegisterForm = () => {
+export const RegisterForm = ({setIsLogin}) => {
   const {
     register,
     handleSubmit,
@@ -116,12 +116,13 @@ export const RegisterForm = () => {
         Registrarse
       </Button>
       <div className="text-center">
-        <Link
-          to="/login"
+        <button
+          onClick={() => setIsLogin(true)}
+          type="button"
           className="text-sm font-medium hover:underline underline-offset-4"
         >
           ¿Ya tienes cuenta? Inicia sesión aquí
-        </Link>
+        </button>
       </div>
     </form>
   );

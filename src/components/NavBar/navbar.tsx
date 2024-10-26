@@ -15,8 +15,7 @@ export default function Navbar() {
   const { location } = useLocationContext()
 
   const isLoginOrNotFound =
-    location.pathname === '/login' ||
-    location.pathname === '/register' ||
+    location.pathname === '/auth' ||
     location.pathname === '/404'
 
   const handleLogout = () => {
@@ -87,16 +86,10 @@ export default function Navbar() {
               ) : (
                 <>
                   <a
-                    href="/login"
+                    href="/auth"
                     className="text-sm font-medium hover:underline underline-offset-4"
                   >
                     Iniciar Sesión
-                  </a>
-                  <a
-                    href="/register"
-                    className="text-sm font-medium hover:underline underline-offset-4"
-                  >
-                    Registrarse
                   </a>
                 </>
               )}
@@ -156,16 +149,10 @@ export default function Navbar() {
           ) : (
             <>
               <a
-                href="/login"
+                href="/auth"
                 className="text-sm font-medium hover:underline underline-offset-4"
               >
                 Iniciar Sesión
-              </a>
-              <a
-                href="/register"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
-                Registrarse
               </a>
             </>
           )}
