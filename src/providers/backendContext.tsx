@@ -99,42 +99,42 @@ export const BackendProvider = ({ children }: BackendProviderProps) => {
     return fetchExpoData('subjects')
   }
   const createSubject = (createSubjectDto: CreateSubjectDto) =>
-    axios.post(`${BACKEND_URL}/subjects`, createSubjectDto)
+    axios.post(`${BACKEND_URL}/api/subjects`, createSubjectDto)
   const updateSubject = (id: string, updateSubjectDto: UpdateSubjectDto) =>
-    axios.put(`${BACKEND_URL}/subjects/${id}`, updateSubjectDto)
+    axios.put(`${BACKEND_URL}/api/subjects/${id}`, updateSubjectDto)
   const deleteSubject = (id: string) =>
-    axios.delete(`${BACKEND_URL}/subjects/${id}`)
+    axios.delete(`${BACKEND_URL}/api/subjects/${id}`)
 
   /** Projects functions **/
   const getProjects = () => {
     return fetchExpoData('projects')
   }
   const getProjectById = (id: string) =>
-    axios.get(`${BACKEND_URL}/projects/${id}`).then((res) => res.data)
+    axios.get(`${BACKEND_URL}/api/projects/${id}`).then((res) => res.data)
   const createProject = (createProjectDto: CreateProjectDto) =>
-    axios.post(`${BACKEND_URL}/projects`, createProjectDto)
+    axios.post(`${BACKEND_URL}/api/projects`, createProjectDto)
   const updateProject = (id: string, updateProjectDto: UpdateProjectDto) =>
-    axios.put(`${BACKEND_URL}/projects/${id}`, updateProjectDto)
+    axios.put(`${BACKEND_URL}/api/projects/${id}`, updateProjectDto)
   const deleteProject = (id: string) =>
-    axios.delete(`${BACKEND_URL}/projects/${id}`)
+    axios.delete(`${BACKEND_URL}/api/projects/${id}`)
 
   /** Questions functions **/
   const getQuestions = () => {
     return fetchExpoData('questions')
   }
   const createQuestion = (createQuestionDto: CreateQuestionsDto) =>
-    axios.post(`${BACKEND_URL}/questions`, createQuestionDto)
+    axios.post(`${BACKEND_URL}/api/questions`, createQuestionDto)
   const deleteQuestion = (id: string) =>
-    axios.delete(`${BACKEND_URL}/questions/${id}`)
+    axios.delete(`${BACKEND_URL}/api/questions/${id}`)
 
   /** Evaluation functions **/
   const getEvaluations = () => {
     return fetchExpoData('evaluations')
   }
   const getEvaluationsByUser = (id: string) =>
-    axios.get(`${BACKEND_URL}/evaluation/user/${id}`).then((res) => res.data)
+    axios.get(`${BACKEND_URL}/api/evaluation/user/${id}`).then((res) => res.data)
   const submitEvaluation = (createEvaluation: EvaluationData) =>
-    axios.post(`${BACKEND_URL}/evaluation`, createEvaluation)
+    axios.post(`${BACKEND_URL}/api/evaluation`, createEvaluation)
 
   const fetchExpoData = async (type: string) => {
     const now = Date.now()
