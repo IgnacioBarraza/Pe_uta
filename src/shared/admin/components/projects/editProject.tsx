@@ -56,19 +56,15 @@ export const EditProjectForm = ({
 
   const onSubmit = async (updateProjectDto) => {
     let image_url;
-    
-    // Si se subió una nueva imagen, subirla y eliminar la imagen anterior
     if (image) {
       deletePreviousImage(selectedProject.image_url);
       image_url = await handleUploadImage(image);
     }
   
     try {
-      // Comprobar si el campo members es vacío o no. Si no es vacío, formatear los miembros.
       const membersArray = updateProjectDto.members?.trim().length 
         ? updateProjectDto.members.split(",").map((member) => member.trim())
         : selectedProject.members;
-      // Crear el objeto projectData, verificando si cada campo en updateProjectDto está vacío.
       const projectData = {
         project_name: updateProjectDto.project_name?.trim().length ? updateProjectDto.project_name : selectedProject.project_name,
         subject: updateProjectDto.subject?.id ? updateProjectDto.subject.id : selectedProject.subject.id,
@@ -76,10 +72,9 @@ export const EditProjectForm = ({
         members: membersArray,
         image_url: image_url || selectedProject.image_url,
       };
-  
-      // Enviar los datos al backend para actualizar el proyecto
+
       const response = await updateProject(selectedProject.id, projectData);
-      console.log(response)
+
       if (response.status === 201) {
         toast({
           title: "Proyecto actualizado con éxito",
