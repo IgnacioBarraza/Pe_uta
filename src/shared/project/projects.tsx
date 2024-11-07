@@ -1,38 +1,47 @@
-import { Input } from "@/components/ui/input";
-import { Link, useLocation } from "react-router-dom";
-import { useDataProvider } from "@/hooks/useData";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect, useState } from "react";
-import { FilteredProjects } from "./components/filteredProjects";
+import { Input } from '@/components/ui/input'
+import { useLocation } from 'react-router-dom'
+import { useDataProvider } from '@/hooks/useData'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useEffect, useState } from 'react'
+import { FilteredProjects } from './components/filteredProjects'
 
 export const Projects = () => {
-  const { projects, evaluations, loading } = useDataProvider();
-  const location = useLocation();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState(projects);
-
-  // Get the subject ID from the URL if available
-  const subjectId = new URLSearchParams(location.search).get("subject");
+  const { projects, evaluations, loading, subjects } = useDataProvider()
+  const location = useLocation()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filteredProjects, setFilteredProjects] = useState(projects)
+  const [selectedSubjects, setSelectedSubjects] = useState([])
+  const subjectId = new URLSearchParams(location.search).get('subject')
 
   useEffect(() => {
-    // Filter projects whenever projects or searchTerm changes
+    if (subjectId) {
+      setSelectedSubjects([subjectId])
+    }
+  }, [subjectId])
+
+  useEffect(() => {
     const filtered = projects.filter((project) => {
-      const matchesSubject = !subjectId || project.subject.id === subjectId;
+      const matchesSubject =
+        selectedSubjects.length === 0 ||
+        selectedSubjects.includes(project.subject.id)
       const matchesSearch = project.project_name
         .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-
-      // Check if the project has been evaluated
+        .includes(searchTerm.toLowerCase())
       const isEvaluated = evaluations.some(
         (evaluation) => evaluation.project.id === project.id
-      );
+      )
 
-      // Only return projects that match the search and have not been evaluated
-      return matchesSubject && matchesSearch && !isEvaluated;
-    });
+      return matchesSubject && matchesSearch && !isEvaluated
+    })
 
-    setFilteredProjects(filtered);
-  }, [projects, evaluations, searchTerm, subjectId]);
+    setFilteredProjects(filtered)
+  }, [projects, evaluations, searchTerm, selectedSubjects])
+
+  const toggleSubject = (id) => {
+    setSelectedSubjects((prev) =>
+      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
+    )
+  }
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
@@ -55,6 +64,23 @@ export const Projects = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+          <div className="flex flex-wrap gap-2 mt-4">
+            {subjects
+              .filter((subject) => subject.showOnExpo)
+              .map((subject) => (
+                <button
+                  key={subject.id}
+                  onClick={() => toggleSubject(subject.id)}
+                  className={`px-4 py-2 rounded-full border ${
+                    selectedSubjects.includes(subject.id)
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                >
+                  {subject.subject_name}
+                </button>
+              ))}
+          </div>
           {loading ? (
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
               {Array.from({ length: 3 }).map((_, index) => (
@@ -71,5 +97,5 @@ export const Projects = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
