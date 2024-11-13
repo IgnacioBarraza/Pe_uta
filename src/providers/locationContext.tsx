@@ -1,4 +1,4 @@
-import { ContextProviderProps, LocationContextProps } from '@/utils/utils'
+import { ContextProviderProps, LocationContextProps } from '@/utils/interface'
 import { createContext, useState, useEffect } from 'react'
 import {
   Location,

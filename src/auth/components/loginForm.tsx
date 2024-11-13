@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useProps } from "@/hooks/useProps";
 import { decodeToken, formatRut, saveUserData } from "@/utils/authHelpers";
-import { LoginUserDto } from "@/utils/utils";
+import { LoginUserDto } from "@/utils/interface";
 import { useForm, Controller } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";

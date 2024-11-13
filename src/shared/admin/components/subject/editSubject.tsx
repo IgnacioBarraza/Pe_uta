@@ -1,5 +1,5 @@
 import { useBackend } from "@/hooks/useBackend";
-import { Subject, SubjectProps, UpdateSubjectDto } from "@/utils/utils";
+import { Subject, SubjectProps, UpdateSubjectDto } from "@/utils/interface";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {

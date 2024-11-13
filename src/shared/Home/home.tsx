@@ -34,11 +34,11 @@ export const Home = () => {
               </div>
             </div>
             <img
-              src="/placeholder.jpg"
+              src="/expo_invitation.jpeg"
               width="550"
               height="550"
               alt="Science Expo"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+              className="mx-auto aspect-video overflow-hidden rounded-xl object-fit sm:w-full lg:order-last lg:aspect-square"
             />
           </div>
         </div>

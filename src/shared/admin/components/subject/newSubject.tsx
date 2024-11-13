@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useForm, Controller } from "react-hook-form";
-import { CreateSubjectDto } from "@/utils/utils";
+import { CreateSubjectDto } from "@/utils/interface";
 import { useBackend } from "@/hooks/useBackend";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea"; // Assuming you have a Textarea component

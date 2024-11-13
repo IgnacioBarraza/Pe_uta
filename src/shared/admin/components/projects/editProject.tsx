@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
 import { useFirebase } from "@/hooks/useFirebase";
-import { Project, Subject, UpdateProjectDto } from "@/utils/utils";
+import { Project, Subject, UpdateProjectDto } from "@/utils/interface";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ProgressModal } from "../progressModal";
@@ -75,7 +75,7 @@ export const EditProjectForm = ({
 
       const response = await updateProject(selectedProject.id, projectData);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         toast({
           title: "Proyecto actualizado con éxito",
         });
@@ -118,12 +118,10 @@ export const EditProjectForm = ({
   };
 
   const deletePreviousImage = (url: string) => {
-    console.log(url)
     const decodedURL = decodeURIComponent(url);
     const parts = decodedURL.split('/');
     const fileNameWithToken = parts.pop();
     const fileName = fileNameWithToken.split('?')[0];
-    console.log(fileName)
     deleteProjectImage(fileName)
   }
 

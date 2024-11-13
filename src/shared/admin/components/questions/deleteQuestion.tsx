@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { FormProps, Project, ProjectProps, Questions } from "@/utils/utils";
+import { FormProps, Project, ProjectProps, Questions } from "@/utils/interface";
 import { useBackend } from "@/hooks/useBackend";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

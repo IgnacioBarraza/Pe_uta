@@ -23,21 +23,21 @@ export default function Auth() {
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faCalendar} className="h-5 w-5 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  29 Noviembre, 2024
+                  22 Noviembre, 2024
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faMapLocationDot} className="h-5 w-5 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  Universidad de Tarapacá, Iquique - Chile
+                  Universidad de Tarapacá sede Esmeralda, Av. Luis Emilio Recabarren 2477 Iquique - Chile
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faClock} className="h-5 w-5 text-muted-foreground" />
-                <p className="text-muted-foreground">9:00 AM - 3:00 PM</p>
+                <p className="text-muted-foreground">8:30 AM - 2:00 PM</p>
               </div>
               <div className="flex flex-col items-center">
-                <Calendar selected={new Date('2024-10-26')}/>
+                <Calendar selected={new Date('2024-11-23')}/>
               </div>
             </div>
           </div>

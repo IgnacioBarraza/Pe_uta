@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { RegisterUserDto } from "@/utils/utils";
+import { RegisterUserDto } from "@/utils/interface";
 import { useAuth } from "@/hooks/useAuth";
 import { useProps } from "@/hooks/useProps";
 import { decodeToken, formatRut, saveUserData } from "@/utils/authHelpers";

@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
 import { useDataProvider } from "@/hooks/useData";
-import { EvaluationData, EvaluationFormData, EvaluationFormProps } from "@/utils/utils";
+import { EvaluationData, EvaluationFormData, EvaluationFormProps } from "@/utils/interface";
 import { useForm, Controller } from "react-hook-form";
 
 export const Form = ({ questions, userId }: EvaluationFormProps) => {

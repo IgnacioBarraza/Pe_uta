@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
 import { useDataProvider } from "@/hooks/useData";
-import { CreateQuestionsDto } from "@/utils/utils";
+import { CreateQuestionsDto } from "@/utils/interface";
 import { useFieldArray, useForm } from "react-hook-form";
 
 export const NewQuestions = () => {

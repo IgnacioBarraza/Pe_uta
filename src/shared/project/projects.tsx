@@ -73,7 +73,9 @@ export const Projects = () => {
                   onClick={() => toggleSubject(subject.id)}
                   className={`px-4 py-2 rounded-full border ${
                     selectedSubjects.includes(subject.id)
-                      ? 'bg-primary text-white'
+                      ? subject.subject_field === 'Invitado Especial'
+                        ? 'bg-gradient-to-r from-yellow-600 to-yellow-400'
+                        : 'bg-primary text-white'
                       : 'bg-gray-200 text-gray-800'
                   }`}
                 >

@@ -41,7 +41,7 @@ export const SubjectCards = () => {
               .map((subject) => (
                 <Link to={`proyectos?subject=${subject.id}`} key={subject.id}>
                   <div className="grid gap-1">
-                    <div className="inline-block rounded-lg bg-primary px-3 py-1 text-sm text-primary-foreground">
+                    <div className={`inline-block rounded-lg ${subject.subject_field === 'Invitado Especial' ? 'bg-gradient-to-r from-yellow-600 to-yellow-400' : 'bg-primary'}  px-3 py-1 text-sm text-primary-foreground`}>
                       {subject.subject_field || "Asignatura"}{" "}
                     </div>
                     <h3 className="text-xl font-bold">

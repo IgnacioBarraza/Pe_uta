@@ -14,7 +14,7 @@ import {
   Project,
   Questions,
   Subject,
-} from '@/utils/utils'
+} from '@/utils/interface'
 import axios from 'axios'
 import { ReactNode, createContext, useState, useEffect } from 'react'
 

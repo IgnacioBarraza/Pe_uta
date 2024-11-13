@@ -2,7 +2,7 @@ import { useBackend } from "@/hooks/useBackend";
 import {
   Subject,
   SubjectProps,
-} from "@/utils/utils";
+} from "@/utils/interface";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {

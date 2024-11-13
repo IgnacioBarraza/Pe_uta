@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect, ReactNode } from "react";
-import { Evaluation, Project, Questions, Subject } from "@/utils/utils";
+import { Evaluation, Project, Questions, Subject } from "@/utils/interface";
 import { useBackend } from "@/hooks/useBackend";
 
 interface DataContextProps {

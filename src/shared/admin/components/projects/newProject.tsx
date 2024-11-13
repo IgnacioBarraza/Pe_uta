@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
 import { useFirebase } from "@/hooks/useFirebase";
-import { CreateProjectDto, SubjectProps } from "@/utils/utils";
+import { CreateProjectDto, SubjectProps } from "@/utils/interface";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ProgressModal } from "../progressModal";
@@ -100,7 +100,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
       const file = e.target.files[0];
       setImage(file);
       setPreview(URL.createObjectURL(file));
-      setError(null); // Reset error when a file is selected
+      setError(null);
     }
   };
 

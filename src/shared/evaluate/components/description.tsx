@@ -1,4 +1,4 @@
-import { ProjectDataProps } from "@/utils/utils";
+import { ProjectDataProps } from "@/utils/interface";
 import { faBookOpen, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

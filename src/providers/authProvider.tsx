@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, ReactNode } from "react";
-import { AuthApiResponse, LoginUserDto, RegisterUserDto } from "@/utils/utils";
+import { AuthApiResponse, LoginUserDto, RegisterUserDto } from "@/utils/interface";
 
 const DEV_BACKEND_URL = "https://peuta.up.railway.app"
 
