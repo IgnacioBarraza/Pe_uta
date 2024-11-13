@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton'; // Import Skeleton component
-import { useDataProvider } from '@/hooks/useData';
-import { Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useDataProvider } from '@/hooks/useData'
+import { Link } from 'react-router-dom'
 
 export default function Evaluated() {
-  const { evaluations, questions, loading } = useDataProvider();
+  const { evaluations, questions, loading } = useDataProvider()
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
@@ -18,11 +18,8 @@ export default function Evaluated() {
             Revisa los proyectos que has evaluado previamente.
           </p>
         </div>
-
-        {/* Conditional Rendering: Skeleton Loader when loading */}
         {loading ? (
           <div className="grid gap-6 mt-8">
-            {/* Repeat skeleton structure for the number of cards you want to show */}
             {[...Array(3)].map((_, index) => (
               <Card key={index}>
                 <CardHeader>
@@ -47,7 +44,10 @@ export default function Evaluated() {
             <p className="text-2xl text-muted-foreground">
               No has evaluado proyectos aún.
             </p>
-            <Link to="/inicio/proyectos" className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+            <Link
+              to="/inicio/proyectos"
+              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            >
               Ir a Proyectos
             </Link>
           </div>
@@ -61,21 +61,34 @@ export default function Evaluated() {
                 <CardContent>
                   <div className="grid gap-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Promedio general:</span>
-                      <span>{evaluation.total_evaluation_score.toFixed(1)} / 7</span>
+                      <span className="text-muted-foreground">
+                        Promedio general:
+                      </span>
+                      <span>
+                        {evaluation.total_evaluation_score.toFixed(1)} / 7
+                      </span>
                     </div>
                     {evaluation.question_scores.map((questionScore) => {
-                      const question = questions.find(q => q.id === questionScore.id);
+                      const question = questions.find(
+                        (q) => q.id === questionScore.id
+                      )
                       return (
-                        <div key={questionScore.id} className="flex items-center justify-between">
-                          <span className="text-muted-foreground">{question?.label}:</span>
+                        <div
+                          key={questionScore.id}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-muted-foreground">
+                            {question?.label}:
+                          </span>
                           <span>{questionScore.score}</span>
                         </div>
-                      );
+                      )
                     })}
                     <Separator className="my-4" />
                     <div>
-                      <span className="text-muted-foreground">Comentarios:</span>
+                      <span className="text-muted-foreground">
+                        Comentarios:
+                      </span>
                       <p>{evaluation.comment}</p>
                     </div>
                   </div>
@@ -86,5 +99,5 @@ export default function Evaluated() {
         )}
       </div>
     </section>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -6,32 +6,33 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { useBackend } from "@/hooks/useBackend";
-import { useFirebase } from "@/hooks/useFirebase";
-import { Project, Subject, UpdateProjectDto } from "@/utils/interface";
-import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { ProgressModal } from "../progressModal";
-import { ErrorModal } from "../errorModal";
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/hooks/use-toast'
+import { useBackend } from '@/hooks/useBackend'
+import { useFirebase } from '@/hooks/useFirebase'
+import { Project, Subject, UpdateProjectDto } from '@/utils/interface'
+import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { ProgressModal } from '../progressModal'
+import { ErrorModal } from '../errorModal'
+import { getMembersArray } from '@/utils/util'
 
 export const EditProjectForm = ({
   projects,
   subjects,
 }: {
-  projects: Project[];
-  subjects: Subject[];
+  projects: Project[]
+  subjects: Subject[]
 }) => {
   const {
     register,
@@ -39,67 +40,72 @@ export const EditProjectForm = ({
     control,
     reset,
     formState: { errors },
-  } = useForm<UpdateProjectDto>();
-  const { updateProject } = useBackend();
-  const { toast } = useToast();
-  const { uploadProjectImage, deleteProjectImage } = useFirebase();
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  } = useForm<UpdateProjectDto>()
+  const { updateProject } = useBackend()
+  const { toast } = useToast()
+  const { uploadProjectImage, deleteProjectImage } = useFirebase()
+  const [image, setImage] = useState(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [progress, setProgress] = useState(0)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const handleProjectSelect = (projectId) => {
     const selected = projects.find((project) => project.id === projectId)
-    setSelectedProject(selected || null);
-  };
+    setSelectedProject(selected || null)
+  }
 
   const onSubmit = async (updateProjectDto) => {
-    let image_url;
+    let image_url
     if (image) {
-      deletePreviousImage(selectedProject.image_url);
-      image_url = await handleUploadImage(image);
+      deletePreviousImage(selectedProject.image_url)
+      image_url = await handleUploadImage(image)
     }
-  
+
     try {
-      const membersArray = updateProjectDto.members?.trim().length 
-        ? updateProjectDto.members.split(",").map((member) => member.trim())
-        : selectedProject.members;
+      const membersArray = getMembersArray(
+        updateProjectDto.members,
+        selectedProject
+      )
       const projectData = {
-        project_name: updateProjectDto.project_name?.trim().length ? updateProjectDto.project_name : selectedProject.project_name,
-        subject: updateProjectDto.subject?.id ? updateProjectDto.subject.id : selectedProject.subject.id,
-        description: updateProjectDto.description?.trim().length ? updateProjectDto.description : selectedProject.description,
+        project_name: updateProjectDto.project_name?.trim().length
+          ? updateProjectDto.project_name
+          : selectedProject.project_name,
+        subject: updateProjectDto.subject?.id
+          ? updateProjectDto.subject.id
+          : selectedProject.subject.id,
+        description: updateProjectDto.description?.trim().length
+          ? updateProjectDto.description
+          : selectedProject.description,
         members: membersArray,
         image_url: image_url || selectedProject.image_url,
-      };
+      }
 
-      const response = await updateProject(selectedProject.id, projectData);
+      const response = await updateProject(selectedProject.id, projectData)
 
       if (response.status === 200) {
         toast({
-          title: "Proyecto actualizado con éxito",
-        });
-        reset();
-        setImage(null);
-        setPreview(null);
-        setProgress(0);
-        setSelectedProject(null);
+          title: 'Proyecto actualizado con éxito',
+        })
+        reset()
+        setImage(null)
+        setPreview(null)
+        setProgress(0)
+        setSelectedProject(null)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
-  
-  
+  }
 
   const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
-      setError(null); // Reset error when a file is selected
+      const file = e.target.files[0]
+      setImage(file)
+      setPreview(URL.createObjectURL(file))
+      setError(null) // Reset error when a file is selected
     }
-  };
+  }
 
   const handleUploadImage = (image: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -107,21 +113,21 @@ export const EditProjectForm = ({
         image,
         (progress) => setProgress(progress),
         (error) => {
-          setError(error);
-          reject(error);
+          setError(error)
+          reject(error)
         },
         (downloadUrl) => {
-          resolve(downloadUrl);
+          resolve(downloadUrl)
         }
-      );
-    });
-  };
+      )
+    })
+  }
 
   const deletePreviousImage = (url: string) => {
-    const decodedURL = decodeURIComponent(url);
-    const parts = decodedURL.split('/');
-    const fileNameWithToken = parts.pop();
-    const fileName = fileNameWithToken.split('?')[0];
+    const decodedURL = decodeURIComponent(url)
+    const parts = decodedURL.split('/')
+    const fileNameWithToken = parts.pop()
+    const fileName = fileNameWithToken.split('?')[0]
     deleteProjectImage(fileName)
   }
 
@@ -160,7 +166,7 @@ export const EditProjectForm = ({
                   <Input
                     id="project_name"
                     placeholder="Ingresa el nombre del proyecto"
-                    {...register("project_name")}
+                    {...register('project_name')}
                   />
                 </div>
                 <div className="space-y-2">
@@ -168,7 +174,7 @@ export const EditProjectForm = ({
                   <Textarea
                     id="description"
                     placeholder="Describe el proyecto"
-                    {...register("description")}
+                    {...register('description')}
                   />
                 </div>
               </div>
@@ -192,10 +198,10 @@ export const EditProjectForm = ({
                   <Controller
                     name="subject"
                     control={control}
-                    defaultValue={selectedProject.subject.subject_name || ""}
+                    defaultValue={selectedProject.subject.subject_name || ''}
                     render={({ field }) => (
                       <Select
-                        value={field.value || ""}
+                        value={field.value || ''}
                         onValueChange={(value) => field.onChange(value)}
                       >
                         <SelectTrigger>
@@ -204,7 +210,7 @@ export const EditProjectForm = ({
                               ? subjects.find(
                                   (subject) => subject.id === field.value
                                 )?.subject_name
-                              : "Seleccionar asignatura"}
+                              : 'Seleccionar asignatura'}
                           </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
@@ -224,7 +230,7 @@ export const EditProjectForm = ({
                 <Textarea
                   id="members"
                   placeholder="Ingresa los nombres de los miembros del proyecto separados por comas"
-                  {...register("members")}
+                  {...register('members')}
                 />
               </div>
               <CardFooter className="flex justify-end">
@@ -236,5 +242,5 @@ export const EditProjectForm = ({
       </CardContent>
       {error && <ErrorModal error={error} />}
     </Card>
-  );
-};
+  )
+}

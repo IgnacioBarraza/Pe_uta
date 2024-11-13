@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -6,26 +6,26 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { useBackend } from "@/hooks/useBackend";
-import { useFirebase } from "@/hooks/useFirebase";
-import { CreateProjectDto, SubjectProps } from "@/utils/interface";
-import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { ProgressModal } from "../progressModal";
-import { ErrorModal } from "../errorModal";
-import { useDataProvider } from "@/hooks/useData";
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/hooks/use-toast'
+import { useBackend } from '@/hooks/useBackend'
+import { useFirebase } from '@/hooks/useFirebase'
+import { CreateProjectDto, SubjectProps } from '@/utils/interface'
+import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { ProgressModal } from '../progressModal'
+import { ErrorModal } from '../errorModal'
+import { useDataProvider } from '@/hooks/useData'
 
 export const NewProjectForm = ({ subjects }: SubjectProps) => {
   const {
@@ -34,15 +34,15 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
     control,
     reset,
     formState: { errors },
-  } = useForm<CreateProjectDto>();
-  const { createProject } = useBackend();
-  const { toast } = useToast();
-  const { uploadProjectImage } = useFirebase();
-  const { addProjectLocally } = useDataProvider();
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0);
+  } = useForm<CreateProjectDto>()
+  const { createProject } = useBackend()
+  const { toast } = useToast()
+  const { uploadProjectImage } = useFirebase()
+  const { addProjectLocally } = useDataProvider()
+  const [image, setImage] = useState(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [progress, setProgress] = useState(0)
 
   const handleUploadImage = (image: File) => {
     return new Promise<string>((resolve, reject) => {
@@ -50,59 +50,59 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
         image,
         (progress) => setProgress(progress),
         (error) => {
-          setError(error);
-          reject(error);
+          setError(error)
+          reject(error)
         },
         (downloadUrl) => {
-          resolve(downloadUrl);
+          resolve(downloadUrl)
         }
-      );
-    });
-  };
+      )
+    })
+  }
 
   const onSubmit = async (createProjectData) => {
     if (!image) {
-      setError("Debes cargar una imagen para continuar");
-      return;
+      setError('Debes cargar una imagen para continuar')
+      return
     }
     try {
       const membersArray = createProjectData.members
-        .split(",")
-        .map((member) => member.trim());
-      const image_url = await handleUploadImage(image);
+        .split(',')
+        .map((member) => member.trim())
+      const image_url = await handleUploadImage(image)
 
       const projectData: CreateProjectDto = {
         ...createProjectData,
         members: membersArray,
         image_url: image_url,
-      };
+      }
 
-      const response = await createProject(projectData);
+      const response = await createProject(projectData)
 
-      const { data, status } = response;
+      const { data, status } = response
       if (status === 201) {
-        addProjectLocally(data);
+        addProjectLocally(data)
         toast({
-          title: "Proyecto creado con exito",
-        });
-        reset();
-        setImage(null);
-        setPreview(null);
-        setProgress(0);
+          title: 'Proyecto creado con exito',
+        })
+        reset()
+        setImage(null)
+        setPreview(null)
+        setProgress(0)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
-      setError(null);
+      const file = e.target.files[0]
+      setImage(file)
+      setPreview(URL.createObjectURL(file))
+      setError(null)
     }
-  };
+  }
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -121,7 +121,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
               <Input
                 id="project_name"
                 placeholder="Ingresa el nombre del proyecto"
-                {...register("project_name", { required: true })}
+                {...register('project_name', { required: true })}
               />
               {errors.project_name && (
                 <span className="text-red-500">Este campo es obligatorio</span>
@@ -132,7 +132,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
               <Textarea
                 id="description"
                 placeholder="Describe el proyecto"
-                {...register("description", { required: true })}
+                {...register('description', { required: true })}
               />
               {errors.description && (
                 <span className="text-red-500">Este campo es obligatorio</span>
@@ -149,9 +149,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
                   <img src={preview} alt="Preview" className="w-full h-auto" />
                 </div>
               )}
-              {progress > 0 && (
-                <ProgressModal progress={progress}/>
-              )}
+              {progress > 0 && <ProgressModal progress={progress} />}
             </div>
             <div className="space-y-2">
               <Label htmlFor="subject">Asignatura del proyecto</Label>
@@ -161,7 +159,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
                 defaultValue=""
                 render={({ field }) => (
                   <Select
-                    value={field.value || "Seleccionar asignatura"}
+                    value={field.value || 'Seleccionar asignatura'}
                     onValueChange={(value) => field.onChange(value)}
                   >
                     <SelectTrigger>
@@ -170,7 +168,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
                           ? subjects.find(
                               (subject) => subject.id === field.value
                             )?.subject_name
-                          : "Seleccionar asignatura"}
+                          : 'Seleccionar asignatura'}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
@@ -193,7 +191,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
             <Textarea
               id="members"
               placeholder="Ingresa los nombres de los miembros del proyecto separados por comas"
-              {...register("members", { required: true })}
+              {...register('members', { required: true })}
             />
             {errors.members && (
               <span className="text-red-500">Este campo es obligatorio</span>
@@ -204,9 +202,7 @@ export const NewProjectForm = ({ subjects }: SubjectProps) => {
           </CardFooter>
         </form>
       </CardContent>
-      {error && (
-        <ErrorModal error={error}/>
-      )}
+      {error && <ErrorModal error={error} />}
     </Card>
-  );
-};
+  )
+}
