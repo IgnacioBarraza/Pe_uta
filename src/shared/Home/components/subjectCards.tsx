@@ -1,9 +1,12 @@
 import { useDataProvider } from "@/hooks/useData";
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sortSubjects, subjectColor, subjectOrder } from "@/utils/util";
 
 export const SubjectCards = () => {
   const { subjects, loading } = useDataProvider();
+
+  const sortedSubjects = sortSubjects(subjects)
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
@@ -22,8 +25,6 @@ export const SubjectCards = () => {
             </p>
           </div>
         </div>
-
-        {/* Skeleton Loading View */}
         {loading ? (
           <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
             {Array.from({ length: 3 }).map((_, index) => (
@@ -36,12 +37,12 @@ export const SubjectCards = () => {
           </div>
         ) : (
           <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-            {subjects
+            {sortedSubjects
               .filter((subject) => subject.showOnExpo)
               .map((subject) => (
-                <Link to={`proyectos?subject=${subject.id}`} key={subject.id}>
+                <Link to={`proyectos?subject=${subject.id}`} key={subject.id} className="h-auto min-h-[190px]">
                   <div className="grid gap-1">
-                    <div className={`inline-block rounded-lg ${subject.subject_field === 'Invitado Especial' ? 'bg-gradient-to-r from-yellow-600 to-yellow-400' : 'bg-primary'}  px-3 py-1 text-sm text-primary-foreground`}>
+                    <div className={`inline-block rounded-lg px-3 py-1 text-sm text-primary-foreground ${subjectColor[subject.subject_name]}`}>
                       {subject.subject_field || "Asignatura"}{" "}
                     </div>
                     <h3 className="text-xl font-bold">

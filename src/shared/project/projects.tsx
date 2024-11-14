@@ -4,6 +4,7 @@ import { useDataProvider } from '@/hooks/useData'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useEffect, useState } from 'react'
 import { FilteredProjects } from './components/filteredProjects'
+import { sortSubjects, subjectColor } from '@/utils/util'
 
 export const Projects = () => {
   const { projects, evaluations, loading, subjects } = useDataProvider()
@@ -43,6 +44,8 @@ export const Projects = () => {
     )
   }
 
+  const sortedSubjects = sortSubjects(subjects)
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 mx-auto">
@@ -65,7 +68,7 @@ export const Projects = () => {
             />
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
-            {subjects
+            {sortedSubjects
               .filter((subject) => subject.showOnExpo)
               .map((subject) => (
                 <button
@@ -73,9 +76,7 @@ export const Projects = () => {
                   onClick={() => toggleSubject(subject.id)}
                   className={`px-4 py-2 rounded-full border ${
                     selectedSubjects.includes(subject.id)
-                      ? subject.subject_field === 'Invitado Especial'
-                        ? 'bg-gradient-to-r from-yellow-600 to-yellow-400'
-                        : 'bg-primary text-white'
+                      ? subjectColor[subject.subject_name]
                       : 'bg-gray-200 text-gray-800'
                   }`}
                 >
