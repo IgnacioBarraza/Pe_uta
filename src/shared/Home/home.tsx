@@ -34,7 +34,7 @@ export const Home = () => {
               </div>
             </div>
             <img
-              src="/expo_invitation.jpeg"
+              src="/expo_invitation.jpg"
               width="550"
               height="550"
               alt="Science Expo"
