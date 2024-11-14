@@ -67,12 +67,13 @@ export const EditProjectForm = ({
         updateProjectDto.members,
         selectedProject
       )
+
       const projectData = {
         project_name: updateProjectDto.project_name?.trim().length
           ? updateProjectDto.project_name
           : selectedProject.project_name,
-        subject: updateProjectDto.subject?.id
-          ? updateProjectDto.subject.id
+        subject: updateProjectDto.subject
+          ? updateProjectDto.subject
           : selectedProject.subject.id,
         description: updateProjectDto.description?.trim().length
           ? updateProjectDto.description
