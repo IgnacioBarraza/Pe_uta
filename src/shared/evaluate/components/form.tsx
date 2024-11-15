@@ -49,25 +49,25 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
       comment: formData.comment,
     };
 
-    // try {
-    //   const response = await submitEvaluation(evaluationData)
-    //   const { data, status } = response
-    //   if (status === 201) {
-    //     addEvaluationLocally(data)
-    //     reset()
-    //     toast({
-    //       title: 'Evaluación enviada con exito!',
-    //       description: 'Gracias por evaluar a este grupo!'
-    //     })
-    //   }
-    // } catch (error) {
-    //   console.error(error)
-    //   toast({
-    //     title: 'Error en la evaluación.',
-    //     description: error.response.data.message,
-    //     variant: 'destructive'
-    //   })
-    // }
+    try {
+      const response = await submitEvaluation(evaluationData)
+      const { data, status } = response
+      if (status === 201) {
+        addEvaluationLocally(data)
+        reset()
+        toast({
+          title: 'Evaluación enviada con exito!',
+          description: 'Gracias por evaluar a este grupo!'
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      toast({
+        title: 'Error en la evaluación.',
+        description: error.response.data.message,
+        variant: 'destructive'
+      })
+    }
   }
 
   return (
