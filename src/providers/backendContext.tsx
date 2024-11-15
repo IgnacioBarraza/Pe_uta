@@ -132,9 +132,9 @@ export const BackendProvider = ({ children }: BackendProviderProps) => {
     return fetchExpoData('evaluations')
   }
   const getEvaluationsByUser = (id: string) =>
-    axios.get(`${BACKEND_URL}/api/evaluation/user/${id}`).then((res) => res.data)
+    axios.get(`${BACKEND_URL}/api/evaluations/user/${id}`).then((res) => res.data)
   const submitEvaluation = (createEvaluation: EvaluationData) =>
-    axios.post(`${BACKEND_URL}/api/evaluation`, createEvaluation)
+    axios.post(`${BACKEND_URL}/api/evaluations`, createEvaluation)
 
   const fetchExpoData = async (type: string) => {
     const now = Date.now()

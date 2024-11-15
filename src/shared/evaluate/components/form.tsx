@@ -31,7 +31,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
   const calculateTotalScore = (scores: { [questionId: string]: string }): number => {
     const scoreValues = Object.values(scores).map(Number);
     const total = scoreValues.reduce((acc, score) => acc + score, 0);
-    return scoreValues.length ? total / scoreValues.length : 0; // Calculate the average score
+    return scoreValues.length ? total / scoreValues.length : 0;
   }
 
   const onSubmit = async (formData: EvaluationFormData) => {
@@ -43,31 +43,31 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
       project: { id: projectId },
       total_evaluation_score: total_evaluation_score,
       question_scores: questions.map((question) => ({
-        id: question.id, // Include question ID
+        id: question.id,
         score: parseInt(scores[question.id] || "0", 10),
       })),
       comment: formData.comment,
     };
 
-    try {
-      const response = await submitEvaluation(evaluationData)
-      const { data, status } = response
-      if (status === 201) {
-        addEvaluationLocally(data)
-        reset()
-        toast({
-          title: 'Evaluación enviada con exito!',
-          description: 'Gracias por evaluar a este grupo!'
-        })
-      }
-    } catch (error) {
-      console.error(error)
-      toast({
-        title: 'Error en la evaluación.',
-        description: error.response.data.message,
-        variant: 'destructive'
-      })
-    }
+    // try {
+    //   const response = await submitEvaluation(evaluationData)
+    //   const { data, status } = response
+    //   if (status === 201) {
+    //     addEvaluationLocally(data)
+    //     reset()
+    //     toast({
+    //       title: 'Evaluación enviada con exito!',
+    //       description: 'Gracias por evaluar a este grupo!'
+    //     })
+    //   }
+    // } catch (error) {
+    //   console.error(error)
+    //   toast({
+    //     title: 'Error en la evaluación.',
+    //     description: error.response.data.message,
+    //     variant: 'destructive'
+    //   })
+    // }
   }
 
   return (
@@ -76,7 +76,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
         <div key={question.id} className="grid gap-2">
           <Label htmlFor={question.id}>{question.label}</Label>
           <Controller
-            name={`scores.${question.id}`} // Register the score for this question
+            name={`scores.${question.id}`}
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
