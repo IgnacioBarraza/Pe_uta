@@ -13,6 +13,7 @@ import { useBackend } from "@/hooks/useBackend";
 import { useDataProvider } from "@/hooks/useData";
 import { EvaluationData, EvaluationFormData, EvaluationFormProps } from "@/utils/interface";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const Form = ({ questions, userId }: EvaluationFormProps) => {
   const {
@@ -25,6 +26,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
   const { submitEvaluation } = useBackend()
   const { toast } = useToast()
   const { addEvaluationLocally } = useDataProvider()
+  const navigate = useNavigate()
 
   const projectId = new URLSearchParams(location.search).get('id')
 
@@ -59,6 +61,8 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
           title: 'Evaluación enviada con exito!',
           description: 'Gracias por evaluar a este grupo!'
         })
+        navigate('/inicio')
+
       }
     } catch (error) {
       console.error(error)
@@ -67,6 +71,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
         description: error.response.data.message,
         variant: 'destructive'
       })
+      navigate('/inicio')
     }
   }
 

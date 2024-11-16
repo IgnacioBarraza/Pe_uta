@@ -39,7 +39,6 @@ export const EditProjectForm = ({
     handleSubmit,
     control,
     reset,
-    formState: { errors },
   } = useForm<UpdateProjectDto>()
   const { updateProject } = useBackend()
   const { toast } = useToast()
@@ -67,6 +66,8 @@ export const EditProjectForm = ({
         updateProjectDto.members,
         selectedProject
       )
+      console.log(updateProjectDto)
+      console.log(selectedProject)
 
       const projectData = {
         project_name: updateProjectDto.project_name?.trim().length
@@ -82,18 +83,20 @@ export const EditProjectForm = ({
         image_url: image_url || selectedProject.image_url,
       }
 
-      const response = await updateProject(selectedProject.id, projectData)
+      console.log(projectData)
 
-      if (response.status === 200) {
-        toast({
-          title: 'Proyecto actualizado con éxito',
-        })
-        reset()
-        setImage(null)
-        setPreview(null)
-        setProgress(0)
-        setSelectedProject(null)
-      }
+      // const response = await updateProject(selectedProject.id, projectData)
+
+      // if (response.status === 200) {
+      //   toast({
+      //     title: 'Proyecto actualizado con éxito',
+      //   })
+      //   reset()
+      //   setImage(null)
+      //   setPreview(null)
+      //   setProgress(0)
+      //   setSelectedProject(null)
+      // }
     } catch (error) {
       console.error(error)
     }
@@ -168,6 +171,7 @@ export const EditProjectForm = ({
                     id="project_name"
                     placeholder="Ingresa el nombre del proyecto"
                     {...register('project_name')}
+                    value={selectedProject.project_name}
                   />
                 </div>
                 <div className="space-y-2">
@@ -176,13 +180,14 @@ export const EditProjectForm = ({
                     id="description"
                     placeholder="Describe el proyecto"
                     {...register('description')}
+                    value={selectedProject.description}
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="image">Imagen del Proyecto</Label>
-                  <Input id="image" type="file" onChange={handleImageFile} />
+                  <Input id="image" type="file" onChange={handleImageFile}/>
                   {preview && (
                     <div className="mt-2">
                       <img
@@ -199,7 +204,7 @@ export const EditProjectForm = ({
                   <Controller
                     name="subject"
                     control={control}
-                    defaultValue={selectedProject.subject.subject_name || ''}
+                    defaultValue={selectedProject.subject.id || ''}
                     render={({ field }) => (
                       <Select
                         value={field.value || ''}
@@ -232,6 +237,7 @@ export const EditProjectForm = ({
                   id="members"
                   placeholder="Ingresa los nombres de los miembros del proyecto separados por comas"
                   {...register('members')}
+                  value={selectedProject.members}
                 />
               </div>
               <CardFooter className="flex justify-end">
