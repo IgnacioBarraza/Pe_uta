@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useBackend } from "@/hooks/useBackend";
 import { useDataProvider } from "@/hooks/useData";
 import { EvaluationData, EvaluationFormData, EvaluationFormProps } from "@/utils/interface";
+import { calculateTotalScore } from "@/utils/util";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -30,16 +31,10 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
 
   const projectId = new URLSearchParams(location.search).get('id')
 
-  const calculateTotalScore = (scores: { [questionId: string]: string }): number => {
-    const scoreValues = Object.values(scores).map(Number);
-    const total = scoreValues.reduce((acc, score) => acc + score, 0);
-    return scoreValues.length ? total / scoreValues.length : 0;
-  }
-
   const onSubmit = async (formData: EvaluationFormData) => {
     const scores = formData.scores;
     const total_evaluation_score = calculateTotalScore(scores);
-
+    console.log(total_evaluation_score)
     const evaluationData: EvaluationData = {
       user: { id: userId },
       project: { id: projectId },
@@ -51,6 +46,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
       comment: formData.comment,
     };
 
+    console.log(formData)
     try {
       const response = await submitEvaluation(evaluationData)
       const { data, status } = response

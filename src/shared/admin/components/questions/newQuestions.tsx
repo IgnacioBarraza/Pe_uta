@@ -34,7 +34,6 @@ export const NewQuestions = () => {
   const onSubmit = async (questionData: CreateQuestionsDto) => {
     try {
       const response = await createQuestion(questionData)
-      console.log(response)
       const { data, status } = response
       if (status === 201) {
         addQuestionLocally(data)
