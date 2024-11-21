@@ -14,6 +14,7 @@ import {
   Project,
   Questions,
   Subject,
+  ExcelResponse,
 } from '@/utils/interface'
 import axios from 'axios'
 import { ReactNode, createContext, useState, useEffect } from 'react'
@@ -55,7 +56,7 @@ type BackendContextType = {
     createEvaluation: EvaluationData
   ) => Promise<EvaluationApiResponse>
   /** Export Excel **/
-  exportExcel: () => void
+  exportExcel: () => Promise<ExcelResponse>
 }
 
 type BackendProviderProps = {
@@ -139,7 +140,7 @@ export const BackendProvider = ({ children }: BackendProviderProps) => {
     axios.post(`${BACKEND_URL}/api/evaluations`, createEvaluation)
 
   /** Export Excel **/
-  const exportExcel = () => axios.get(`${BACKEND_URL}/api/export/xls`).then()
+  const exportExcel = (): Promise<ExcelResponse> => axios.get(`${BACKEND_URL}/api/export/xls`, { responseType: 'blob'})
 
 
   const fetchExpoData = async (type: string) => {

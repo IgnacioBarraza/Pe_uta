@@ -199,3 +199,8 @@ export interface ContextProviderProps {
 export interface LocationContextProps {
   location: Location
 }
+
+export interface ExcelResponse {
+  data: string
+  status: number
+}

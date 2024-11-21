@@ -9,16 +9,55 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { NewQuestions } from "./components/questions/newQuestions";
 import { DeleteQuestion } from "./components/questions/deleteQuestion";
 import { useBackend } from "@/hooks/useBackend";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
   const { projects, subjects, questions, loading, error } = useDataProvider();
   const { exportExcel } = useBackend()
+  const { toast } = useToast()
+  const date = new Date();
+  const currentYear = date.getFullYear();
 
   const excel = async () => {
     try {
-      await exportExcel()
+      await exportExcel().then((res) => {
+        const { data, status } = res
+        if (status === 200) {
+          const url = window.URL.createObjectURL(new Blob([data]))
+          const link = document.createElement('a')
+
+          link.href = url
+          link.download = `Resumen Evaluaciones Feria ${currentYear}.xlsx`
+          document.body.appendChild(link)
+          link.click()
+
+
+          document.body.removeChild(link)
+          window.URL.revokeObjectURL(url)
+
+          toast({
+            title: 'Archivo excel generado con exito',
+            description: 'Espera un momento mientras se descarga el archivo',
+            variant: 'default'
+          })
+        } else {
+          console.error('Error al generar el archivo excel...')
+          toast({
+            title: 'Hubo un error al generar el archivo excel',
+            description: 'Contacte a desarrollo',
+            variant: 'destructive'
+          })
+        }
+      })
     } catch (error) {
       console.error(error)
+      toast({
+        title: 'Hubo un error al generar el archivo excel',
+        description: 'Contacte a desarrollo',
+        variant: 'destructive'
+      })
     }
   }
   if (loading) {
@@ -62,6 +101,12 @@ export default function Admin() {
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
                 Gestiona los proyectos y asignaturas desde aca.
               </p>
+            </div>
+            <div className="grid gap-4">
+              <button className="w-60 h-10 bg-green-700 rounded-xl text-white" onClick={() => excel()}>
+                <FontAwesomeIcon icon={faFileExcel} size="xl" className="mr-2"/>
+                Generar Excel
+              </button>
             </div>
             <div className="grid gap-4 ">
               <NewProjectForm subjects={subjects} />
