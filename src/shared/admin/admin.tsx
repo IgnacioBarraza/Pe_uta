@@ -8,10 +8,19 @@ import { useDataProvider } from "@/hooks/useData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewQuestions } from "./components/questions/newQuestions";
 import { DeleteQuestion } from "./components/questions/deleteQuestion";
+import { useBackend } from "@/hooks/useBackend";
 
 export default function Admin() {
   const { projects, subjects, questions, loading, error } = useDataProvider();
+  const { exportExcel } = useBackend()
 
+  const excel = async () => {
+    try {
+      await exportExcel()
+    } catch (error) {
+      console.error(error)
+    }
+  }
   if (loading) {
     return(
       <section className="w-full py-12 md:py-24 lg:py-32">

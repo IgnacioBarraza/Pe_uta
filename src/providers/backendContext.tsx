@@ -54,6 +54,8 @@ type BackendContextType = {
   submitEvaluation: (
     createEvaluation: EvaluationData
   ) => Promise<EvaluationApiResponse>
+  /** Export Excel **/
+  exportExcel: () => void
 }
 
 type BackendProviderProps = {
@@ -136,6 +138,10 @@ export const BackendProvider = ({ children }: BackendProviderProps) => {
   const submitEvaluation = (createEvaluation: EvaluationData) =>
     axios.post(`${BACKEND_URL}/api/evaluations`, createEvaluation)
 
+  /** Export Excel **/
+  const exportExcel = () => axios.get(`${BACKEND_URL}/api/export/xls`).then()
+
+
   const fetchExpoData = async (type: string) => {
     const now = Date.now()
     const cacheKey = `${type}Timestamp`
@@ -209,6 +215,7 @@ export const BackendProvider = ({ children }: BackendProviderProps) => {
         getEvaluations,
         getEvaluationsByUser,
         submitEvaluation,
+        exportExcel
       }}
     >
       {children}
