@@ -39,6 +39,7 @@ interface QuestionsOptions {
 export interface CreateQuestionsDto {
   label: string;
   options: QuestionsOptions[]
+  ponderation: number
 }
 
 export interface FormProps {

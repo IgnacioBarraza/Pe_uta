@@ -1,12 +1,19 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { useBackend } from "@/hooks/useBackend";
-import { useDataProvider } from "@/hooks/useData";
-import { CreateQuestionsDto } from "@/utils/interface";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useToast } from '@/hooks/use-toast'
+import { useBackend } from '@/hooks/useBackend'
+import { useDataProvider } from '@/hooks/useData'
+import { CreateQuestionsDto } from '@/utils/interface'
+import { useFieldArray, useForm } from 'react-hook-form'
 
 export const NewQuestions = () => {
   const {
@@ -18,19 +25,19 @@ export const NewQuestions = () => {
   } = useForm<CreateQuestionsDto>({
     defaultValues: {
       label: '',
-      options: Array(4).fill({ label: "", value: "" }), // Predefine 5 options
+      options: Array(4).fill({ label: '', value: '' }), // Predefine 5 options
     },
-  });
+  })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields } = useFieldArray({
     control,
-    name: "options",
-  });
+    name: 'options',
+  })
 
   const { createQuestion } = useBackend()
   const { toast } = useToast()
   const { addQuestionLocally } = useDataProvider()
-  
+
   const onSubmit = async (questionData: CreateQuestionsDto) => {
     try {
       const response = await createQuestion(questionData)
@@ -38,27 +45,30 @@ export const NewQuestions = () => {
       if (status === 201) {
         addQuestionLocally(data)
         toast({
-          title: 'Pregunta agregada con exito'
+          title: 'Pregunta agregada con exito',
         })
         reset()
       }
     } catch (error) {
       console.error(error)
     }
-  };
+  }
 
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
         <CardTitle>Crear Pregunta</CardTitle>
-        <CardDescription>Agrega una nueva pregunta con 5 opciones y su respectivo puntaje.</CardDescription>
+        <CardDescription>
+          Agrega una nueva pregunta con 5 opciones y su respectivo puntaje.
+        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4">
           {/* Pregunta */}
-          <div className="space-y-2">
-            <Label htmlFor="question">Pregunta</Label>
+          <Label htmlFor="question">Pregunta</Label>
+          <div className="grid grid-cols-3 gap-2">
             <Input
+            className='col-span-2'
               id="question"
               placeholder="Ingresa la pregunta"
               {...register('label', { required: true })}
@@ -66,8 +76,16 @@ export const NewQuestions = () => {
             {errors.label && (
               <span className="text-red-500">Este campo es obligatorio</span>
             )}
+          {/* Ponderación*/}
+          <Input
+            className='col-span-1'
+            type="number"
+            placeholder="Ponderación"
+            {...register('ponderation', { required: true })}
+          />
           </div>
-
+          {/* Asociar asignaturas */}
+          
           {/* Opciones */}
           <div className="space-y-4">
             <Label>Opciones</Label>
@@ -80,7 +98,9 @@ export const NewQuestions = () => {
                   {...register(`options.${index}.label`, { required: true })}
                 />
                 {errors?.options?.[index]?.label && (
-                  <span className="text-red-500">Este campo es obligatorio</span>
+                  <span className="text-red-500">
+                    Este campo es obligatorio
+                  </span>
                 )}
 
                 {/* Opción Puntaje */}
@@ -90,7 +110,9 @@ export const NewQuestions = () => {
                   {...register(`options.${index}.value`, { required: true })}
                 />
                 {errors?.options?.[index]?.value && (
-                  <span className="text-red-500">Este campo es obligatorio</span>
+                  <span className="text-red-500">
+                    Este campo es obligatorio
+                  </span>
                 )}
               </div>
             ))}
@@ -103,5 +125,5 @@ export const NewQuestions = () => {
         </CardFooter>
       </form>
     </Card>
-  );
-};
+  )
+}
