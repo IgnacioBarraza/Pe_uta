@@ -40,6 +40,23 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
   const projectId = new URLSearchParams(location.search).get('id')
 
   const onSubmit = async (formData: EvaluationFormData) => {
+    if (!userId) {
+      toast({
+        title: "Error",
+        description: "El ID de usuario no es válido o no fue encontrado.",
+        variant: "destructive",
+      });
+      return;
+    }
+  
+    if (!projectId) {
+      toast({
+        title: "Error",
+        description: "El ID del proyecto no es válido o no fue encontrado.",
+        variant: "destructive",
+      });
+      return;
+    }
     const scores = formData.scores;
     const total_evaluation_score = calculateTotalScore(scores, questions);
 
