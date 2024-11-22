@@ -23,7 +23,15 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
     control,
     reset,
     formState: { errors },
-  } = useForm<EvaluationFormData>();
+  } = useForm<EvaluationFormData>({
+    defaultValues: {
+      scores: questions.reduce((acc, question) => {
+        acc[question.id] = "";
+        return acc;
+      }, {}),
+      comment: "",
+    },
+  });
   const { submitEvaluation } = useBackend()
   const { toast } = useToast()
   const { addEvaluationLocally } = useDataProvider()
@@ -46,6 +54,8 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
       comment: formData.comment,
     };
 
+    console.log(evaluationData)
+
     try {
       const response = await submitEvaluation(evaluationData)
       const { data, status } = response
@@ -66,7 +76,6 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
         description: error.response.data.message,
         variant: 'destructive'
       })
-      navigate('/inicio')
     }
   }
 
@@ -80,7 +89,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} defaultValue={field.value || ''}>
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione el puntaje" />
                 </SelectTrigger>
