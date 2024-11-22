@@ -24,6 +24,8 @@ export interface Questions {
   id: string,
   label: string,
   options: QuestionsOptions[]
+  ponderation: number
+  associatedTo: Subject[]
 }
 
 export interface QuestionsApiResponse {

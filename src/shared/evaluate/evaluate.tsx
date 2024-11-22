@@ -12,8 +12,12 @@ export default function Evaluate() {
   const { userId } = useProps()
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
-  const id = searchParams.get("id");
-  const project = projects.find((project) => project.id === id);
+  const projectId = searchParams.get("id");
+  const project = projects.find((project) => project.id === projectId);
+  const subjectId = searchParams.get("subject")
+  const filteredQuestions = questions.filter((question) => question.associatedTo?.some((subject) => subject.id === subjectId))
+  console.log('filtered questions:',filteredQuestions)
+  console.log('questions:',questions)
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,7 +50,7 @@ export default function Evaluate() {
                     Por favor envíe sus comentarios sobre el proyecto.
                   </p>
                 </div>
-                <Form questions={questions} userId={userId}/>
+                <Form questions={filteredQuestions} userId={userId}/>
               </div>
             )}
           </div>
