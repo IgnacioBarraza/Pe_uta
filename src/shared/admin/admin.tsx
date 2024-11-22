@@ -111,7 +111,7 @@ export default function Admin() {
             <div className="grid gap-4 ">
               <NewProjectForm subjects={subjects} />
               <NewSubjectForm />
-              <NewQuestions />
+              <NewQuestions subjects={subjects} />
             </div>
           </div>
           <div className="grid sm:mt-28 gap-4">

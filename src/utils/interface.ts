@@ -32,7 +32,7 @@ export interface QuestionsApiResponse {
 }
 
 interface QuestionsOptions {
-  value: string,
+  value: number,
   label: string
 }
 
@@ -40,6 +40,7 @@ export interface CreateQuestionsDto {
   label: string;
   options: QuestionsOptions[]
   ponderation: number
+  associatedTo: string[]
 }
 
 export interface FormProps {
@@ -204,4 +205,8 @@ export interface LocationContextProps {
 export interface ExcelResponse {
   data: string
   status: number
+}
+
+export interface NewQuestionProps {
+  subjects: Subject[]
 }
