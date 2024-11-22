@@ -33,8 +33,8 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
 
   const onSubmit = async (formData: EvaluationFormData) => {
     const scores = formData.scores;
-    const total_evaluation_score = calculateTotalScore(scores);
-    console.log(total_evaluation_score)
+    const total_evaluation_score = calculateTotalScore(scores, questions);
+
     const evaluationData: EvaluationData = {
       user: { id: userId },
       project: { id: projectId },
@@ -46,7 +46,6 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
       comment: formData.comment,
     };
 
-    console.log(formData)
     try {
       const response = await submitEvaluation(evaluationData)
       const { data, status } = response
@@ -87,7 +86,7 @@ export const Form = ({ questions, userId }: EvaluationFormProps) => {
                 </SelectTrigger>
                 <SelectContent>
                   {question.options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={String(option.value)}>
                       {option.label}
                     </SelectItem>
                   ))}

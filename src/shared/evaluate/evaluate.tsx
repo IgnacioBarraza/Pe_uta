@@ -16,8 +16,6 @@ export default function Evaluate() {
   const project = projects.find((project) => project.id === projectId);
   const subjectId = searchParams.get("subject")
   const filteredQuestions = questions.filter((question) => question.associatedTo?.some((subject) => subject.id === subjectId))
-  console.log('filtered questions:',filteredQuestions)
-  console.log('questions:',questions)
 
   useEffect(() => {
     setTimeout(() => {

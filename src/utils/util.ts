@@ -36,23 +36,21 @@ export const sortSubjects = (subjects: Subject[]) => {
     .sort((a, b) => subjectOrder.indexOf(a.id) - subjectOrder.indexOf(b.id))
 }
 
-export const calculateTotalScore = (scores: { [questionId: string]: string }): number => {
-  const weights: { [key: string]: number } = {
-    "612d8190-fcec-4978-889b-715fa2968b3c": 0.45, // Pregunta 1
-    "3b734267-0ed7-44aa-907f-2785b155d2f7": 0.05, // Pregunta 2
-    "07c430a7-aa44-4c6a-a12d-72c17891b55b": 0.05, // Pregunta 3
-    "32c0e0a1-8074-4560-b727-f6c8fc75a2c7": 0.35, // Pregunta 4
-    "374932b4-69f1-4042-93e5-6c39f5aeaca0": 0.05, // Pregunta 5
-    "63a2a9e0-8c0d-4672-aa3b-fa041c1aec34": 0.05, // Pregunta 6
-  };
+export const calculateTotalScore = (scores: { [questionId: string]: string }, questions: { id: string, ponderation: number }[]): number => {
+  // Create a lookup object for ponderation based on questionId
+  const ponderations: { [key: string]: number } = questions.reduce((acc, question) => {
+    acc[question.id] = question.ponderation;
+    return acc;
+  }, {} as { [key: string]: number });
 
-  // Calculamos la nota final basada en las ponderaciones y los puntajes seleccionados
+  // Calculate the final score using the ponderation for each question
   const totalScore = Object.keys(scores).reduce((acc, questionId) => {
-    const score = parseInt(scores[questionId] || "0", 10); // Valor seleccionado
-    const weight = weights[questionId] || 0; // Ponderación asignada
-    return acc + score * weight;
+    const score = parseInt(scores[questionId] || "0", 10); // Value selected by the user
+    const ponderation = ponderations[questionId] || 0; // Ponderation from the question data
+    return acc + score * ponderation;
   }, 0);
 
-  // Redondeo a un decimal
+  // Round the total score to one decimal place
   return Math.round((totalScore + Number.EPSILON) * 10) / 10;
 };
+
