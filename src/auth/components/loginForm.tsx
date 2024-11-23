@@ -54,6 +54,7 @@ export const LoginForm = ({setIsLogin}) => {
       console.error(error);
       toast({
         title: 'Hubo un error al iniciar sesión',
+        description: `${error.response.data.message}`,
         variant: 'destructive'
       })
     }
